@@ -21,9 +21,11 @@ private:
 	{
 		T		item;
 		Node 	*next;
+		Node  	*prev;
 	};
 	
 	Node	*head;		// the pointer for the linked list
+	Node	*tail;
 	
 public:
 			List		( void );
