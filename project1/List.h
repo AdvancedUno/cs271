@@ -19,7 +19,7 @@ private:
 	// struct for Node for linked list
 	struct Node
 	{
-		T		item;
+		T	item;
 		Node 	*next;
 		Node  	*prev;
 	};
@@ -28,19 +28,22 @@ private:
 	Node	*tail;
 	
 public:
-			List		( void );
-			List		( const List<T> &mylist );
-		   ~List		( void );
-List<T>		operator=	( const List<T> &mylist );
+		List		( void );
+		List		( const List<T> &mylist );
+		~List		( void );
+List<T>	operator=	( const List<T> &mylist );
 string		to_string	( void ) const;	
-void		append		( const T &item	);
-T &			operator[]	( int index );
+void		prepend	( const T &item);
+void		append		( const T &item );
+T &		operator[]	( int index );
 void		insert		( const T &item, int index );
 void		remove		( int index );
-List<T>		operator+	( const List<T> &mylist ) const;
-int			length		( void ) const;
-bool		isEmpty		( void ) const;
+void		search		( const T &item ) const;
+List<T>	operator+	( const List<T> &mylist ) const;
+int		length		( void ) const;
+bool		isEmpty	( void ) const;
 void		clear		( void );
+List<T>	concat		( const List<T> &list ) const;
 
 friend ostream & operator<< ( ostream &os, List<T> &mylist )
 {
