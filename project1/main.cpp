@@ -17,6 +17,8 @@ int main ( void )
 {
     List<int> l1;
 
+    cout << "start" << endl;
+
     l1.append(1);
     l1.append(2);
     l1.append(3);
@@ -60,32 +62,10 @@ int main ( void )
     cout << "l6 = " << l6 << endl;
     cout << "l7 = " << l7 << endl;
 
-
-    List<int> test;
-    test.append(1);
-    test.append(2);
-    test.insert(3,2);
-    test.remove(1);
-    test.insert(4,1);
-    test[2] = 2;
-
-    test = l1 + test;
-
-    cout << "Test = " << test << endl; 
-    cout << "Test size = " << test.length() << endl; 
-
-
-    List<char> test2;
-
-    test2.append('a');
-    test2.append('b');
-    test2.insert('c',2);
-    test2.remove(0);
-    cout << "Test2 = " << test2 << endl;
-    cout << "Test2 size = " << test2.length() << endl;
-
-
-
+    cout << "l1 = " << l1 << endl;
+    l1.clear();
+    l1.insert(9,0);
+    cout << "l1 = " << l1 << endl;
 
 
     return 0;
