@@ -21,16 +21,17 @@ private:
 	{
 		T	item;
 		Node 	*next;
+		Node  	*prev;
 	};
 	
 	Node	*head;		// the pointer for the linked list
+	Node	*tail;
 	
 public:
 		List		( void );
 		List		( const List<T> &mylist );
 		~List		( void );
 List<T>	operator=	( const List<T> &mylist );
-string		to_string	( void ) const;	
 void		prepend	( const T &item);
 void		append		( const T &item );
 T &		operator[]	( int index );
@@ -58,6 +59,8 @@ friend ostream & operator<< ( ostream &os, List<T> &mylist )
 	os << "]";
 	return os;	
 }
+
+
 
 
 };

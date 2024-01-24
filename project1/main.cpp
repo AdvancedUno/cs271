@@ -56,7 +56,10 @@ int main ( void )
     for ( char c = 'h'; c <= 'z'; c++ )
         l5.append(c);
     List<char> l7 = l5;
+    
     l5.remove(19);
+
+    
 
     cout << "l5 = " << l5 << endl;
     cout << "l6 = " << l6 << endl;
@@ -65,7 +68,11 @@ int main ( void )
     cout << "l1 = " << l1 << endl;
     l1.clear();
     l1.insert(9,0);
+    l1.append(10);
+    l1.prepend(2);
+    l1.prepend(1);
     cout << "l1 = " << l1 << endl;
+    cout << "l1 back =" << l1 << endl;
 
 
     return 0;
