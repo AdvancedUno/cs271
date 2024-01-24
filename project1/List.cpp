@@ -19,6 +19,8 @@ template <class T>
 List<T>::List( void ){
 
     head = NULL;
+    tail = NULL;
+    size = 0;
 
 }
 
@@ -35,25 +37,25 @@ List<T>::List( const List<T> &mylist ){
 
     if (mylist.head == NULL) {
         head = NULL;
+        tail = NULL;
         return;
     } 
     
     head = new Node;
-    head->next = NULL;
+    head->item = mylist.head->data;
     Node* ptr = head;
-    Node* qtr = mylist.head;
-
-    ptr->item = qtr->item;
-    qtr = qtr ->next;
-
+    Node* qtr = mylist.head->next;
+    
     while (qtr != NULL) {
         ptr->next = new Node;
+        ptr->next->item = qtr->item;
+        
         ptr = ptr->next;
-        ptr->item = qtr->item;
         qtr = qtr->next;
     }
 
-    ptr->next = NULL;
+    tail = ptr;
+    size = mylist.size;
 
 }
 
@@ -89,25 +91,25 @@ List<T> List<T>::operator= ( const List<T> &mylist ){
 
     if (mylist.head == NULL) {
         head = NULL;
+        tail = NULL
         return *this;
     } 
 
     head = new Node;
-    head->next = NULL;
+    head->item = mylist.head->data;
     Node* ptr = head;
-    Node* qtr = mylist.head;
-
-    ptr->item = qtr->item;
-    qtr = qtr ->next;
-
+    Node* qtr = mylist.head->next;
+    
     while (qtr != NULL) {
         ptr->next = new Node;
+        ptr->next->item = qtr->item;
+        
         ptr = ptr->next;
-        ptr->item = qtr->item;
         qtr = qtr->next;
     }
 
-    ptr->next = NULL;
+    tail = ptr;
+    size = mylist.size;
 
     return *this;
 
@@ -136,21 +138,49 @@ string List<T>::to_string	( void ) const{
 template <class T> 
 void	List<T>::append( const T &item	){
 
-    Node* newNode = new Node;
-    newNode->item = item;
-    newNode->next = NULL;
+    Node* ptr = new Node;
+    ptr->item = item;
+    ptr->next = NULL;
 
-    if(head == NULL){
-        head = newNode;
-        return;
+    if(head == NULL)
+    {
+        head = ptr;
+        tail = ptr;
     }
-
-    Node *qtr = head;
-
-    while(qtr->next != NULL){
-        qtr = qtr->next;
+    else
+    {
+    	tail->next = ptr;
+    	ptr->prev = tail;
+    	tail = ptr;
     }
-    qtr->next = newNode;
+    size++;
+    
+}
+
+//==============================================
+// prepend (const T &item)
+// Prepends a new item onto the front of the list.
+// INPUT: const T &item
+// RETURN: none
+//==============================================
+template <class T> 
+void	List<T>::prepend( const T &item	){
+
+    Node* ptr = new Node;
+    ptr->item = item;
+    ptr->next = NULL;
+    if (head == NULL)
+    {
+    	head = tail;
+    	head = ptr;
+    }
+    else
+    {
+    	ptr->next = head;
+    	head->prev = ptr;
+    	head = ptr;
+    }
+    size++;
 }
 
 //==============================================
