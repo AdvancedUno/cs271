@@ -2,7 +2,7 @@
 // List.cpp
 // List with Linked List Structure with method implementations
 // Name: EunHo Lee
-// Date: 27 Nov 2023
+// Date: 22 Jan 2024
 //===============================
 
 
@@ -33,28 +33,43 @@ List<T>::List( void ){
 template <class T> 
 List<T>::List( const List<T> &mylist ){
     
-
+    head = NULL;
+    tail = NULL;
     if (mylist.head == NULL) {
-        head = NULL;
-        tail = NULL;
+        // If the input list is empty, return
         return;
     } 
     
-    head = new Node;
-    head->item = mylist.head->data;
-    Node* ptr = head;
-    Node* qtr = mylist.head->next;
+    // allocate memory for head and initialize
+    Node* newNode = new Node;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+
+ 
+    head = newNode;
     
+    Node* qtr = mylist.head;
+    newNode->item = qtr->item;
+    qtr = qtr ->next;
+
+    Node* ptr = newNode;
+
+    // copy the Node until the end
     while (qtr != NULL) {
-        ptr->next = new Node;
-        ptr->next->item = qtr->item;
-        
-        ptr = ptr->next;
+        newNode = new Node;
+        newNode->item = qtr->item;
+        newNode->next = NULL;
+        newNode->prev = ptr; // make new node prev point to the ptr node
+        ptr->next = newNode;
+        ptr = newNode;
         qtr = qtr->next;
     }
-
+    
+    // set the last node -> next as NULL
+    ptr->next = NULL;
+    
+    // set the tail node to the last node pointer
     tail = ptr;
-    size = mylist.size;
 
 }
 
@@ -69,6 +84,7 @@ List<T>::List( const List<T> &mylist ){
 template <class T> 
 List<T>::~List	( void ){
 
+    // Call clear function for destruction
     clear();
 
 
@@ -84,31 +100,46 @@ List<T>::~List	( void ){
 template <class T> 
 List<T> List<T>::operator= ( const List<T> &mylist ){
 
-
-
+    // clear the existing list before assign new value for the new list
     clear();
+    
+    head = NULL;
+    tail = NULL;
 
+    // if the input list is empty, return
     if (mylist.head == NULL) {
-        head = NULL;
-        tail = NULL
         return *this;
     } 
 
+    // allocate memory for head and initialize
     head = new Node;
-    head->item = mylist.head->data;
+    head->next = NULL;
+    head->prev = NULL;
+
+    // locate the head of both list
     Node* ptr = head;
-    Node* qtr = mylist.head->next;
-    
+    Node* qtr = mylist.head;
+   
+
+    ptr->item = qtr->item;
+    ptr->prev = NULL;
+    qtr = qtr ->next;
+
+
+    // copy the Node until the end
     while (qtr != NULL) {
         ptr->next = new Node;
-        ptr->next->item = qtr->item;
-        
+        ptr->next->prev = ptr; // make new node prev point to the ptr node
         ptr = ptr->next;
+        ptr->item = qtr->item;
         qtr = qtr->next;
     }
-
+    
+    // set the last node -> next as NULL
+    ptr->next = NULL;
+    
+    // set the tail node to the last node pointer
     tail = ptr;
-    size = mylist.size;
 
     return *this;
 
@@ -125,48 +156,59 @@ List<T> List<T>::operator= ( const List<T> &mylist ){
 template <class T> 
 void	List<T>::append( const T &item	){
 
-    Node* ptr = new Node;
-    ptr->item = item;
-    ptr->next = NULL;
-    ptr->prev = NULL;
+    Node* newNode = new Node;
+    newNode->item = item;
+    newNode->next = NULL;
+    newNode->prev = NULL;
 
-    if(head == NULL)
-    {
-        head = ptr;
-        tail = ptr;
+    //if there is no element in the list then assign new node to the head and tail and return
+    if(head == NULL){
+        head = newNode;
+        tail = newNode;
         return;
     }
-    tail->next = ptr;
-    ptr->prev = tail;
-    tail = ptr;
-    
+
+    // append newNode to the tail
+    Node *qtr = tail;
+    qtr->next = newNode;
+    newNode->prev =qtr;
+
+    // update tail node
+    tail = newNode;
 }
+
+
 
 //==============================================
 // prepend (const T &item)
-// Prepends a new item onto the front of the list.
+// prepend a new item onto the front of the list.
 // INPUT: const T &item
 // RETURN: none
 //==============================================
 template <class T> 
 void	List<T>::prepend( const T &item	){
 
-    Node* ptr = new Node;
-    ptr->item = item;
-    ptr->next = NULL;
-    ptr->prev = NULL;
-    
-    if (head == NULL)
-    {
-    	head = tail;
-    	head = ptr;
-    	return;
+    // create newNode instance
+    Node* newNode = new Node;
+    newNode->item = item;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+
+    //if there is no element in the list then assign new node to the head and tail and return
+    if(head == NULL){
+        head = newNode;
+        tail = newNode;
+        return;
     }
-    ptr->next = head;
-    head->prev = ptr;
-    head = ptr;
-    
+
+    // append newNode to the front
+    newNode->next = head;
+    head->prev = newNode;
+    head = newNode;
 }
+
+
+
 
 //==============================================
 // operator[](int index)
@@ -178,8 +220,8 @@ template <class T>
 T &		List<T>::	operator[]	( int index ){
 
     if(index < 0 || index > length() -1){
-        cout << "Invalid position" << endl;
-        exit(0);
+        cout << "Out of range" << endl;
+        throw std::out_of_range("List<T>::operator[] : index is out of range");
     }
 
     Node *qtr = head;
@@ -196,23 +238,6 @@ T &		List<T>::	operator[]	( int index ){
 
 }
 
-template <typename T>
-int List<T>::search(const T& item) const{
-	Node* ptr = head
-	int index = 0;
-	
-	while (ptr != NULL) 
-	{
-		if (ptr->item == item)
-		{
-			return index;
-		}
-		ptr = ptr->next;
-		index++;
-	}
-	return -1;
-}
-
 //==============================================
 // insert(const T &item, int index)
 // Inserts a new value at the specified position.
@@ -224,7 +249,6 @@ void List<T>::insert(const T &item, int index ){
 
     if(index < 0 || index > length()){
         cout << "Invalid position" << endl;
-        exit(0);
         throw std::out_of_range("List<T>::insert(const T &item, int index ) : index is out of range");
 
     }
@@ -245,11 +269,6 @@ void List<T>::insert(const T &item, int index ){
     newNode->prev = NULL;
 
 
-    if (index == 0) {
-        newNode->next = head;
-        head = newNode;
-        return;
-    }
 
     Node *qtr = head;
     while(index > 1){
@@ -276,10 +295,8 @@ void List<T>::insert(const T &item, int index ){
 template <class T> 
 void	List<T>::	remove		( int index ){
 
-
     if(index < 0 || index > length()-1){
         cout << "Invalid position" << endl;
-        exit(0);
         throw std::out_of_range("List<T>::remove( int index ) : index is out of range");
     }
 
@@ -292,6 +309,7 @@ void	List<T>::	remove		( int index ){
         delete temp;
         return;
     }
+
     Node *qtr = head;
     while(index > 1){
         index--;  
@@ -308,19 +326,17 @@ void	List<T>::	remove		( int index ){
 
 }
 
-
 //==============================================
-// concat(const List<T> &mylist )
-// concat two existing lists to return the newly created list.
+// operator+(const List<T> &mylist )
+// Concatenates two lists into a new list.
 // INPUT: const List<T> &mylist
 // RETURN: List<T>
 //==============================================
 template <class T> 
-List<T>	List<T>::concat( const List<T> &mylist ) const{
+List<T>	List<T>::operator+( const List<T> &mylist ) const{
 
-    //create newly created list for return
+
     List<T> resultList;
-
     Node* ptr = head;
 
     while (ptr != NULL) {
@@ -334,7 +350,7 @@ List<T>	List<T>::concat( const List<T> &mylist ) const{
         qtr = qtr->next;
     }
 
-
+    
 
     return resultList;
 }
@@ -454,6 +470,7 @@ List<T>	List<T>::concat( const List<T> &mylist ) const{
 template <class T> 
 void	List<T>::	clear		( void ){
 
+
     Node* ptr;
 
     // clear all the dynamically allocated memeory to the list nodes
@@ -466,9 +483,6 @@ void	List<T>::	clear		( void ){
     // set the tail to NULL
     tail = NULL;
 
-
-
-}
 
 
 }
