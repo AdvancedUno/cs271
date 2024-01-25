@@ -39,39 +39,15 @@ List<T>::List( const List<T> &mylist ){
         // If the input list is empty, return
         return;
     } 
+
+    Node * qtr = mylist.head;
     
-    // allocate memory for head and initialize
-    Node* newNode = new Node;
-    newNode->next = NULL;
-    newNode->prev = NULL;
-
-    // make head point to the first node that is created
-    head = newNode;
-    
-    // point to input list head
-    Node* qtr = mylist.head;
-    newNode->item = qtr->item;
-    qtr = qtr ->next;
-
-    Node* ptr = newNode;
-
     // copy the Node until the end
     while (qtr != NULL) {
-        newNode = new Node;
-        newNode->item = qtr->item;
-        newNode->next = NULL;
-        newNode->prev = ptr; // make new node prev point to the ptr node
-        ptr->next = newNode;
-        ptr = newNode;
+        append(qtr->item);
         qtr = qtr->next;
     }
     
-    // set the last node -> next as NULL
-    ptr->next = NULL;
-    
-    // set the tail node to the last node pointer
-    tail = ptr;
-
 }
 
 
@@ -112,35 +88,12 @@ List<T> List<T>::operator= ( const List<T> &mylist ){
         return *this;
     } 
 
-    // allocate memory for head and initialize
-    head = new Node;
-    head->next = NULL;
-    head->prev = NULL;
-
-    // locate the head of both list
-    Node* ptr = head;
-    Node* qtr = mylist.head;
-   
-    // assign value to the first node of the list
-    ptr->item = qtr->item;
-    ptr->prev = NULL; // because it is a first node, prev should be null
-    qtr = qtr ->next;
-
-
-    // copy the Node until the end
+    Node * qtr = mylist.head;
     while (qtr != NULL) {
-        ptr->next = new Node;
-        ptr->next->prev = ptr; // make new node prev point to the ptr node
-        ptr = ptr->next;
-        ptr->item = qtr->item;
+        append(qtr->item);
         qtr = qtr->next;
     }
     
-    // set the last node -> next as NULL
-    ptr->next = NULL;
-    
-    // set the tail node to the last node pointer
-    tail = ptr;
 
     return *this;
 
@@ -273,8 +226,6 @@ void List<T>::insert(const T &item, int index ){
     newNode->item = item;
     newNode->next = NULL;
     newNode->prev = NULL;
-
-
 
     Node *qtr = head;
     // loop to the index where to insert
@@ -458,7 +409,7 @@ List<T>	List<T>::concat( const List<T> &mylist ) const{
     }
 
     // start appending second list
-    Node* qtr = mylist.;
+    Node* qtr = mylist.head;
     while (qtr != NULL) {
         resultList.append(qtr->item);
         qtr = qtr->next;
