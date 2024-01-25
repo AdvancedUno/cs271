@@ -9,6 +9,8 @@
 using namespace std;
 #include "List.h"
 
+
+
 //==============================================================
 // main
 //==============================================================
@@ -37,7 +39,8 @@ int main ( void )
     cout << "l1 = " << l1 << endl;
     cout << "l1.length() = " << l1.length() << endl;
 
-    l3 = l2 + l1;
+    l3 = l2.concat(l1);
+    cout << l2 << endl;
     cout << "l3 = l2 + l1 = " << l3 << endl;
     cout << "l3.length() = " << l3.length() << endl;
 
@@ -72,13 +75,46 @@ int main ( void )
     l1.prepend(2);
     l1.prepend(1);
     cout << "l1 = " << l1 << endl;
-    cout << "l1 back =" << l1 << endl;
+    cout << "l1 back =" <<endl;
+    l1.backward(l1); 
 
 
 
     l1.remove(0);
-    l1.append(2);
+    l1.append(-2);
     cout << "l1 = " << l1 << endl;
+    cout << "search of l1: " << l1.search(-2) << endl;
+    cout << "l1 = " << l1 << endl;
+    
+    cout << l1.search(1) << endl;
+    //l1.search(834);
+    l1.search(0);
+    cout << l1.search(-230) << endl;
+    
+    cout << "Appending for L3" << endl;
+    l3.append(7);
+    cout << l3 << endl;
+    l3.prepend(-10);
+    cout << l3 << endl << endl;
+    
+    cout << "l3 back =" <<endl;
+    l3.backward(l3); 
+    
+    l3.insert(0, 0);
+    cout << l3 << endl << endl;
+    
+    l3.insert(20, 4);
+    cout << l3 << endl << endl;
+    cout << "l3 back =" <<endl;
+    l3.backward(l3); 
+    
+    cout << endl;
+    l3.remove(0);
+     cout << l3 << endl << endl;
+    cout << "l3 back =" <<endl;
+    l3.backward(l3); 
+    
+    
 
 
 
