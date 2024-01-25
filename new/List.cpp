@@ -45,9 +45,10 @@ List<T>::List( const List<T> &mylist ){
     newNode->next = NULL;
     newNode->prev = NULL;
 
- 
+    // make head point to the first node that is created
     head = newNode;
     
+    // point to input list head
     Node* qtr = mylist.head;
     newNode->item = qtr->item;
     qtr = qtr ->next;
@@ -120,9 +121,9 @@ List<T> List<T>::operator= ( const List<T> &mylist ){
     Node* ptr = head;
     Node* qtr = mylist.head;
    
-
+    // assign value to the first node of the list
     ptr->item = qtr->item;
-    ptr->prev = NULL;
+    ptr->prev = NULL; // because it is a first node, prev should be null
     qtr = qtr ->next;
 
 
@@ -219,6 +220,7 @@ void	List<T>::prepend( const T &item	){
 template <class T> 
 T &		List<T>::	operator[]	( int index ){
 
+    // Throw erre if out of range
     if(index < 0 || index > length() -1){
         cout << "Out of range" << endl;
         throw std::out_of_range("List<T>::operator[] : index is out of range");
@@ -247,22 +249,26 @@ T &		List<T>::	operator[]	( int index ){
 template <class T> 
 void List<T>::insert(const T &item, int index ){
 
+    // throw error if it is out of range
     if(index < 0 || index > length()){
         cout << "Invalid position" << endl;
         throw std::out_of_range("List<T>::insert(const T &item, int index ) : index is out of range");
 
     }
 
+    // if it is inserting to the head, then just prepend
     if (index == 0) {
         prepend(item);
         return;
     }
 
+    // if it is end, jsut call append
     if(index == length()){
         append(item);
         return;
     }
 
+    // create new node for the insert
     Node *newNode = new Node;
     newNode->item = item;
     newNode->next = NULL;
@@ -271,11 +277,13 @@ void List<T>::insert(const T &item, int index ){
 
 
     Node *qtr = head;
+    // loop to the index where to insert
     while(index > 1){
         index--;  
         qtr = qtr->next;
     }
 
+    // insert the new node
     newNode->next = qtr->next;
     newNode->prev = qtr;
     if(qtr->next !=NULL){
@@ -302,6 +310,7 @@ void	List<T>::	remove		( int index ){
 
     Node* temp; 
 
+    // if we try to delete the first node of the list 
     if (index == 0) {
         temp = head;
         head = head->next;
@@ -310,7 +319,9 @@ void	List<T>::	remove		( int index ){
         return;
     }
 
+    
     Node *qtr = head;
+    // loop to the node we try to delete (need to be the node that points to the node we are trying to delete)
     while(index > 1){
         index--;  
         qtr = qtr->next;
@@ -336,6 +347,7 @@ template <class T>
 List<T>	List<T>::operator+( const List<T> &mylist ) const{
 
 
+    // same as Concat
     List<T> resultList;
     Node* ptr = head;
 
@@ -367,7 +379,8 @@ int		List<T>::	length		( void ) const{
 
     int cnt = 0;
     Node *qtr = head;
-
+    
+    // loop until it reach to the end of the list
     while(qtr != NULL){
         qtr = qtr->next;
         cnt ++;
@@ -393,12 +406,13 @@ int		List<T>::	search		( const T &item ) const{
 
     Node *qtr = head;
 
+    // loop till the end of the list
     while(qtr != NULL){
         index++;
         if(qtr->item == item){ // If the item is found, return the index
             return index;
         }
-        qtr = qtr->next;
+        qtr = qtr->next; // move the next node
     }
 
     return -1;
@@ -416,7 +430,7 @@ int		List<T>::	search		( const T &item ) const{
 template <class T> 
 bool	List<T>::	isEmpty		( void ) const{
 
-    return head == NULL;
+    return head == NULL; // check the head is pointing to null, if so then the list is empty
 
 
 }
@@ -437,23 +451,21 @@ List<T>	List<T>::concat( const List<T> &mylist ) const{
 
     Node* ptr = head;
 
+    // start appending first list
     while (ptr != NULL) {
         resultList.append(ptr->item);
         ptr = ptr->next;
     }
 
-    Node* qtr = mylist.head;
+    // start appending second list
+    Node* qtr = mylist.;
     while (qtr != NULL) {
         resultList.append(qtr->item);
         qtr = qtr->next;
     }
 
+    // tail should be pointing to the last node memory address
 
-
-    
-
-
-    
 
     return resultList;
 }
