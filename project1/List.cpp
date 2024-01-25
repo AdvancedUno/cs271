@@ -20,7 +20,6 @@ List<T>::List( void ){
 
     head = NULL;
     tail = NULL;
-    size = 0;
 
 }
 
@@ -116,18 +115,6 @@ List<T> List<T>::operator= ( const List<T> &mylist ){
 }
 
 
-//==============================================
-// to_string( void )
-// create string
-// INPUT: none
-// RETURN: string
-//==============================================
-template <class T> 
-string List<T>::to_string	( void ) const{
-
-    return "I have no idea";
-}
-
 
 //==============================================
 // append (const T &item)
@@ -141,19 +128,17 @@ void	List<T>::append( const T &item	){
     Node* ptr = new Node;
     ptr->item = item;
     ptr->next = NULL;
+    ptr->prev = NULL;
 
     if(head == NULL)
     {
         head = ptr;
         tail = ptr;
+        return;
     }
-    else
-    {
-    	tail->next = ptr;
-    	ptr->prev = tail;
-    	tail = ptr;
-    }
-    size++;
+    tail->next = ptr;
+    ptr->prev = tail;
+    tail = ptr;
     
 }
 
@@ -169,18 +154,18 @@ void	List<T>::prepend( const T &item	){
     Node* ptr = new Node;
     ptr->item = item;
     ptr->next = NULL;
+    ptr->prev = NULL;
+    
     if (head == NULL)
     {
     	head = tail;
     	head = ptr;
+    	return;
     }
-    else
-    {
-    	ptr->next = head;
-    	head->prev = ptr;
-    	head = ptr;
-    }
-    size++;
+    ptr->next = head;
+    head->prev = ptr;
+    head = ptr;
+    
 }
 
 //==============================================
@@ -211,6 +196,23 @@ T &		List<T>::	operator[]	( int index ){
 
 }
 
+template <typename T>
+int List<T>::search(const T& item) const{
+	Node* ptr = head
+	int index = 0;
+	
+	while (ptr != NULL) 
+	{
+		if (ptr->item == item)
+		{
+			return index;
+		}
+		ptr = ptr->next;
+		index++;
+	}
+	return -1;
+}
+
 //==============================================
 // insert(const T &item, int index)
 // Inserts a new value at the specified position.
@@ -223,12 +225,26 @@ void List<T>::insert(const T &item, int index ){
     if(index < 0 || index > length()){
         cout << "Invalid position" << endl;
         exit(0);
+        throw std::out_of_range("List<T>::insert(const T &item, int index ) : index is out of range");
+
+    }
+
+    if (index == 0) {
+        prepend(item);
+        return;
+    }
+
+    if(index == length()){
+        append(item);
+        return;
     }
 
 
     Node *newNode = new Node;
     newNode->item = item;
     newNode->next = NULL;
+    newNode->prev = NULL;
+
 
     if (index == 0) {
         newNode->next = head;
@@ -243,6 +259,11 @@ void List<T>::insert(const T &item, int index ){
     }
 
     newNode->next = qtr->next;
+    newNode->prev = qtr;
+    if(qtr->next !=NULL){
+        qtr->next->prev = newNode;
+    }
+
     qtr->next = newNode;
 
 }
@@ -260,6 +281,7 @@ void	List<T>::	remove		( int index ){
     if(index < 0 || index > length()-1){
         cout << "Invalid position" << endl;
         exit(0);
+        throw std::out_of_range("List<T>::remove( int index ) : index is out of range");
     }
 
     Node* temp; 
@@ -267,10 +289,10 @@ void	List<T>::	remove		( int index ){
     if (index == 0) {
         temp = head;
         head = head->next;
+        head->prev = NULL;
         delete temp;
         return;
     }
-
     Node *qtr = head;
     while(index > 1){
         index--;  
@@ -279,21 +301,27 @@ void	List<T>::	remove		( int index ){
 
     temp = qtr->next;
     qtr->next = temp->next;
+    if(temp->next != NULL){
+        temp->next->prev = qtr;
+    }
+
     delete temp;
 
 }
 
+
 //==============================================
-// operator+(const List<T> &mylist )
-// Concatenates two lists into a new list.
+// concat(const List<T> &mylist )
+// concat two existing lists to return the newly created list.
 // INPUT: const List<T> &mylist
 // RETURN: List<T>
 //==============================================
 template <class T> 
-List<T>	List<T>::operator+( const List<T> &mylist ) const{
+List<T>	List<T>::concat( const List<T> &mylist ) const{
 
-
+    //create newly created list for return
     List<T> resultList;
+
     Node* ptr = head;
 
     while (ptr != NULL) {
@@ -307,7 +335,7 @@ List<T>	List<T>::operator+( const List<T> &mylist ) const{
         qtr = qtr->next;
     }
 
-    
+
 
     return resultList;
 }
@@ -360,14 +388,21 @@ bool	List<T>::	isEmpty		( void ) const{
 template <class T> 
 void	List<T>::	clear		( void ){
 
-
     Node* ptr;
 
+    // clear all the dynamically allocated memeory to the list nodes
     while(head != NULL){
         ptr = head;
         head = head->next;
         delete ptr;
     }
+
+    // set the tail to NULL
+    tail = NULL;
+
+
+
+}
 
 
 }
