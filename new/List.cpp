@@ -458,7 +458,7 @@ List<T>	List<T>::concat( const List<T> &mylist ) const{
     }
 
     // start appending second list
-    Node* qtr = mylist.;
+    Node* qtr = mylist.head;
     while (qtr != NULL) {
         resultList.append(qtr->item);
         qtr = qtr->next;

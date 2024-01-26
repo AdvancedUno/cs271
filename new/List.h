@@ -62,22 +62,6 @@ friend ostream & operator<< ( ostream &os, List<T> &mylist )
 
 
 
-void backward (List<T> mylist )
-{
-	Node *ptr = mylist.tail;
-	cout << "[ ";
-	while ( ptr != NULL )
-	{
-		if ( ptr->prev != NULL )
-			cout << ptr->item << ", ";
-		else
-			cout << ptr->item << " ";
-		ptr = ptr->prev;
-	}
-	cout << "]" << endl;
-	
-}
-
 
 
 };

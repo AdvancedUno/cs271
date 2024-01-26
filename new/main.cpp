@@ -75,8 +75,6 @@ int main ( void )
     l1.prepend(2);
     l1.prepend(1);
     cout << "l1 = " << l1 << endl;
-    cout << "l1 back =" <<endl;
-    l1.backward(l1); 
 
 
 
@@ -97,22 +95,16 @@ int main ( void )
     l3.prepend(-10);
     cout << l3 << endl << endl;
     
-    cout << "l3 back =" <<endl;
-    l3.backward(l3); 
     
     l3.insert(0, 0);
     cout << l3 << endl << endl;
     
     l3.insert(20, 4);
     cout << l3 << endl << endl;
-    cout << "l3 back =" <<endl;
-    l3.backward(l3); 
     
     cout << endl;
     l3.remove(0);
      cout << l3 << endl << endl;
-    cout << "l3 back =" <<endl;
-    l3.backward(l3); 
     
     
 
