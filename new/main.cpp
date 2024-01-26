@@ -71,6 +71,7 @@ int main ( void )
 
     cout << "l1 = " << l1 << endl;
  
+    cout << "Inserting 9 at 0 pos" << endl;
     l1.insert(9,0);
     l1.append(10);
     l1.prepend(2);
@@ -116,7 +117,7 @@ int main ( void )
    cout << "length = " << l1.length() << endl;
 
 
-    List<int> t1,t2,t3;
+    List<int> t1,t2;
 
     for(int i = 0; i < 10 ;i ++){
         t1.insert(i,i);
@@ -149,6 +150,11 @@ int main ( void )
     cout << "temp " << temp << endl;
 
     cout << "t2 = " << t2 << endl;
+    
+    List<int> t3(t2);
+    
+    cout << "t3 = " << t3 << endl;
+    
 
     while(t2.length() > 1){
         t2.remove(0);
@@ -162,7 +168,32 @@ int main ( void )
     cout << "t1= " << t1<< endl;
 
     cout << t1.search(-1) << endl;
+    
+    while(t3.search(0) != -1){
+    
+    	t3.remove(t3.search(0));
+    
+    }
 
+    while(t3.search(-1) != -1){
+    
+    	t3.remove(t3.search(-1));
+    
+    }
+
+    cout << "t3 = " << t3 << endl;
+    
+    
+     for(int i = 0; i < 3; i ++){
+        t3.remove(t3.length()-1);
+    }
+    cout << "t3 = " << t3 << endl;
+    
+    
+    for(int i = 0; i < 3; i ++){
+        t3.insert(-1, t3.length());
+    }
+        cout << "t3 = " << t3 << endl;
     
 
 

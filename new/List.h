@@ -1,7 +1,8 @@
 //========================================================
 // Matt Kretchmar
-// November 2023
+// January 2024
 // List.h
+// Name: EunHo Lee, Ashwin Krishnamurthy 
 // This file contains the List class declaration.  
 //========================================================
 
@@ -29,23 +30,23 @@ private:
 	void	clear		(void );
 	
 public:
-		List		( void );
-		List		( const List<T> &mylist );
-		~List		( void );
-List<T>	operator=	( const List<T> &mylist );
-void	prepend		( const T &item);
+	List		( void );
+	List		( const List<T> &mylist );
+	~List		( void );
+List<T> operator=	( const List<T> &mylist );
+void	prepend	( const T &item);
 void	append		( const T &item );
-T &		operator[]	( int index );
+T &	operator[]	( int index );
 void	insert		( const T &item, int index );
 void	remove		( int index );
-int		search		( const T &item ) const;
-int		length		( void ) const;
-bool	empty	( void ) const;
-List<T>	concat		( const List<T> &list ) const;
+int	search		( const T &item ) const;
+int	length		( void ) const;
+bool	empty		( void ) const;
+List<T> concat		( const List<T> &list ) const;
 
 friend ostream & operator<< ( ostream &os, List<T> &mylist )
 {
-	Node *ptr = mylist.main;
+	Node *ptr = mylist.head;
 	os << "[ ";
 	while ( ptr != NULL )
 	{

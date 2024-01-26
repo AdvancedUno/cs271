@@ -1,7 +1,7 @@
 //===============================
 // List.cpp
 // List with Linked List Structure with method implementations
-// Name: EunHo Lee Aswin 
+// Name: EunHo Lee, Ashwin Krishnamurthy 
 // Date: 27 Jan 2024
 //===============================
 
@@ -61,6 +61,7 @@ List<T>::List( const List<T> &mylist ){
 template <class T> 
 List<T>::~List	( void ){
 
+	clear();
     // Call clear function for destruction
     Node* ptr;
 
