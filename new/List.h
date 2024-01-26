@@ -26,27 +26,26 @@ private:
 	
 	Node	*head;		// the pointer for the linked list
 	Node	*tail;
+	void	clear		(void );
 	
 public:
 		List		( void );
 		List		( const List<T> &mylist );
 		~List		( void );
 List<T>	operator=	( const List<T> &mylist );
-void		prepend	( const T &item);
-void		append		( const T &item );
+void	prepend		( const T &item);
+void	append		( const T &item );
 T &		operator[]	( int index );
-void		insert		( const T &item, int index );
-void		remove		( int index );
+void	insert		( const T &item, int index );
+void	remove		( int index );
 int		search		( const T &item ) const;
-List<T>	operator+	( const List<T> &mylist ) const;
 int		length		( void ) const;
-bool		isEmpty	( void ) const;
-void		clear		( void );
+bool	empty	( void ) const;
 List<T>	concat		( const List<T> &list ) const;
 
 friend ostream & operator<< ( ostream &os, List<T> &mylist )
 {
-	Node *ptr = mylist.head;
+	Node *ptr = mylist.main;
 	os << "[ ";
 	while ( ptr != NULL )
 	{
