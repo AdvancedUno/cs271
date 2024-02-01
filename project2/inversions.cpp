@@ -16,6 +16,8 @@ using namespace std;
 //=============================================================
 // Funtion Declaration
 int InversionMerge(int arr[], int size);
+int Merge(int arr[], int p, int q, int r);
+int MergeSort(int arr[], int p, int r);
 int InversionForLoop(int arr[], int size);
 void RunTestCases(int);
 void CheckInversion(int arr[], int size, int index, int ans);
@@ -33,8 +35,12 @@ typedef struct TestCase{
 
 // Creating test cases manually just in case of tricky one
 vector<TestCase> test_cases = {
-    {{1,2,3}, 3,0},
-    {{22,23,4},3,0},
+    {{3,2,1}, 3,3},
+    {{22,23,4},3,2},
+    {{},0,0},
+    {{1},1,0},
+    {{8289, 9588, 137, 1175, 7751, 8550, 1516, 9951, 4013, 3464},10, 22}
+
 }; 
 
 
@@ -51,8 +57,11 @@ int main ( int argc, char *argv [])
     int n;
     if ( argc > 1 )
         n = atoi(argv[1]);
-    else
+    else{
         n = 10;
+        srand(time(0)); 
+    }
+
     
     // initialize array
     int arr[n];
@@ -61,10 +70,24 @@ int main ( int argc, char *argv [])
     }
 
 
-    InversionForLoop(arr, n);
-    InversionMerge(arr, n);
 
-    RunTestCases(10);
+    if(n <= 20){
+        PrintArray(arr, n);
+    }
+    
+
+    InversionForLoop(arr, n);
+    try{
+    
+        InversionMerge(arr, n);
+    }catch(std::exception& e){
+        cout << "error : " << e.what() << endl;
+    }
+
+    cout << endl;
+    cout << "---------------------Start Test-------------------------\n" << endl;
+
+    RunTestCases(1000);
 
 }
 
@@ -81,9 +104,7 @@ int InversionForLoop(int arr[], int size){
     start = std::clock();
     
     int count_inv_total = 0;
-
-
-    for(int i = 0; i < size; i ++){
+    for(int i = 0; i < size-1; i ++){
         for(int j = i+1; j <size; j ++){
             if(arr[i] > arr[j]){
                 count_inv_total += 1;
@@ -110,39 +131,100 @@ int InversionMerge(int arr[], int size){
     start = std::clock();
     int count_inv_total = 0;
 
-
-
-
-
+    count_inv_total = MergeSort(arr, 0, size-1);
 
     stop = std::clock();
     std::cout << "count2:" << std::setw(20) << count_inv_total <<  std::setw(20) << (stop - start) / (double)(CLOCKS_PER_SEC / 1000)
     << " ms" << std::endl;
-    return 0;
+    return count_inv_total;
 }
 
-void Merge(int arr[], int size, int p, int q, int r){
 
-    int left_num = q-p+1;
-    int right_num = r-q;
 
-    int left_array[left_num];
-    int right_array[right_num];
+int MergeSort(int arr[], int p, int r){
+    if(p>=r)return 0;
 
-    for(int i = 0; i < left_num; i ++){
-        left_array[i] == arr[p+i];
+    int count_inv_total = 0;
+    try{
+        int q = (p+r)/2;
+
+        
+
+        count_inv_total += MergeSort(arr, p, q);
+        count_inv_total += MergeSort(arr, q+1,r);
+        count_inv_total += Merge(arr, p,q,r);
+    }catch(std::exception& e){
+        cout << "error : " << e.what() << endl;
     }
+    
 
-    for(int i = 0; i < right_num; i ++){
-        right_array[i] == arr[q+i+1];
+    return count_inv_total;
+}
+
+
+
+
+
+int Merge(int arr[], int p, int q, int r){
+    int cnt_inversion = 0;
+    try{
+        
+        int left_num = q-p+1, right_num = r-q, prev_count = 0;
+    
+
+        int left_array[left_num];
+        int right_array[right_num];
+
+        for(int i = 0; i < left_num; i ++){
+            left_array[i] = arr[p+i];
+        }
+
+        for(int i = 0; i < right_num; i ++){
+            right_array[i] = arr[q+i+1];
+        }
+
+        int i = 0, j =0, k =p;
+        
+        while(i < left_num && j < right_num){
+
+            if(left_array[i] <= right_array[j]){
+                arr[k] = left_array[i];
+                i ++;
+                cnt_inversion+= prev_count;
+                
+            }else{
+                arr[k] = right_array[j];
+                j++;
+                prev_count++;
+                cnt_inversion+= 1;
+            }
+            k++;
+        }
+
+        cnt_inversion -= prev_count;
+
+        while(i < left_num ){
+            arr[k] = left_array[i];
+            i ++;
+            k++;
+            cnt_inversion+= right_num;
+        }
+
+        while(j < right_num ){
+            arr[k] = right_array[j];
+            j ++;
+            k++;
+        }
+        
+    }catch(std::exception& e){
+        cout << "error : " << e.what() << endl;
+        PrintArray(arr,r-p);
     }
 
     
 
-
-
+    return cnt_inversion;
 }
-
 
 
 
@@ -163,7 +245,9 @@ void RunTestCases(int num_cases){
         }
         CheckInversion(arr,n,i, -1);
     }
+    
 
+    cout << "---------------------- Custom test -------------------------" << endl;
     for(int i = 0; i < test_cases.size(); i ++){
         // get information from the current test case
         int size = test_cases[i].size;
@@ -189,7 +273,7 @@ void CheckInversion(int arr[], int size, int index, int ans){
         cout << "_____________________" << "Test " << index << " ______________________ " << endl;
         string check = "Fail";
         if(ans> 0){
-            if(InversionForLoop(arr, size)  == ans && InversionMerge(arr, size) == ans ){
+            if((InversionForLoop(arr, size)  == ans) && (InversionMerge(arr, size) == ans) ){
                 check = "Pass";
             }
         }else{
@@ -203,9 +287,10 @@ void CheckInversion(int arr[], int size, int index, int ans){
         cout << endl;
 
         if(check == "Fail"){
+            exit(0);
             // if test fail, print the array
             if(size< 20){
-                PrintArray(arr, size);
+                //PrintArray(arr, size);
             }
         }
 }
