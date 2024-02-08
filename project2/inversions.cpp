@@ -39,7 +39,37 @@ vector<TestCase> test_cases = {
     {{22,23,4},3,2},
     {{},0,0},
     {{1},1,0},
-    {{8289, 9588, 137, 1175, 7751, 8550, 1516, 9951, 4013, 3464},10, 22}
+    {{8289, 9588, 137, 1175, 7751, 8550, 1516, 9951, 4013, 3464},10, 22},
+
+    // Edge case: empty array
+    {{}, 0, 0},
+
+    // Edge case: array with one element
+    {{1}, 1, 0},
+
+    // Already sorted array, no inversions
+    {{1, 2, 3, 4, 5}, 5, 0},
+
+    // Array sorted in reverse order, maximum number of inversions
+    {{5, 4, 3, 2, 1}, 5, 10},
+
+    // Array with all elements equal, no inversions
+    {{2, 2, 2, 2, 2}, 5, 0},
+
+    // Random array with multiple inversions
+    {{7, 3, 5, 1, 4, 2, 6}, 7, 12},
+
+    // Random array with no inversions
+    {{10, 20, 30, 40, 50}, 5, 0},
+
+    // Random array with a few inversions
+    {{2, 5, 8, 1, 3, 7, 6, 4}, 8, 8},
+
+    // Large array with random elements
+    {{9, 12, 5, 18, 3, 15, 7, 20, 10}, 9, 13},
+
+    // Large array with all elements equal, no inversions
+    {{8, 8, 8, 8, 8, 8, 8}, 7, 0}
 
 }; 
 
