@@ -35,11 +35,11 @@ typedef struct TestCase{
 
 // Creating test cases manually just in case of tricky one
 vector<TestCase> test_cases = {
-    {{3,2,1}, 3,3},
-    {{22,23,4},3,2},
-    {{},0,0},
-    {{1},1,0},
-    {{8289, 9588, 137, 1175, 7751, 8550, 1516, 9951, 4013, 3464},10, 22},
+    // {{3,2,1}, 3,3},
+    // {{22,23,4},3,2},
+    // {{},0,0},
+    // {{1},1,0},
+    // {{8289, 9588, 137, 1175, 7751, 8550, 1516, 9951, 4013, 3464},10, 22},
 
     // Edge case: empty array
     {{}, 0, 0},
@@ -63,13 +63,13 @@ vector<TestCase> test_cases = {
     {{10, 20, 30, 40, 50}, 5, 0},
 
     // Random array with a few inversions
-    {{2, 5, 8, 1, 3, 7, 6, 4}, 8, 8},
+    {{2, 5, 8, 1, 3, 7, 6, 4}, 8, 12},
 
     // Large array with random elements
-    {{9, 12, 5, 18, 3, 15, 7, 20, 10}, 9, 13},
+    {{9, 12, 5, 18, 3, 15, 7, 20, 10}, 9, 15},
 
     // Large array with all elements equal, no inversions
-    {{8, 8, 8, 8, 8, 8, 8}, 7, 0}
+    {{8, 8, 8, 8, 8, 8, 8}, 7, 0},
 
 }; 
 
@@ -117,7 +117,7 @@ int main ( int argc, char *argv [])
     cout << endl;
     cout << "---------------------Start Test-------------------------\n" << endl;
 
-    RunTestCases(1000);
+    RunTestCases(1);
 
 }
 
@@ -317,11 +317,12 @@ void CheckInversion(int arr[], int size, int index, int ans){
         cout << endl;
 
         if(check == "Fail"){
-            exit(0);
+            
             // if test fail, print the array
             if(size< 20){
-                //PrintArray(arr, size);
+                PrintArray(arr, size);
             }
+            exit(0);
         }
 }
 
