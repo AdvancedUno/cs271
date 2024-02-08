@@ -35,41 +35,37 @@ typedef struct TestCase{
 
 // Creating test cases manually just in case of tricky one
 vector<TestCase> test_cases = {
-    // {{3,2,1}, 3,3},
-    // {{22,23,4},3,2},
-    // {{},0,0},
-    // {{1},1,0},
-    // {{8289, 9588, 137, 1175, 7751, 8550, 1516, 9951, 4013, 3464},10, 22},
-
-    // Edge case: empty array
+    // empty array
     {{}, 0, 0},
 
-    // Edge case: array with one element
+    // array with one element
     {{1}, 1, 0},
 
-    // Already sorted array, no inversions
+    // all elements equal
+    {{8, 8, 8, 8, 8, 8, 8}, 7, 0},
+
+    // sorted array, no inversions
     {{1, 2, 3, 4, 5}, 5, 0},
 
-    // Array sorted in reverse order, maximum number of inversions
+    // sorted in reverse order, maximum number of inversions
     {{5, 4, 3, 2, 1}, 5, 10},
 
-    // Array with all elements equal, no inversions
-    {{2, 2, 2, 2, 2}, 5, 0},
+    // additional tests
+    {{3,2,1}, 3,3},
 
-    // Random array with multiple inversions
-    {{7, 3, 5, 1, 4, 2, 6}, 7, 12},
-
-    // Random array with no inversions
-    {{10, 20, 30, 40, 50}, 5, 0},
-
-    // Random array with a few inversions
-    {{2, 5, 8, 1, 3, 7, 6, 4}, 8, 12},
-
-    // Large array with random elements
     {{9, 12, 5, 18, 3, 15, 7, 20, 10}, 9, 15},
 
-    // Large array with all elements equal, no inversions
-    {{8, 8, 8, 8, 8, 8, 8}, 7, 0},
+    {{22,23,4},3,2},
+    
+    {{8289, 9588, 137, 1175, 7751, 8550, 1516, 9951, 4013, 3464},10, 22},
+
+    {{2, 2, 2, 2, 2}, 5, 0},
+
+    {{7, 3, 5, 1, 4, 2, 6}, 7, 12},
+
+    {{10, 20, 30, 40, 50}, 5, 0},
+
+    {{2, 5, 8, 1, 3, 7, 6, 4}, 8, 12},
 
 }; 
 
@@ -108,7 +104,6 @@ int main ( int argc, char *argv [])
 
     InversionForLoop(arr, n);
     try{
-    
         InversionMerge(arr, n);
     }catch(std::exception& e){
         cout << "error : " << e.what() << endl;
@@ -117,7 +112,7 @@ int main ( int argc, char *argv [])
     cout << endl;
     cout << "---------------------Start Test-------------------------\n" << endl;
 
-    RunTestCases(1);
+    RunTestCases(100);
 
 }
 
@@ -183,6 +178,7 @@ int MergeSort(int arr[], int p, int r){
         count_inv_total += MergeSort(arr, p, q);
         count_inv_total += MergeSort(arr, q+1,r);
         count_inv_total += Merge(arr, p,q,r);
+
     }catch(std::exception& e){
         cout << "error : " << e.what() << endl;
     }
@@ -235,15 +231,13 @@ int Merge(int arr[], int p, int q, int r){
 
         while(i < left_num ){
             arr[k] = left_array[i];
-            i ++;
-            k++;
+            i ++; k++;
             cnt_inversion+= right_num;
         }
 
         while(j < right_num ){
             arr[k] = right_array[j];
-            j ++;
-            k++;
+            j ++; k++;
         }
         
     }catch(std::exception& e){
