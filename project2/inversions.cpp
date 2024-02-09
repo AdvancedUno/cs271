@@ -109,8 +109,7 @@ int main ( int argc, char *argv [])
         cout << "error : " << e.what() << endl;
     }
 
-    cout << endl;
-    cout << "---------------------Start Test-------------------------\n" << endl;
+
 
     RunTestCases(100);
 
@@ -177,9 +176,6 @@ int MergeSort(int arr[], int p, int r){
     int count_inv_total = 0;
     try{
         int q = (p+r)/2;
-
-        
-
         count_inv_total += MergeSort(arr, p, q);
         count_inv_total += MergeSort(arr, q+1,r);
         count_inv_total += Merge(arr, p,q,r);
@@ -270,6 +266,8 @@ int Merge(int arr[], int p, int q, int r){
 // RETURN: None
 //==============================================
 void RunTestCases(int num_cases){
+    cout << endl;
+    cout << "---------------------Start Test-------------------------\n" << endl;
     for(int i = 0; i < num_cases; i ++){
         // generate random array with random size <= 50000 but >0
         int n = rand() % 50001 + 1;
