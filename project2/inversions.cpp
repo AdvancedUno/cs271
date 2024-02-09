@@ -1,7 +1,7 @@
 //===============================
 // inversions.cpp
 // Count the total number of inversion using devide and concour method and for loop
-// Name: EunHo Lee  
+// Name: EunHo Lee, Ashwin   
 // Date: 1 Feb 2024
 //===============================
 
@@ -165,7 +165,12 @@ int InversionMerge(int arr[], int size){
 }
 
 
-
+//==============================================
+// MergeSort(int arr[], int p, int r)
+// Perform Merge Sorting and count the inversion
+// INPUT: int arr[], int p, int r
+// RETURN: int
+//==============================================
 int MergeSort(int arr[], int p, int r){
     if(p>=r)return 0;
 
@@ -190,7 +195,12 @@ int MergeSort(int arr[], int p, int r){
 
 
 
-
+//==============================================
+// Merge(int arr[], int p, int q, int r)
+// Perform Merging and count the inversion
+// INPUT: int arr[], int p, int q, int r
+// RETURN: int
+//==============================================
 int Merge(int arr[], int p, int q, int r){
     int cnt_inversion = 0;
     try{
@@ -320,7 +330,12 @@ void CheckInversion(int arr[], int size, int index, int ans){
         }
 }
 
-
+//==============================================
+// PrintArray(int arr[], int size)
+// Print the array
+// INPUT: int arr[], int size
+// RETURN: None
+//==============================================
 void PrintArray(int arr[], int size){
 
     for(int i = 0; i < size; i ++){
