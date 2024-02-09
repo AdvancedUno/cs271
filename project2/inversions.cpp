@@ -50,7 +50,7 @@ vector<TestCase> test_cases = {
     // sorted in reverse order, maximum number of inversions
     {{5, 4, 3, 2, 1}, 5, 10},
 
-    // additional tests
+    // ==================== additional tests ====================
     {{3,2,1}, 3,3},
 
     {{9, 12, 5, 18, 3, 15, 7, 20, 10}, 9, 15},
@@ -88,19 +88,15 @@ int main ( int argc, char *argv [])
         srand(time(0)); 
     }
 
-    
     // initialize array
     int arr[n];
     for(int i = 0; i < n; i ++){
         arr[i] =  (rand() % 10000);
     }
 
-
-
     if(n <= 20){
         PrintArray(arr, n);
     }
-    
 
     InversionForLoop(arr, n);
     try{
@@ -113,7 +109,6 @@ int main ( int argc, char *argv [])
     cout << "---------------------Start Test-------------------------\n" << endl;
 
     RunTestCases(100);
-
 }
 
 
@@ -172,8 +167,6 @@ int MergeSort(int arr[], int p, int r){
     int count_inv_total = 0;
     try{
         int q = (p+r)/2;
-
-        
 
         count_inv_total += MergeSort(arr, p, q);
         count_inv_total += MergeSort(arr, q+1,r);
@@ -327,7 +320,6 @@ void PrintArray(int arr[], int size){
         cout << arr[i] << " ";
     }
     cout << endl;
-
 }
 
 
