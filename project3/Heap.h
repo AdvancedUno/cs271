@@ -17,36 +17,108 @@ class Heap
 {
 private:
 
-	
+    int size = 0;
+    int capacity = 0;
+    T* heap_array;
+
 
 	
 public:
-	Heap		( void );
-	Heap		( const List<T> &mylist );
-	~Heap		( void );
-List<T> operator=	( const List<T> &mylist );
-void	prepend	( const T &item);
-void	append		( const T &item );
-T &	operator[]	( int index );
-void	insert		( const T &item, int index );
-void	remove		( int index );
-int	search		( const T &item ) const;
-int	length		( void ) const;
-bool	empty		( void ) const;
-List<T> concat		( const List<T> &list ) const;
+	Heap		                ( void );
+	Heap		                ( const Heap<T> &myHeap ); // copy constructor
+    Heap		                ( int capacity); // empty heap with the specified capacity
+    Heap		                ( int array[], int size); // heap with array and size
+	~Heap		                ( void ); // destructor
 
-friend ostream & operator<< ( ostream &os, List<T> &mylist )
-{
+    Heap<T>     operator=	    ( const Heap<T> &myHeap );
+
+    void        heapify         (int index); 
+    void        buildHeap       (void);
+    T*          heapSort        (void); 
+    void        increaseKey     (int index);
+    void        insert          (T item, int position);
+    int         length          (void);
+    bool        empty           (void);
+    T           max             (void);
+    T           extract         (void);
 
 
 
+    friend ostream & operator<< ( ostream &os, List<T> &mylist )
+    {
+        os << "[ ";
+
+        for(int i = 0 ; i < size; i ++){
+
+            os << heap_array[i] << " ";
+        }
+
+        os << "]";
+        return os;	
+    }
+
+
+};
+
+template <class T>
+Heap<T> :: Heap(){
+  
+}
+
+
+template <class T>
+Heap<T> :: Heap( const Heap<T> &myHeap ){
+  
+}
+
+template <class T>
+Heap<T> :: Heap( int capacity ){
+  
+}
+
+template <class T>
+Heap<T> :: Heap( int array[], int size ){
+  
+}
+
+
+template <class T>
+Heap<T> :: ~Heap(void){
+  
+}
+
+template <class T>
+Heap<T>  Heap<T> ::operator= ( const Heap<T> &myHeap ){
+
+
+    
+}
+
+template <class T>
+void Heap<T> ::heapify (int index){
+
+}
+
+template <class T>
+void Heap<T> ::buildHeap (void){
+    
+}
+
+
+template <class T>
+T* Heap<T> ::heapSort (void){
+    
 }
 
 
 
 
 
-};
+
+
+
+
+
 
 
 #endif
