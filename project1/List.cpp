@@ -269,7 +269,7 @@ void	List<T>::	remove		( int index ){
     Node* temp; 
 
     // if we try to delete the first node of the list 
-    if (index == 0) {
+    if (index = = 0) {
         temp = head;
         head = head->next;
         head->prev = NULL;

@@ -20,8 +20,14 @@ using namespace std;
 // INPUT: int argc, char *argv []
 // RETURN: int 
 //==============================================
-int main ( int argc, char *argv [])
+int main (void)
 {
+
+    
+
+
+
+
 
 
 }

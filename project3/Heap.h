@@ -239,6 +239,16 @@ void swapVal(int a, int b){
 
 }
 
+//==============================================
+// heapSort (void)
+// It sorts an array in decending order by calling buildHeap to build max-heap on the array. 
+// INPUT: 
+// RETURN: 
+//==============================================
+template <class T>
+T* Heap<T>::heapSort (void){
+
+
     buildHeap();// input??
     // i should be the length of the array to sort !! 
     for (int i = size; i >= 1; i--){

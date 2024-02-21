@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
     {
         cout << "error : " << e.what() << endl;
     }
-    // RunTestCases(50);
+    RunTestCases(5);
 }
 //==============================================
 // InversionForLoop(int arr[], int size)
