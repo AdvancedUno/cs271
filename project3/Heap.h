@@ -33,9 +33,9 @@ public:
 
     Heap<T>     operator=	    ( const Heap<T> &myHeap );
 
-    void        heapify         (int index); 
+    void        heapify         (int large_index); 
     void        buildHeap       (void);
-    T*     heapSort        (void); 
+    T*          heapSort        (void); 
     void        increaseKey     (int index);
     void        insert          (T item, int position);
     int         length          (void);
@@ -78,6 +78,8 @@ Heap<T> :: Heap(){
 //==============================================
 template <class T>
 Heap<T> :: Heap( const Heap<T> &myHeap ){
+
+
 
 }
 
@@ -130,6 +132,30 @@ Heap<T>  Heap<T> ::operator= ( const Heap<T> &myHeap ){
 template <class T>
 void Heap<T> ::heapify (int index){
 
+    int large_index = index;
+    int left_index = index*2 +1;
+    int right_index = index*2+2;
+
+    if(left_index < size && heap_array[left_index] > heap_array[large_index]){
+        large_index = left_index;
+    }
+
+    if(right_index < size && heap_array[right_index] > heap_array[large_index]){
+        large_index = right_index;
+    }
+
+    if(large_index != index){
+        
+        T temp = heap_array[large_index];
+        heap_array[large_index] = heap_array[index];
+        heap_array[index] = temp;
+
+        heapify(large_index);
+    }
+
+
+
+    return;
 }
 
 //==============================================
