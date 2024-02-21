@@ -170,16 +170,22 @@ void Heap<T> ::heapify (int index){
 }
 
 //==============================================
-// INPUT: 
-// RETURN: 
+// buildHeap (void)
+// This converts an array into a max-heap by calling heapify in a bottom-up manner.
+// INPUT: none
+// RETURN: none
 //==============================================
 template <class T>
 void Heap<T> ::buildHeap (void){
-    
+    for (int i = (size/2); i >= 0; i--){
+        heapify(i);
+    }
 }
 
 
 //==============================================
+// heapSort (void)
+// It sorts an array in decending order by calling buildHeap to build max-heap on the array. 
 // INPUT: 
 // RETURN: 
 //==============================================
@@ -233,6 +239,74 @@ void swapVal(int a, int b){
 
 }
 
+    buildHeap();// input??
+    // i should be the length of the array to sort !! 
+    for (int i = size; i >= 1; i--){
+        heap_array[1] = heap_array[i];
+        size = size - 1;
+        heapify(1);
+    }
+    return heap_array;
+}
+
+//==============================================
+// length (void)
+// It returns the number of items in the heap.
+// INPUT: none
+// RETURN: int
+//==============================================
+template <class T>
+int Heap<T> ::length (void){
+    return size;
+}
+
+//==============================================
+// empty(void)
+// Returns true if the heap is empty, false otherwise.
+// INPUT: none
+// RETURN: bool
+//==============================================
+template <class T>
+bool Heap<T> ::empty (void){
+    return size == 0;
+}
+
+//==============================================
+// max (void)
+// It returns the max item in the heap without removing it.
+// INPUT: none
+// RETURN: Template datatype
+//==============================================
+template <class T>
+T Heap<T>::max (void){
+    if(size == 0){
+        cout << "Heap is empty" << endl;
+        throw std::out_of_range("Heap<T>::max (void) : heap is empty");
+        return;
+    }
+    return heap_array[0];
+}
+
+//==============================================
+// extract (void)
+// It removes and returns the max item in the heap.
+// INPUT: none
+// RETURN: Template datatype
+//==============================================
+template <class T>  
+T Heap<T> ::extract (void){
+    if(size == 0){
+        cout << "Heap is empty" << endl;
+        throw std::out_of_range("Heap<T>::max (void) : heap is empty");
+        return;
+    }  
+    T max_item = heap_array[0]; 
+    //Replacing the max item with the last item in the heap
+    heap_array[0] = heap_array[size];
+    size = size - 1;
+    heapify(1);
+    return max_item;
+}
 
 
 
