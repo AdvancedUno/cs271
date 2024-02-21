@@ -197,7 +197,7 @@ T* Heap<T> ::heapSort (void){
 // RETURN: int
 //==============================================
 template <class T>
-int length (void){
+int Heap<T> ::length (void){
     return size;
 }
 
@@ -208,7 +208,7 @@ int length (void){
 // RETURN: bool
 //==============================================
 template <class T>
-bool empty (void){
+bool Heap<T> ::empty (void){
     return size == 0;
 }
 
@@ -219,7 +219,12 @@ bool empty (void){
 // RETURN: Template datatype
 //==============================================
 template <class T>
-T max (void){
+T Heap<T>::max (void){
+    if(size == 0){
+        cout << "Heap is empty" << endl;
+        throw std::out_of_range("Heap<T>::max (void) : heap is empty");
+        return;
+    }
     return heap_array[0];
 }
 
@@ -230,12 +235,18 @@ T max (void){
 // RETURN: Template datatype
 //==============================================
 template <class T>  
-T extract (void){
+T Heap<T> ::extract (void){
+    if(size == 0){
+        cout << "Heap is empty" << endl;
+        throw std::out_of_range("Heap<T>::max (void) : heap is empty");
+        return;
+    }  
+    T max_item = heap_array[0]; 
     //Replacing the max item with the last item in the heap
-    heap_array[1] = heap_array[size];
+    heap_array[0] = heap_array[size];
     size = size - 1;
     heapify(1);
-    return heap_array[0];
+    return max_item;
 }
 
 
