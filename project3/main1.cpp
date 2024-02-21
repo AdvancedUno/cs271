@@ -85,7 +85,7 @@ int main(void) {
     try {
         int_heap.extract();
     } catch (const std::out_of_range& e) {
-        std::cout << "Failed: " << e.what() << std::endl;
+        std::cout << "Check: " << e.what() << std::endl;
     }
 
 

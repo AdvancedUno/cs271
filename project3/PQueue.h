@@ -87,7 +87,7 @@ public:
  // assignment operator
  //=================================
  template <class T>
- PQueue PQueue<T>::operator=	    ( const PQueue<T> &my_pqueue ){
+ PQueue<T>  PQueue<T>::operator=	    ( const PQueue<T> &my_pqueue ){
     
  }
 
