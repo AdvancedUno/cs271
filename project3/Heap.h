@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <List.h>
 using namespace std;
 
 #ifndef HEAP_H
@@ -19,7 +20,7 @@ private:
 
     int size = 0;
     int capacity = 0;
-    T* heap_array;
+    List<T> heap_array;
 
 
 	
@@ -27,14 +28,14 @@ public:
 	Heap		                ( void );
 	Heap		                ( const Heap<T> &myHeap ); // copy constructor
     Heap		                ( int capacity); // empty heap with the specified capacity
-    Heap		                ( int array[], int size); // heap with array and size
+    Heap		                ( List<T> array, int size); // heap with array and size
 	~Heap		                ( void ); // destructor
 
     Heap<T>     operator=	    ( const Heap<T> &myHeap );
 
     void        heapify         (int index); 
     void        buildHeap       (void);
-    T*          heapSort        (void); 
+    T*     heapSort        (void); 
     void        increaseKey     (int index);
     void        insert          (T item, int position);
     int         length          (void);
@@ -77,7 +78,7 @@ Heap<T> :: Heap(){
 //==============================================
 template <class T>
 Heap<T> :: Heap( const Heap<T> &myHeap ){
-  
+
 }
 
 //==============================================
@@ -86,7 +87,8 @@ Heap<T> :: Heap( const Heap<T> &myHeap ){
 //==============================================
 template <class T>
 Heap<T> :: Heap( int capacity ){
-  
+    capacity = capacity;
+    heap_array = NULL;
 }
 
 //==============================================
@@ -94,8 +96,10 @@ Heap<T> :: Heap( int capacity ){
 // RETURN: 
 //==============================================
 template <class T>
-Heap<T> :: Heap( int array[], int size ){
-  
+Heap<T> :: Heap( List<T> array, int size ){
+
+    
+
 }
 
 
@@ -145,6 +149,10 @@ void Heap<T> ::buildHeap (void){
 template <class T>
 T* Heap<T> ::heapSort (void){
     
+
+
+
+
 }
 
 

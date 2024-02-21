@@ -69,7 +69,7 @@ public:
     T &     operator[]  ( int position );
     void    remove      ( int position );
     bool    isEmpty     ( void ) const;
-    List<T> operator+   ( const List<T> &l ) const;
+    // List<T> operator+   ( const List<T> &l ) const;
     void    clear       ( void );
 
     friend ostream & operator << ( ostream &os, const List<T> &l )
@@ -97,14 +97,6 @@ private:
 };
 
 
-//===============================
-// List.cpp
-// List with array Structure with method implementations
-// Name: EunHo Lee
-// Date: 27 Jan 2024
-//===============================
-
-#include "List.h"
 
 //==============================================
 // List(void)
@@ -277,23 +269,23 @@ bool List<T>::isEmpty(void)const{
 // INPUT: List<T> class parameter
 // RETURN: new List<T>
 //==============================================
-template <typename T>
-List<T> List<T>::operator+( const List<T> &l ) const{
+// template <typename T>
+// List<T> List<T>::operator+( const List<T> &l ) const{
 
-    List<T> result;
+//     List<T> result;
 
-    result.list = new T[capacity + l.capacity];
-    result.size = size + l.size;
-    result.capacity = capacity + l.capacity;
+//     result.list = new T[capacity + l.capacity];
+//     result.size = size + l.size;
+//     result.capacity = capacity + l.capacity;
 
-    for(int i = 0; i < size; i++){
-        result.list[i] = list[i];
-    }
-    for(int i = 0; i < l.size; i++){
-        result.list[size + i] = l.list[i];
-    }
-    return result;
-}
+//     for(int i = 0; i < size; i++){
+//         result.list[i] = list[i];
+//     }
+//     for(int i = 0; i < l.size; i++){
+//         result.list[size + i] = l.list[i];
+//     }
+//     return result;
+// }
 
 //==============================================
 // clear(void)
@@ -304,7 +296,6 @@ List<T> List<T>::operator+( const List<T> &l ) const{
 template <typename T>
 void List<T>::clear(void){
     size = 0;
-    capacity = DEFAULT_LIST_SIZE;
 }
 
 //==============================================
