@@ -159,32 +159,84 @@ void Heap<T> ::heapify (int index){
 }
 
 //==============================================
-// INPUT: 
-// RETURN: 
+// buildHeap (void)
+// This converts an array into a max-heap by calling heapify in a bottom-up manner.
+// INPUT: none
+// RETURN: none
 //==============================================
 template <class T>
 void Heap<T> ::buildHeap (void){
-    
+    for (int i = (size/2); i >= 0; i--){
+        heapify(i);
+    }
 }
 
 
 //==============================================
+// heapSort (void)
+// It sorts an array in decending order by calling buildHeap to build max-heap on the array. 
 // INPUT: 
 // RETURN: 
 //==============================================
 template <class T>
 T* Heap<T> ::heapSort (void){
-    
-
-
-
-
+    buildHeap();// input??
+    // i should be the length of the array to sort !! 
+    for (int i = size; i >= 1; i--){
+        heap_array[1] = heap_array[i];
+        size = size - 1;
+        heapify(1);
+    }
+    return heap_array;
 }
 
+//==============================================
+// length (void)
+// It returns the number of items in the heap.
+// INPUT: none
+// RETURN: int
+//==============================================
+template <class T>
+int length (void){
+    return size;
+}
 
+//==============================================
+// empty(void)
+// Returns true if the heap is empty, false otherwise.
+// INPUT: none
+// RETURN: bool
+//==============================================
+template <class T>
+bool empty (void){
+    return size == 0;
+}
 
+//==============================================
+// max (void)
+// It returns the max item in the heap without removing it.
+// INPUT: none
+// RETURN: Template datatype
+//==============================================
+template <class T>
+T max (void){
+    return heap_array[0];
+}
 
-
+//==============================================
+// extract (void)
+// It removes and returns the max item in the heap.
+// INPUT: none
+// RETURN: Template datatype
+//==============================================
+template <class T>  
+T extract (void){
+    //Replacing the max item with the last item in the heap
+    heap_array[1] = heap_array[size];
+    size = size - 1;
+    heapify(1);
+    return heap_array[0];
+}
 
 
 
