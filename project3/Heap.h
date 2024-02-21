@@ -22,6 +22,8 @@ private:
     int capacity = 0;
     List<T> heap_array;
 
+    void        swapVal         (int a, int b);
+
 
 	
 public:
@@ -37,7 +39,7 @@ public:
     void        buildHeap       (void);
     T*          heapSort        (void); 
     void        increaseKey     (int index);
-    void        insert          (T item, int position);
+    void        insert          (T item);
     int         length          (void);
     bool        empty           (void);
     T           max             (void);
@@ -126,30 +128,39 @@ Heap<T>  Heap<T> ::operator= ( const Heap<T> &myHeap ){
 }
 
 //==============================================
-// INPUT: 
-// RETURN: 
+// Heap<T> ::heapify (int index)
+// Implement the heapify function
+// INPUT: int index
+// RETURN: void
 //==============================================
 template <class T>
 void Heap<T> ::heapify (int index){
 
+    // set large index to input index as initialize
     int large_index = index;
+
+    // find the left and right child index
     int left_index = index*2 +1;
     int right_index = index*2+2;
 
+    // if left child index is valid and left child is larger than its parents set large_index to left child index
     if(left_index < size && heap_array[left_index] > heap_array[large_index]){
         large_index = left_index;
     }
 
+    // if rogjt child index is valid and right child is larger than the large_index element, set large_index to right child index
     if(right_index < size && heap_array[right_index] > heap_array[large_index]){
         large_index = right_index;
     }
 
+    // if the childs are larger than their parents, then swap parent with a child with larger value
     if(large_index != index){
         
         T temp = heap_array[large_index];
         heap_array[large_index] = heap_array[index];
         heap_array[index] = temp;
 
+        // call heapify with the swapted index to check error in that node
         heapify(large_index);
     }
 
@@ -177,13 +188,50 @@ T* Heap<T> ::heapSort (void){
     
 
 
+}
+
+template <class T>
+void increaseKey(int index){
+
+    int parent_index = (index-1)/2;
+
+    if(index >0 && heap_array[parent_index] < heap_arry[index]){
+        swapVal(index , parent_index);
+        index = parent_index;
+        increaseKey(index);
+    }
+
+
+    return;
+}
+
+//==============================================
+// INPUT: 
+// RETURN: 
+//==============================================
+template <class T>
+void insert(T item){
+
+    heap_array.append(item);
+
+    increaseKey(heap_array.size-1);
 
 
 }
 
 
+//==============================================
+// INPUT: 
+// RETURN: 
+//==============================================
+template <class T>
+void swapVal(int a, int b){
 
+    T temp = heap_array[a];
+    heap_array[a] = heap_array[b];
+    heap_array[b] = temp;
 
+}
 
 
 
