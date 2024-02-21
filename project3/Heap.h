@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <string>
-#include <List.h>
+#include "List.h"
 using namespace std;
 
 #ifndef HEAP_H
@@ -18,11 +18,13 @@ class Heap
 {
 private:
 
-    int size = 0;
-    int capacity = 0;
-    List<T> heap_array;
+    int         size = 0;
+    int         capacity = 0;
 
     void        swapVal         (int a, int b);
+    int         findParent      (int index);   
+    List<T>     heap_array;
+     
 
 
 	
@@ -37,7 +39,7 @@ public:
 
     void        heapify         (int large_index); 
     void        buildHeap       (void);
-    T*          heapSort        (void); 
+    List<T>     heapSort        (void); 
     void        increaseKey     (int index);
     void        insert          (T item);
     int         length          (void);
@@ -51,9 +53,9 @@ public:
     {
         os << "[ ";
 
-        for(int i = 0 ; i < size; i ++){
+        for(int i = 0 ; i < mylist.size; i ++){
 
-            os << heap_array[i] << " ";
+            os << mylist[i] << " ";
         }
 
         os << "]";
@@ -71,7 +73,7 @@ template <class T>
 Heap<T> :: Heap(){
   size =0;
   capacity =0;
-  heap_array = NULL;
+  heap_array.clear();
 }
 
 //==============================================
@@ -81,6 +83,8 @@ Heap<T> :: Heap(){
 template <class T>
 Heap<T> :: Heap( const Heap<T> &myHeap ){
 
+    heap_array = myHeap.heap_array;
+    size = myHeap.size;
 
 
 }
@@ -90,9 +94,10 @@ Heap<T> :: Heap( const Heap<T> &myHeap ){
 // RETURN: 
 //==============================================
 template <class T>
-Heap<T> :: Heap( int capacity ){
-    capacity = capacity;
+Heap<T> :: Heap( int arr_capacity ){
+    capacity = arr_capacity;
     heap_array = NULL;
+    heap_array.capacity = arr_capacity;
 }
 
 //==============================================
@@ -100,9 +105,11 @@ Heap<T> :: Heap( int capacity ){
 // RETURN: 
 //==============================================
 template <class T>
-Heap<T> :: Heap( List<T> array, int size ){
+Heap<T> :: Heap( List<T> array, int arr_size ){
 
-    
+    heap_array = array;
+    size = arr_size;
+
 
 }
 
@@ -114,6 +121,11 @@ Heap<T> :: Heap( List<T> array, int size ){
 template <class T>
 Heap<T> :: ~Heap(void){
   
+
+    size = 0;
+    heap_array.clear();
+
+
 }
 
 //==============================================
@@ -123,7 +135,11 @@ Heap<T> :: ~Heap(void){
 template <class T>
 Heap<T>  Heap<T> ::operator= ( const Heap<T> &myHeap ){
 
+    
+    heap_array = myHeap.heap_array;
+    size = myHeap.size;
 
+    return *this;
     
 }
 
@@ -177,10 +193,11 @@ void Heap<T> ::heapify (int index){
 //==============================================
 template <class T>
 void Heap<T> ::buildHeap (void){
-    for (int i = (size/2); i >= 0; i--){
+    for (int i = findParent(size-1); i >= 0; i--){
         heapify(i);
     }
 }
+
 
 
 //==============================================
@@ -190,18 +207,11 @@ void Heap<T> ::buildHeap (void){
 // RETURN: 
 //==============================================
 template <class T>
-T* Heap<T> ::heapSort (void){
-    
+void Heap<T>::increaseKey(int index){
 
+    int parent_index = findParent(index);
 
-}
-
-template <class T>
-void increaseKey(int index){
-
-    int parent_index = (index-1)/2;
-
-    if(index >0 && heap_array[parent_index] < heap_arry[index]){
+    if(index >0 && heap_array[parent_index] < heap_array[index]){
         swapVal(index , parent_index);
         index = parent_index;
         increaseKey(index);
@@ -216,11 +226,12 @@ void increaseKey(int index){
 // RETURN: 
 //==============================================
 template <class T>
-void insert(T item){
+void Heap<T>::insert(T item){
 
     heap_array.append(item);
+    size++;
 
-    increaseKey(heap_array.size-1);
+    increaseKey(size-1);
 
 
 }
@@ -231,12 +242,22 @@ void insert(T item){
 // RETURN: 
 //==============================================
 template <class T>
-void swapVal(int a, int b){
+void Heap<T>::swapVal(int a, int b){
 
     T temp = heap_array[a];
     heap_array[a] = heap_array[b];
     heap_array[b] = temp;
 
+}
+
+//==============================================
+// INPUT: 
+// RETURN: 
+//==============================================
+template <class T>
+int Heap<T>::findParent(int index){
+
+    return (index -1)/2;
 }
 
 //==============================================
@@ -246,16 +267,16 @@ void swapVal(int a, int b){
 // RETURN: 
 //==============================================
 template <class T>
-T* Heap<T>::heapSort (void){
-
+List<T> Heap<T>::heapSort (void){
 
     buildHeap();// input??
     // i should be the length of the array to sort !! 
-    for (int i = size; i >= 1; i--){
-        heap_array[1] = heap_array[i];
-        size = size - 1;
-        heapify(1);
+    for (int i = size-1; i >0 ; i--){
+        swapVal(0, i);
+        size --;
+        heapify(0);
     }
+    
     return heap_array;
 }
 
@@ -292,7 +313,7 @@ T Heap<T>::max (void){
     if(size == 0){
         cout << "Heap is empty" << endl;
         throw std::out_of_range("Heap<T>::max (void) : heap is empty");
-        return;
+
     }
     return heap_array[0];
 }
@@ -307,14 +328,15 @@ template <class T>
 T Heap<T> ::extract (void){
     if(size == 0){
         cout << "Heap is empty" << endl;
-        throw std::out_of_range("Heap<T>::max (void) : heap is empty");
-        return;
+        throw std::out_of_range("Heap<T>::extract (void) : heap is empty");
+        
     }  
     T max_item = heap_array[0]; 
     //Replacing the max item with the last item in the heap
-    heap_array[0] = heap_array[size];
-    size = size - 1;
-    heapify(1);
+    heap_array[0] = heap_array[size-1];
+    heap_array.remove(heap_array.length()-1);
+    size --;
+    heapify(0);
     return max_item;
 }
 
@@ -322,9 +344,7 @@ T Heap<T> ::extract (void){
 
 
 
-
-
-#endif
+#endif 
 
 
 

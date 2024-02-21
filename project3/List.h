@@ -69,7 +69,7 @@ public:
     T &     operator[]  ( int position );
     void    remove      ( int position );
     bool    isEmpty     ( void ) const;
-    // List<T> operator+   ( const List<T> &l ) const;
+    List<T> operator+   ( const List<T> &l ) const;
     void    clear       ( void );
 
     friend ostream & operator << ( ostream &os, const List<T> &l )
@@ -188,7 +188,8 @@ void List<T>::insert(T item, int position){
 
     if(position < 0 || position > size){
         cout << "Invalid position" << endl;
-        exit(0);
+        throw std::out_of_range("List<T>::insert(T item, int position) : Invalid position");
+
     }
 
     if(size == capacity){
@@ -225,7 +226,8 @@ template <typename T>
 T &  List<T>::operator[](int position){
     if(position < 0 || position > size-1){
         cout << "Invalid position" << endl;
-        exit(0);
+        throw std::out_of_range("List<T>::operator[](int position) : Invalid position");
+
     }
 
     return list[position];
@@ -243,7 +245,8 @@ void List<T>::remove(int position){
 
     if(position < 0 || position > size-1){
         cout << "Invalid position" << endl;
-        exit(0);
+        throw std::out_of_range("List<T>::remove(int position) : Invalid position");
+
     }
 
     for(int i = position; i < size-1; i++){
@@ -269,23 +272,23 @@ bool List<T>::isEmpty(void)const{
 // INPUT: List<T> class parameter
 // RETURN: new List<T>
 //==============================================
-// template <typename T>
-// List<T> List<T>::operator+( const List<T> &l ) const{
+template <typename T>
+List<T> List<T>::operator+( const List<T> &l ) const{
 
-//     List<T> result;
+    List<T> result;
 
-//     result.list = new T[capacity + l.capacity];
-//     result.size = size + l.size;
-//     result.capacity = capacity + l.capacity;
+    result.list = new T[capacity + l.capacity];
+    result.size = size + l.size;
+    result.capacity = capacity + l.capacity;
 
-//     for(int i = 0; i < size; i++){
-//         result.list[i] = list[i];
-//     }
-//     for(int i = 0; i < l.size; i++){
-//         result.list[size + i] = l.list[i];
-//     }
-//     return result;
-// }
+    for(int i = 0; i < size; i++){
+        result.list[i] = list[i];
+    }
+    for(int i = 0; i < l.size; i++){
+        result.list[size + i] = l.list[i];
+    }
+    return result;
+}
 
 //==============================================
 // clear(void)
