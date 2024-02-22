@@ -79,7 +79,7 @@ public:
  //=================================
  template <class T>
  PQueue<T>::PQueue        (T array[], int size){
-     pq(array, size);
+    pq(array, size);
     
  }
 
@@ -108,6 +108,7 @@ public:
 
  //=================================
  // enqueue
+ // It inserts a new item by priority.
  // params: T item
  // return val: none
  //=================================
@@ -119,6 +120,7 @@ public:
  }
  //=================================
  // length
+ // It returns the number of items in the priority queue.
  // params: none
  // return val: int
  //=================================
@@ -131,6 +133,7 @@ public:
 
  //=================================
  // empty
+ // true if empty, false otherwise
  // params: none
  // return val: boolean expression( true if the Pqueue is empty, false otherwise)
  //=================================
@@ -142,6 +145,7 @@ public:
  }
  //=================================
  // peek
+ // It returns the first item in the priority queue without removing it.
  // params: none
  // return val: T item
  //=================================
@@ -153,6 +157,7 @@ public:
  }
  //=================================
  // dequeue
+ // It removes and returns the first item in the priority queue.
  // params: none
  // return val: T item
  //=================================

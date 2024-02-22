@@ -1,7 +1,7 @@
 //===============================
 // main1.cpp
 // Name: EunHo Lee,Ritika, Tomer  
-// Date: 1 Feb 2024
+// Date: 22 Feb 2024
 // This file contains all test case for the heap class.
 //===============================
 
@@ -18,7 +18,7 @@ using namespace std;
 // main
 // Run test case on heap class
 // INPUT: none
-// RETURN: none
+// RETURN: int 
 //==============================================
 int main(void) {
     cout << "--------------- INT datatype Test Start---------------" << endl;
@@ -168,7 +168,7 @@ int main(void) {
     assert(single_heap.length() == 0);
     cout << "Test 6 Pass" << endl;
 
-       // Test 7: Neg number check
+    // Test 7: Neg number check
     cout << "---------------Test 7 Start---------------" << endl;
     Heap<int> heap_neg;
     heap_neg.insert(-1);
@@ -212,15 +212,22 @@ int main(void) {
     assert(heap_pn.extract() == -100);
     cout << "Test 10 Pass" << endl;
 
-
+    // Test 10: Large size array
     cout << "---------------Test 11 Start---------------" << endl;
+    Heap<int> large_heap;
+    for (int i = 0; i < 100000; ++i) large_heap.insert(i);
+    assert(large_heap.length() == 100000);
+    cout << "Test 10 Pass" << endl;
+
+    cout << "---------------Test 12 Start---------------" << endl;
     // Test last: Error handling, e.g., extract from an empty heap
     try {
         int_heap.extract();
     } catch (const std::out_of_range& e) {
         std::cout << "Check: " << e.what() << std::endl;
     }
-    cout << "Test 11 Pass" << endl;
+
+    cout << "Test 12 Pass" << endl;
 
 
 
@@ -269,9 +276,27 @@ int main(void) {
     char C_arr[5]= {'a','b','f','d','e'};
     Heap<char> C_heap_from_array(C_arr, 5);
     C_heap_from_array.buildHeap();
-    cout << "C_Heap 1 = " << C_heap_from_array << endl;
+    cout << "C_heap_from_array = " << C_heap_from_array << endl;
     assert( C_heap_from_array.max() == 'f');
 
+    // Test 4: Copy constructor and assignment operator
+    cout << "---------------Test 4 Start---------------" << endl;
+    char C_arr2[5]= {'f','d','a','e','b'};
+    Heap<char> C_heap_from_array2(C_arr2, 5);
+    cout << "C_heap_from_array2 = " << C_heap_from_array2 << endl;
+
+    C_heap_from_array2.heapify(1);
+    cout << "C_heap_from_array2 hepified = " << C_heap_from_array2 << endl;
+
+    Heap<char> C_copyHeap( C_heap_from_array2); // Using the copy constructor
+    cout << "C_copyHeap = " << C_copyHeap << endl;
+    cout << "C_heap_from_array2 = " << C_heap_from_array2 << endl;
+
+    //if assigning heap is empty
+    Heap<char> C_copyHeap2;
+    C_copyHeap = C_copyHeap2;
+    cout << "C_copyHeap = " << C_copyHeap << endl;
+    assert(assigned_heap.length() == 0);
 
 
     // Test 5: Empty check

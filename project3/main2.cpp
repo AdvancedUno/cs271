@@ -1,8 +1,8 @@
 //===============================
-// inversions.cpp
-// Count the total number of inversion using devide and concour method and for loop
-// Name: EunHo Lee, Ashwin   
-// Date: 1 Feb 2024
+// main2.cpp
+// Name: EunHo Lee , Ritika, Tomer  
+// Date: 22 Feb 2024
+// This file contains all test case for the priority queue class.
 //===============================
 
 #include <ctime>
@@ -17,14 +17,15 @@
 using namespace std;
 
 //==============================================
-// main( int argc, char *argv [])
-// main function that takes in argument (number of random element in the array) 
-// as a parameter and execute the inversion counting 
-// INPUT: int argc, char *argv []
+// main
+// Run test case on heap class
+// INPUT: none
 // RETURN: int 
 //==============================================
 int main ( void)
 {
+    cout << "--------------- INT datatype Test Start---------------" << endl;
+    cout << "                                                       " << endl;
     // Test 1: test length and enqueue
     cout << "---------------Test 1 Start---------------" << endl;
     PQueue<int> pri_queue;
@@ -32,6 +33,7 @@ int main ( void)
     pri_queue.enqueue(20);
     pri_queue.enqueue(5);
     assert(pri_queue.length() == 3);
+    // cout << " pri_queue =  " << pri_queue << endl;
     cout << "test 1 pass" << endl;
 
     // Test 2: Extract maximum
@@ -133,6 +135,57 @@ int main ( void)
     assert(pq_consecutive.length() == 0);
     assert(pq_consecutive.empty() == true);
     cout << "Test 11 Pass" << endl;
+
+    cout << "                                                       " << endl;
+    cout << "--------------- CHAR datatype Test Start---------------" << endl;
+    cout << "                                                         "  << endl;
+   // Test 1: test length and enqueue
+    cout << "---------------Test 1 Start---------------" << endl;
+    PQueue<char> char_pri_queue;
+    char_pri_queue.enqueue('a');
+    char_pri_queue.enqueue('c');
+    char_pri_queue.enqueue('e');
+    assert(char_pri_queue.length() == 3);
+    // cout << " char_pri_queue =  " << char_pri_queue << endl;
+    cout << "test 1 pass" << endl;
+
+    // Test 2: Extract maximum
+    cout << "---------------Test 2 Start---------------" << endl;
+    char max1 = char_pri_queue.dequeue();
+    assert(max1 == 'e');
+    assert(char_pri_queue.length() == 2);
+    cout << "Test 2 Pass" << endl;
+
+    // Test 3: Empty
+    cout << "---------------Test 3 Start---------------" << endl;
+    PQueue<char> char_pri_queue2;
+    assert(char_pri_queue2.empty());
+    char_pri_queue2.enqueue('f');
+    assert(!char_pri_queue2.empty());
+    assert(char_pri_queue2.peek() == char_pri_queue2.dequeue());
+    assert(char_pri_queue2.empty() == true);
+    cout << "Test 3 Pass" << endl;
+
+    // Test 4: Copy and peek
+    cout << "---------------Test 4 Start---------------" << endl;
+    PQueue<char> char_pri_queue3(char_pri_queue);
+    assert(char_pri_queue3.length()==2);
+    char max2 = char_pri_queue3.peek();
+    assert(max2 == 'c');
+    cout << "Test 4 Pass" << endl;
+
+     // Test 5: Assignment operator
+     cout << "---------------Test 5 Start---------------" << endl;
+     char_pri_queue2.enqueue('p');
+     char_pri_queue2.enqueue('q');
+     char_pri_queue2.enqueue('r');
+     char_pri_queue2.enqueue('s');
+     char_pri_queue2.enqueue('t');
+     char_pri_queue = char_pri_queue2;
+     assert(char_pri_queue.length()== 5);
+     assert(char_pri_queue.peek()== 't');
+     cout << "Test 5 Pass" << endl;
+
 
     cout << "Pass All Test Cases" << endl;
 
