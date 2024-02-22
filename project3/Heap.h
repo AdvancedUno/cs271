@@ -135,7 +135,7 @@ Heap<T> :: Heap( T* array, int arr_size ){
     }
     size = arr_size;
     capacity = arr_size;
-
+    buildHeap();
 }
 
 
@@ -185,6 +185,11 @@ Heap<T>  Heap<T> ::operator= ( const Heap<T> &myHeap ){
 //==============================================
 template <class T>
 void Heap<T> ::heapify (int index){
+    if(index < 0 || index > size){
+        cout << "Heap is empty" << endl;
+        throw std::out_of_range("Heap<T>::max (void) : heap is empty");
+        exit(0);
+    }
 
     // set large index to input index as initialize
     int large_index = index;
@@ -304,13 +309,14 @@ int Heap<T>::findParent(int index){
 template <class T>
 void Heap<T>::heapSort (void){
 
-    buildHeap();
-    int len= size-1;
+    int len = size-1;
     for (int i = len; i > 0 ; i--){
         swapVal(0, i);
         size--;
         heapify(0);
     }
+    //Adjusting the array size to sorted part
+    size = len +1;
 
 }
 

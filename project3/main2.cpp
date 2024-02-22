@@ -33,7 +33,7 @@ int main ( void)
     pri_queue.enqueue(20);
     pri_queue.enqueue(5);
     assert(pri_queue.length() == 3);
-    // cout << " pri_queue =  " << pri_queue << endl;
+    cout << " pri_queue =  " << pri_queue << endl;
     cout << "test 1 pass" << endl;
 
     // Test 2: Extract maximum
@@ -145,6 +145,7 @@ int main ( void)
     char_pri_queue.enqueue('a');
     char_pri_queue.enqueue('c');
     char_pri_queue.enqueue('e');
+    cout << " char_pri_queue =  " << char_pri_queue << endl;
     assert(char_pri_queue.length() == 3);
     // cout << " char_pri_queue =  " << char_pri_queue << endl;
     cout << "test 1 pass" << endl;

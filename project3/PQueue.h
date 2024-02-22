@@ -38,18 +38,12 @@ public:
     
 
 	// Friend function
-    friend ostream & operator<< ( ostream &os, PQueue<T> &my_pqueue )
-    {
-        os << "[ ";
+   friend ostream & operator<< ( ostream &os, PQueue<T> &my_pqueue )
+   {
+      os << my_pqueue.pq << " ";
 
-        for(int i = 0 ; i < my_pqueue.pq.length(); i ++){
-
-            os << my_pqueue.pq[i] << " ";
-        }
-
-        os << "]";
-        return os;	
-    }
+      return os;	
+   }
 };
 
  //=================================
@@ -69,7 +63,7 @@ public:
  //=================================
  template <class T>
  PQueue<T>::PQueue        (const PQueue<T> &my_pqueue){
-    pq = Heap<T>(my_pqueue.pq);
+   pq = Heap<T>(my_pqueue.pq);
  }
 
  //=================================
@@ -79,8 +73,7 @@ public:
  //=================================
  template <class T>
  PQueue<T>::PQueue        (T array[], int size){
-    pq(array, size);
-    
+   pq(array, size);
  }
 
  //=================================
@@ -90,7 +83,7 @@ public:
  //=================================
  template <class T>
  PQueue<T>::~PQueue        (){
-    
+   
  }
 
  //=================================

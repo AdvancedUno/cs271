@@ -1,10 +1,10 @@
-all: main pq
+all: main1 main2
 
-main: main.o 
-	g++ -std=c++11 -Wall -g -o main main1.o 
+main1: main.o 
+	g++ -std=c++11 -Wall -g -o main1 main1.o 
 
-pq: pq.o  
-	g++ -std=c++11 -Wall -g -o pq main2.o 
+main2: pq.o  
+	g++ -std=c++11 -Wall -g -o main2 main2.o 
 
 main.o: main1.cpp Heap.h
 	g++ -std=c++11 -c -g -Wall main1.cpp

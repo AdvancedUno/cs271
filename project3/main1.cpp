@@ -84,17 +84,22 @@ int main(void) {
     cout << "---------------Test 3 Start---------------" << endl;
     int arr[5]= {1,2,70,10,9};
     Heap<int> heap_from_array(arr, 5);
-    heap_from_array.buildHeap();
     cout << "Heap 1 = " << heap_from_array << endl;
     assert( heap_from_array.max() == 70);
 
-    // !!!!!
     heap_from_array.heapSort();
     cout << "Sorted Heap 1  = " << heap_from_array << endl;
+    heap_from_array.buildHeap();
+
+    // Already sorted array
+    int arr_s[5]= {1,2,3,4,5};
+    Heap<int> heap_sorted(arr_s, 5);
+    heap_sorted.heapSort();
+    cout << "Heap_sorted = " << heap_sorted << endl;
+    heap_sorted.buildHeap();
 
     int arr2[5]= {1,1,1,1,2};
     Heap<int> heap_from_array2(arr2, 5);
-    heap_from_array2.buildHeap();
     cout << "Heap 2 = " << heap_from_array2 << endl;
     assert( heap_from_array2.max() == 2);
 
@@ -109,13 +114,6 @@ int main(void) {
     Heap<int> heap_from_array4(arr4, 4);
     heap_from_array4.buildHeap();
     cout << "Heap 4 = " << heap_from_array4 << endl;
-
-    //hepifying with one violation
-    int arr5[9]= {70,2,9,10,1,3,4,5,6};
-    Heap<int> heap_from_array5(arr5, 9);
-    cout << "Heap 5 = " << heap_from_array5 << endl;
-    heap_from_array5.heapify(1);
-    cout << "Heap 5 = " << heap_from_array5 << endl;
 
     cout << "Test 3 Pass" << endl;
 
@@ -155,6 +153,8 @@ int main(void) {
     for (int i= 0;i < len ;i++){
         heap.extract(); // Remove remaining elements
     }
+    heap.heapSort();
+    cout << "empty_heap = " << heap<< endl;
     assert(heap.empty() == true);
     cout << "Test 5 Pass" << endl;
 
@@ -162,6 +162,8 @@ int main(void) {
     cout << "---------------Test 6 Start---------------" << endl;
     Heap<int> single_heap;
     single_heap.insert(1);
+    single_heap.heapSort();
+    cout << "single_heap = " << single_heap<< endl;
     assert(single_heap.max() == 1);
     assert(single_heap.extract() == 1);
     assert(single_heap.empty() == true);
@@ -183,10 +185,10 @@ int main(void) {
     // Test 8: sorted check
     cout << "---------------Test 8 Start---------------" << endl;
     int sorted_array[5] = {1, 2, 3, 4, 5};
-    Heap<int> heap_sorted(sorted_array, 5);
-    heap_sorted.buildHeap();
-    assert(heap_sorted.max() == 5);
-    cout << "heap_sorted = " << heap_sorted << endl;
+    Heap<int> heap_sorted2(sorted_array, 5);
+    heap_sorted2.buildHeap();
+    assert(heap_sorted2.max() == 5);
+    cout << "heap_sorted2 = " << heap_sorted2 << endl;
     cout << "Test 8 Pass" << endl;
 
     // Test 9: Extract and empty function check
