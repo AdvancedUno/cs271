@@ -168,14 +168,60 @@ int main(void) {
     assert(single_heap.length() == 0);
     cout << "Test 6 Pass" << endl;
 
+       // Test 7: Neg number check
     cout << "---------------Test 7 Start---------------" << endl;
+    Heap<int> heap_neg;
+    heap_neg.insert(-1);
+    heap_neg.insert(-2);
+    heap_neg.insert(-3);
+    assert(heap_neg.extract() == -1);
+    assert(heap_neg.extract() == -2);
+    assert(heap_neg.extract() == -3);
+    cout << "heap_neg = " << heap_neg << endl;
+    cout << "Test 7 Pass" << endl;
+
+    // Test 8: sorted check
+    cout << "---------------Test 8 Start---------------" << endl;
+    int sorted_array[5] = {1, 2, 3, 4, 5};
+    Heap<int> heap_sorted(sorted_array, 5);
+    heap_sorted.buildHeap();
+    assert(heap_sorted.max() == 5);
+    cout << "heap_sorted = " << heap_sorted << endl;
+    cout << "Test 8 Pass" << endl;
+
+    // Test 9: Extract and empty function check
+    cout << "---------------Test 9 Start---------------" << endl;
+    Heap<int> heap_extract;
+    for (int i = 0; i < 5; ++i) {
+        heap_extract.insert(i);
+    }
+    while (!heap_extract.empty()) {
+        heap_extract.extract();
+    }
+    assert(heap_extract.empty() == true);
+    cout << "Test 9 Pass" << endl;
+
+    // Test 10: Pos Neg check
+    cout << "---------------Test 10 Start---------------" << endl;
+    Heap<int> heap_pn;
+    heap_pn.insert(-100);
+    heap_pn.insert(100);
+    heap_pn.insert(0);
+    assert(heap_pn.extract() == 100);
+    assert(heap_pn.extract() == 0);
+    assert(heap_pn.extract() == -100);
+    cout << "Test 10 Pass" << endl;
+
+
+    cout << "---------------Test 11 Start---------------" << endl;
     // Test last: Error handling, e.g., extract from an empty heap
     try {
         int_heap.extract();
-        
     } catch (const std::out_of_range& e) {
         std::cout << "Check: " << e.what() << std::endl;
     }
+    cout << "Test 11 Pass" << endl;
+
 
 
     cout << "                                                       " << endl;
@@ -247,6 +293,9 @@ int main(void) {
     assert(single_char_heap.empty() == true);
     assert(single_char_heap.length() == 0);
     cout << "Test 6 Pass" << endl;
+
+ 
+
 
 
     std::cout << "All Pass" << std::endl;

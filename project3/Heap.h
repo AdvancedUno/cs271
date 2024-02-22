@@ -198,7 +198,7 @@ void Heap<T> ::heapify (int index){
         large_index = left_index;
     }
 
-    // if rogjt child index is valid and right child is larger than the large_index element, set large_index to right child index
+    // if right child index is valid and right child is larger than the large_index element, set large_index to right child index
     if(right_index < size && heap_array[right_index] > heap_array[large_index]){
         large_index = right_index;
     }

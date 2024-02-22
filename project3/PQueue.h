@@ -23,15 +23,15 @@ public:
 	// Primary methods
     PQueue      (void); //default constructor
     PQueue      (const PQueue<T> &my_pqueue); // copy constructor
-    PQueue		 ( int array[], int size); // priority queue with array and size
+    PQueue		 ( T array[], int size); // priority queue with array and size
     ~PQueue      (void); //destructor
 
     PQueue<T>     operator=	    ( const PQueue<T> &my_pqueue ); //assignment operator
     void          enqueue       (T item);
     int           length        (void);
     bool          empty         (void);
-    T*            peek          (void);
-    T*            dequeue       (void);
+    T             peek          (void);
+    T             dequeue       (void);
 
 
 
@@ -70,8 +70,6 @@ public:
  template <class T>
  PQueue<T>::PQueue        (const PQueue<T> &my_pqueue){
     pq = Heap<T>(my_pqueue.pq);
-
-    
  }
 
  //=================================
@@ -150,7 +148,7 @@ public:
  template <class T>
  T             PQueue<T>::peek          (void){
 
-    return pq.max()
+    return pq.max();
 
  }
  //=================================
@@ -161,7 +159,7 @@ public:
  template <class T>
  T            PQueue<T>::dequeue         (void){
 
-    return pq.extract()
+    return pq.extract();
     
  }
 
