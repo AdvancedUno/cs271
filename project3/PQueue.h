@@ -42,9 +42,9 @@ public:
     {
         os << "[ ";
 
-        for(int i = 0 ; i < my_pqueue.length i ++){
+        for(int i = 0 ; i < my_pqueue.pq.length(); i ++){
 
-            os << my_pqueue[i] << " ";
+            os << my_pqueue.pq[i] << " ";
         }
 
         os << "]";
@@ -54,29 +54,41 @@ public:
 
  //=================================
  // default constructor
+ // params: none
+ // return val: none
  //=================================
  template <class T>
  PQueue<T>::PQueue        (void){
 
+
  }
  //=================================
  // copy constructor
+ // params: PQueue<T> &my_pqueue)
+ // return val: none
  //=================================
  template <class T>
  PQueue<T>::PQueue        (const PQueue<T> &my_pqueue){
+    pq = Heap<T>(my_pqueue.pq);
+
     
  }
 
  //=================================
  // constructor with array and size
+ // params: T array[], int size
+ // return val: none
  //=================================
  template <class T>
- PQueue<T>::PQueue        (int array[], int size){
+ PQueue<T>::PQueue        (T array[], int size){
+     pq(array, size);
     
  }
 
  //=================================
  // desturctor
+ // params: none
+ // return val: none
  //=================================
  template <class T>
  PQueue<T>::~PQueue        (){
@@ -85,46 +97,71 @@ public:
 
  //=================================
  // assignment operator
+ // params: PQueue<T> &my_pqueue)
+ // return val: PQueue<T> 
  //=================================
- template <class T>
+  template <class T>
  PQueue<T>  PQueue<T>::operator=	    ( const PQueue<T> &my_pqueue ){
+
+   pq = Heap<T>(my_pqueue.pq);
+   return *this;
     
  }
 
  //=================================
  // enqueue
+ // params: T item
+ // return val: none
  //=================================
  template <class T>
  void PQueue<T>::enqueue	    ( T item){
-    
+
+    return pq.insert(item);
+
  }
  //=================================
  // length
+ // params: none
+ // return val: int
  //=================================
  template <class T>
  int           PQueue<T>::length        (void){
+
+    return pq.length();
 
  }
 
  //=================================
  // empty
+ // params: none
+ // return val: boolean expression( true if the Pqueue is empty, false otherwise)
  //=================================
  template <class T>
  bool           PQueue<T>::empty       (void){
 
+    return pq.empty();
+
  }
  //=================================
  // peek
+ // params: none
+ // return val: T item
  //=================================
  template <class T>
- T*            PQueue<T>::peek          (void){
+ T             PQueue<T>::peek          (void){
+
+    return pq.max()
 
  }
  //=================================
  // dequeue
+ // params: none
+ // return val: T item
  //=================================
  template <class T>
- T*            PQueue<T>::dequeue         (void){
+ T            PQueue<T>::dequeue         (void){
+
+    return pq.extract()
     
  }
 
