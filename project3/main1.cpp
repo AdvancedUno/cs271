@@ -21,7 +21,8 @@ using namespace std;
 // RETURN: none
 //==============================================
 int main(void) {
-    
+    cout << "--------------- INT datatype Test Start---------------" << endl;
+    cout << "                                                       " << endl;
     // Test 1: Inserting
     cout << "---------------Test 1 Start---------------" << endl;
     Heap<int> heap;
@@ -175,6 +176,77 @@ int main(void) {
     } catch (const std::out_of_range& e) {
         std::cout << "Check: " << e.what() << std::endl;
     }
+
+
+    cout << "                                                       " << endl;
+    cout << "--------------- CHAR datatype Test Start---------------" << endl;
+    cout << "                                                       " << endl;
+    // Test 1: Inserting
+    cout << "---------------Test 1 Start---------------" << endl;
+    Heap<char> C_heap;
+    C_heap.insert('a');
+    C_heap.insert('b');
+    C_heap.insert('c');
+    C_heap.insert('A');
+    assert(C_heap.length() == 4);
+    cout << "C_Heap1 = " << C_heap << endl;    
+
+    //Exceeding capcity
+    Heap<char> C_heap2(2);
+    C_heap2.insert('A');
+    C_heap2.insert('a');
+    C_heap2.insert('a');
+    C_heap2.insert('a');
+    assert(C_heap2.length() == 4); 
+    cout << "C_heap2 = " << C_heap2 << endl;
+
+    // Test 2: Extract maximum
+    cout << "---------------Test 2 Start---------------" << endl;
+    char C_max = C_heap.extract();
+    assert(C_max == 'c');
+    assert(C_heap.length() == 3);
+    cout << "C_Heap 1 = " << C_heap << endl;
+    cout << "Heap max extracted= " << C_heap.max() << endl;
+
+    C_heap.extract();
+    C_heap.extract();
+    //extracting the last item
+    C_heap.extract();
+
+    //empty heap
+    assert(C_heap.length() == 0);
+    cout << "Heap = " << C_heap << endl;
+    cout << "Test 2 Pass" << endl;
+
+    // Test 3: Heapify and heap sort
+    cout << "---------------Test 3 Start---------------" << endl;
+    char C_arr[5]= {'a','b','f','d','e'};
+    Heap<char> C_heap_from_array(C_arr, 5);
+    C_heap_from_array.buildHeap();
+    cout << "C_Heap 1 = " << C_heap_from_array << endl;
+    assert( C_heap_from_array.max() == 'f');
+
+
+
+    // Test 5: Empty check
+    cout << "---------------Test 5 Start---------------" << endl;
+    assert(C_heap2.empty() == false);
+    int len2= C_heap2.length();
+    for (int i= 0;i < len2 ;i++){
+        C_heap2.extract(); // Remove remaining elements
+    }
+    assert(C_heap2.empty() == true);
+    cout << "Test 5 Pass" << endl;
+
+    // Test 6: Empty check
+    cout << "---------------Test 6 Start---------------" << endl;
+    Heap<char> single_char_heap;
+    single_char_heap.insert('k');
+    assert(single_char_heap.max() == 'k');
+    assert(single_char_heap.extract() == 'k');
+    assert(single_char_heap.empty() == true);
+    assert(single_char_heap.length() == 0);
+    cout << "Test 6 Pass" << endl;
 
 
     std::cout << "All Pass" << std::endl;
