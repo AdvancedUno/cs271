@@ -3,6 +3,7 @@
 // Heap data structure with method implementations
 // Name: EunHo Lee, Ritika Shrestha, Tomer
 // Date: 23 Feb 2024
+// This file contains declaration of heap class and impleamention of all heap class methods.
 //===============================
 
 #include <iostream>
@@ -12,7 +13,7 @@ using namespace std;
 
 #ifndef HEAP_H
 #define HEAP_H
-#define DEFAULT_LIST_SIZE 10
+#define DEFAULT_HEAP_SIZE 10
 
 template <class T> 
 class Heap
@@ -33,7 +34,7 @@ private:
 
 	
 public:
-	Heap		                ( void );
+	Heap		                ( void );   //Default constructor
 	Heap		                ( const Heap<T> &myHeap ); // copy constructor
     Heap		                ( int capacity); // empty heap with the specified capacity
     Heap		                ( T* array, int size); // heap with array and size
@@ -53,13 +54,13 @@ public:
 
 
 
-    friend ostream & operator<< ( ostream &os, T* &mylist )
+    friend ostream & operator<< ( ostream &os, Heap<T> &myHeap )
     {
         os << "[ ";
 
-        for(int i = 0 ; i < mylist.size; i ++){
+        for(int i = 0 ; i < myHeap.size; i ++){
 
-            os << mylist[i] << " ";
+            os << myHeap.heap_array[i] << " ";
         }
 
         os << "]";
@@ -70,20 +71,26 @@ public:
 };
 
 //==============================================
-// INPUT: 
-// RETURN: 
+// Heap(void)
+// default constructor
+// Create a empty heap with default capacity
+// INPUT: none
+// RETURN: none
 //==============================================
 template <class T>
 Heap<T> :: Heap(void){
   size =0;
-  capacity =DEFAULT_LIST_SIZE;
-  heap_array = new T[DEFAULT_LIST_SIZE];
+  capacity =DEFAULT_HEAP_SIZE;
+  heap_array = new T[DEFAULT_HEAP_SIZE];
   
 }
 
 //==============================================
-// INPUT: 
-// RETURN: 
+// Heap( const Heap<T> &myHeap )
+// Copy Contructor 
+// Create a new heap from an existing one.
+// INPUT: const Heap<T> &myHeap 
+// RETURN: none
 //==============================================
 template <class T>
 Heap<T> :: Heap( const Heap<T> &myHeap ){
@@ -98,19 +105,26 @@ Heap<T> :: Heap( const Heap<T> &myHeap ){
 }
 
 //==============================================
-// INPUT: 
-// RETURN: 
+// Heap( int arr_capacity )
+// Contructor 
+// Creates a new heap of specified capacity 
+// INPUT: int arr_capacity 
+// RETURN: none
 //==============================================
 template <class T>
 Heap<T> :: Heap( int arr_capacity ){
+    size = 0;
     capacity = arr_capacity;
     heap_array = new T[arr_capacity];
     
 }
 
 //==============================================
-// INPUT: 
-// RETURN: 
+// Heap( T* array, int arr_size )
+// Contructor for heap class
+// Create a new heap with specified array and size
+// INPUT: int arr_capacity 
+// RETURN: none
 //==============================================
 template <class T>
 Heap<T> :: Heap( T* array, int arr_size ){
@@ -126,29 +140,38 @@ Heap<T> :: Heap( T* array, int arr_size ){
 
 
 //==============================================
-// INPUT: 
-// RETURN: 
+// ~Heap(void)
+// Destructor for heap class
+// Cleans up the heap.
+// INPUT: none
+// RETURN: none
 //==============================================
 template <class T>
 Heap<T> :: ~Heap(void){
-  
 
     size = 0;
-    
-
-
+   
 }
 
 //==============================================
-// INPUT: 
-// RETURN: 
+// operator= 
+// Assignment operator.
+// Assign heap to the class
+// INPUT: const Heap<T> &myHeap 
+// RETURN: Heap<T> 
 //==============================================
 template <class T>
 Heap<T>  Heap<T> ::operator= ( const Heap<T> &myHeap ){
+    //Clearing the current heap
+    size = 0; 
+    capacity = 0;
 
-    
-    heap_array = myHeap.heap_array;
+    heap_array = new T[myHeap.capacity];
+    for(int i = 0; i < myHeap.size; i++){
+        heap_array[i] = myHeap.heap_array[i];
+    }
     size = myHeap.size;
+    capacity = myHeap.capacity;
 
     return *this;
     
@@ -191,8 +214,6 @@ void Heap<T> ::heapify (int index){
         heapify(large_index);
     }
 
-
-
     return;
 }
 
@@ -212,10 +233,10 @@ void Heap<T> ::buildHeap (void){
 
 
 //==============================================
-// heapSort (void)
-// It sorts an array in decending order by calling buildHeap to build max-heap on the array. 
-// INPUT: 
-// RETURN: 
+// increaseKey(int index)
+// Position the inserted item to maintain the max-heap property
+// INPUT: int index
+// RETURN: none
 //==============================================
 template <class T>
 void Heap<T>::increaseKey(int index){
@@ -228,22 +249,25 @@ void Heap<T>::increaseKey(int index){
         increaseKey(index);
     }
 
-
     return;
 }
 
 //==============================================
-// INPUT: 
-// RETURN: 
+//insert(T item)
+// Inserts an item in the heap and position it properly by calling increase key
+// INPUT: T item
+// RETURN: none
 //==============================================
 template <class T>
 void Heap<T>::insert(T item){
 
-    heap_array.append(item);
+    if(size == capacity){
+        reallocate();
+    }
+    heap_array[size] = item;
     size++;
 
     increaseKey(size-1);
-
 
 }
 
@@ -274,21 +298,20 @@ int Heap<T>::findParent(int index){
 //==============================================
 // heapSort (void)
 // It sorts an array in decending order by calling buildHeap to build max-heap on the array. 
-// INPUT: 
-// RETURN: 
+// INPUT: None 
+// RETURN: None
 //==============================================
 template <class T>
-T* Heap<T>::heapSort (void){
+void Heap<T>::heapSort (void){
 
-    buildHeap();// input??
-    // i should be the length of the array to sort !! 
-    for (int i = size-1; i >0 ; i--){
+    buildHeap();
+    int len= size-1;
+    for (int i = len; i > 0 ; i--){
         swapVal(0, i);
-        size --;
+        size--;
         heapify(0);
     }
-    
-    return heap_array;
+
 }
 
 //==============================================
@@ -340,39 +363,38 @@ T Heap<T> ::extract (void){
     if(size == 0){
         cout << "Heap is empty" << endl;
         throw std::out_of_range("Heap<T>::extract (void) : heap is empty");
-        
+
     }  
     T max_item = heap_array[0]; 
     //Replacing the max item with the last item in the heap
     heap_array[0] = heap_array[size-1];
-    heap_array.remove(heap_array.length()-1);
-    size --;
+    size--;
     heapify(0);
     return max_item;
 }
 
 //==============================================
 // reallocate(void)
-// Reallocate the list
+// Reallocate the heap with double the capacity 
 // INPUT: none
 // RETURN: none
 //==============================================
 template <typename T>
 void Heap<T> ::reallocate(void){
     capacity *= 2;
-    T *temp_list = list;
-    list = new T[capacity];
+    T *temp_heap = heap_array;
+    heap_array = new T[capacity];
     for(int i = 0; i < size; i++){
-        list[i] = temp_list[i];
+        heap_array[i] = temp_heap[i];
     }
-    delete[] temp_list;
+    delete[] temp_heap;
 }
 
 
 
 
 
-#endif 
+#endif  
 
 
 
