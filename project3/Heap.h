@@ -251,7 +251,11 @@ void Heap<T> ::buildHeap (void){
 //==============================================
 template <class T>
 void Heap<T>::increaseKey(int index){
-
+    if(index < 0 || index > size){
+        cout << "Invalid Index" << endl;
+        throw std::out_of_range("Heap<T> ::heapify (int index) : Invalid Index");
+        exit(0);
+    }
     int parent_index = findParent(index);
 
     if(index >0 && heap_array[parent_index] < heap_array[index]){
@@ -284,8 +288,10 @@ void Heap<T>::insert(T item){
 
 
 //==============================================
-// INPUT: 
-// RETURN: 
+// swapVal(int a, int b)
+// It swaps the item in heap at index a with b
+// INPUT: int a, int b
+// RETURN: none
 //==============================================
 template <class T>
 void Heap<T>::swapVal(int a, int b){
@@ -297,13 +303,25 @@ void Heap<T>::swapVal(int a, int b){
 }
 
 //==============================================
-// INPUT: 
-// RETURN: 
+// findParent(int index)
+// It finds the parent node from the given node
+// INPUT: int index
+// RETURN: int
 //==============================================
 template <class T>
 int Heap<T>::findParent(int index){
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
     if(size <2)return -1;
     return (index -1)/2;
+=======
+
+    return (index - 1)/2;
+>>>>>>> Stashed changes
+=======
+
+    return (index - 1)/2;
+>>>>>>> Stashed changes
 }
 
 //==============================================
