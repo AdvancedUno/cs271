@@ -310,18 +310,9 @@ void Heap<T>::swapVal(int a, int b){
 //==============================================
 template <class T>
 int Heap<T>::findParent(int index){
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
     if(size <2)return -1;
     return (index -1)/2;
-=======
-
-    return (index - 1)/2;
->>>>>>> Stashed changes
-=======
-
-    return (index - 1)/2;
->>>>>>> Stashed changes
 }
 
 //==============================================
