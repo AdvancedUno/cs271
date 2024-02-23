@@ -53,8 +53,7 @@ public:
  //=================================
  template <class T>
  PQueue<T>::PQueue        (void){
-    pq = Heap<T>();
-
+    //pq = Heap<T>();
  }
  //=================================
  // copy constructor
@@ -94,7 +93,7 @@ public:
   template <class T>
  PQueue<T>  PQueue<T>::operator=	    ( const PQueue<T> &my_pqueue ){
 
-   pq=  Heap<T>(my_pqueue.pq);
+   pq =  Heap<T>(my_pqueue.pq);
    return *this;
     
  }
@@ -111,6 +110,7 @@ public:
     return pq.insert(item);
 
  }
+
  //=================================
  // length
  // It returns the number of items in the priority queue.
@@ -136,6 +136,7 @@ public:
     return pq.empty();
 
  }
+
  //=================================
  // peek
  // It returns the first item in the priority queue without removing it.
@@ -161,10 +162,7 @@ public:
     
  }
 
-
-
  
-
 
 
 #endif
