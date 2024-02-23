@@ -113,6 +113,11 @@ Heap<T> :: Heap( const Heap<T> &myHeap ){
 //==============================================
 template <class T>
 Heap<T> :: Heap( int arr_capacity ){
+    
+    if(arr_capacity < 0){
+        cout << "capacity cannot be negative" << endl;
+        throw std::out_of_range("Heap<T> :: Heap( int arr_capacity ) : capacity cannot be negative");
+    }  
     size = 0;
     capacity = arr_capacity;
     heap_array = new T[arr_capacity];
@@ -148,9 +153,9 @@ Heap<T> :: Heap( T* array, int arr_size ){
 //==============================================
 template <class T>
 Heap<T> :: ~Heap(void){
-
+    delete[] heap_array;
     size = 0;
-   
+    capacity = 0;
 }
 
 //==============================================
@@ -163,6 +168,7 @@ Heap<T> :: ~Heap(void){
 template <class T>
 Heap<T>  Heap<T> ::operator= ( const Heap<T> &myHeap ){
     //Clearing the current heap
+    delete[] heap_array;
     size = 0; 
     capacity = 0;
 

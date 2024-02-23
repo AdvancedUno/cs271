@@ -53,7 +53,7 @@ public:
  //=================================
  template <class T>
  PQueue<T>::PQueue        (void){
-
+    pq = Heap<T>();
 
  }
  //=================================
@@ -73,7 +73,7 @@ public:
  //=================================
  template <class T>
  PQueue<T>::PQueue        (T array[], int size){
-   pq(array, size);
+   pq = Heap<T>(array, size);
  }
 
  //=================================
@@ -94,7 +94,7 @@ public:
   template <class T>
  PQueue<T>  PQueue<T>::operator=	    ( const PQueue<T> &my_pqueue ){
 
-   pq = Heap<T>(my_pqueue.pq);
+   pq=  Heap<T>(my_pqueue.pq);
    return *this;
     
  }
