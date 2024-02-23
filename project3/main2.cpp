@@ -97,10 +97,14 @@ int main ( void)
     pq_ori.enqueue(10);
     pq_ori.enqueue(7);
     PQueue<int> pq_assign;
+    cout << "pq_ori = " << pq_ori << endl;
     pq_assign = pq_ori;
+    cout << "pq_assign = " << pq_assign << endl;
     assert(pq_assign.peek() == 10);
     assert(pq_assign.length() == 3);
     pq_ori.dequeue();
+    cout << "pq_ori = " << pq_ori << endl;
+    cout << "pq_assign = " << pq_assign << endl;
     assert(pq_assign.peek() == 10);
     assert(pq_assign.length() == 3);
     cout << "Test 8 Pass" << endl;
