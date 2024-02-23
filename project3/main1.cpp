@@ -225,6 +225,7 @@ int main(void) {
     // Test last: Error handling, e.g., extract from an empty heap
     try {
         int_heap.extract();
+        int_heap.heapify(-10);
     } catch (const std::out_of_range& e) {
         std::cout << "Check: " << e.what() << std::endl;
     }
