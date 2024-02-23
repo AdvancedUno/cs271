@@ -48,6 +48,7 @@ public:
 
  //=================================
  // default constructor
+ // create and initalize the priority queue 
  // params: none
  // return val: none
  //=================================
@@ -57,6 +58,7 @@ public:
  }
  //=================================
  // copy constructor
+ // create a priority queue using the copy constructor of the heap class.
  // params: PQueue<T> &my_pqueue)
  // return val: none
  //=================================
@@ -67,6 +69,8 @@ public:
 
  //=================================
  // constructor with array and size
+ // creating a priority queue from a specified array and size
+ // using the method of the heap class
  // params: T array[], int size
  // return val: none
  //=================================
@@ -77,6 +81,7 @@ public:
 
  //=================================
  // desturctor
+ // delete the priority queue
  // params: none
  // return val: none
  //=================================
@@ -87,6 +92,8 @@ public:
 
  //=================================
  // assignment operator
+ // assign priority queue to another using the assignment operator
+ // of the heap class
  // params: PQueue<T> &my_pqueue)
  // return val: PQueue<T> 
  //=================================

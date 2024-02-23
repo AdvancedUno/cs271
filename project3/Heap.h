@@ -79,6 +79,7 @@ public:
 //==============================================
 template <class T>
 Heap<T> :: Heap(void){
+  // intialize size to 0, capacity to DEFAULT_HEAP_SIZE and creating new dynamic array .
   size =0;
   capacity =DEFAULT_HEAP_SIZE;
   heap_array = new T[DEFAULT_HEAP_SIZE];
@@ -95,10 +96,13 @@ Heap<T> :: Heap(void){
 template <class T>
 Heap<T> :: Heap( const Heap<T> &myHeap ){
 
+    // creating new dynamic array with the capacity of the parameter object.
     heap_array = new T[myHeap.capacity];
+    // populating heap_array with the elements of the parameter object.
     for(int i = 0; i < myHeap.size; i++){
         heap_array[i] = myHeap.heap_array[i];
     }
+    // set the size and capacity of heap_array to the size and capacity of the parameter object.
     size = myHeap.size;
     capacity = myHeap.capacity;
 
@@ -113,11 +117,12 @@ Heap<T> :: Heap( const Heap<T> &myHeap ){
 //==============================================
 template <class T>
 Heap<T> :: Heap( int arr_capacity ){
-    
+    // taking care of invalid index
     if(arr_capacity < 0){
         cout << "capacity cannot be negative" << endl;
         throw std::out_of_range("Heap<T> :: Heap( int arr_capacity ) : capacity cannot be negative");
     }  
+    // creating a new dynamic array with size 0 and the parameter capacity
     size = 0;
     capacity = arr_capacity;
     heap_array = new T[arr_capacity];
@@ -134,12 +139,16 @@ Heap<T> :: Heap( int arr_capacity ){
 template <class T>
 Heap<T> :: Heap( T* array, int arr_size ){
 
+    // creating a new dynamic array
     heap_array = new T[arr_size];
+    // populating the heap array with the paramet array elements
     for(int i = 0; i < arr_size; i++){
         heap_array[i] = array[i];
     }
+    // set the size and the capacity of the heap array to the size of the parameter array
     size = arr_size;
     capacity = arr_size;
+    // calling the build heap function to build the heap
     buildHeap();
 }
 
@@ -172,6 +181,7 @@ Heap<T>  Heap<T> ::operator= ( const Heap<T> &myHeap ){
     size = 0; 
     capacity = 0;
 
+    // creating a new heap arrau using the copy constructor
     heap_array = new T[myHeap.capacity];
     for(int i = 0; i < myHeap.size; i++){
         heap_array[i] = myHeap.heap_array[i];
@@ -179,6 +189,7 @@ Heap<T>  Heap<T> ::operator= ( const Heap<T> &myHeap ){
     size = myHeap.size;
     capacity = myHeap.capacity;
 
+    // return the calling object.
     return *this;
     
 }
@@ -236,6 +247,7 @@ void Heap<T> ::heapify (int index){
 //==============================================
 template <class T>
 void Heap<T> ::buildHeap (void){
+    //calling heapify function on non leaf nodes to build an heap
     for (int i = findParent(size-1); i >= 0; i--){
         heapify(i);
     }
@@ -251,13 +263,14 @@ void Heap<T> ::buildHeap (void){
 //==============================================
 template <class T>
 void Heap<T>::increaseKey(int index){
+    // taking care of invalid index
     if(index < 0 || index > size){
         cout << "Invalid Index" << endl;
         throw std::out_of_range("Heap<T> ::heapify (int index) : Invalid Index");
         exit(0);
     }
     int parent_index = findParent(index);
-
+    // maintain the max heap property by taking care that each node in its right place
     if(index >0 && heap_array[parent_index] < heap_array[index]){
         swapVal(index , parent_index);
         index = parent_index;
@@ -275,7 +288,7 @@ void Heap<T>::increaseKey(int index){
 //==============================================
 template <class T>
 void Heap<T>::insert(T item){
-
+    // reallocate if exceed capacity
     if(size == capacity){
         reallocate();
     }
@@ -328,6 +341,7 @@ void Heap<T>::heapSort (void){
     for (int i = len; i > 0 ; i--){
         swapVal(0, i);
         size--;
+        // calling heapify on the new root to maintain the max-heap property
         heapify(0);
     }
     //Adjusting the array size to sorted part
@@ -365,6 +379,7 @@ bool Heap<T> ::empty (void){
 //==============================================
 template <class T>
 T Heap<T>::max (void){
+    // taking care of the case where the heap is empty
     if(size == 0){
         cout << "Heap is empty" << endl;
         throw std::out_of_range("Heap<T>::max (void) : heap is empty");
@@ -386,6 +401,7 @@ T Heap<T> ::extract (void){
         throw std::out_of_range("Heap<T>::extract (void) : heap is empty");
 
     }  
+    // storing the max node (the root) in max_item
     T max_item = heap_array[0]; 
     //Replacing the max item with the last item in the heap
     heap_array[0] = heap_array[size-1];
