@@ -302,7 +302,7 @@ void Heap<T>::swapVal(int a, int b){
 //==============================================
 template <class T>
 int Heap<T>::findParent(int index){
-
+    if(size <2)return -1;
     return (index -1)/2;
 }
 
