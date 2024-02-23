@@ -192,8 +192,8 @@ Heap<T>  Heap<T> ::operator= ( const Heap<T> &myHeap ){
 template <class T>
 void Heap<T> ::heapify (int index){
     if(index < 0 || index > size){
-        cout << "Heap is empty" << endl;
-        throw std::out_of_range("Heap<T>::max (void) : heap is empty");
+        cout << "Invalid Index" << endl;
+        throw std::out_of_range("Heap<T> ::heapify (int index) : Invalid Index");
         exit(0);
     }
 

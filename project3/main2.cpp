@@ -175,7 +175,7 @@ int main ( void)
     assert(max2 == 'c');
     cout << "Test 4 Pass" << endl;
 
-     // Test 5: Assignment operator
+    // Test 5: Assignment operator
      cout << "---------------Test 5 Start---------------" << endl;
      char_pri_queue2.enqueue('p');
      char_pri_queue2.enqueue('q');
@@ -187,6 +187,32 @@ int main ( void)
      assert(char_pri_queue.peek()== 't');
      cout << "Test 5 Pass" << endl;
 
+    //Test 6: pq from array and size
+     cout << "---------------Test 6 Start---------------" << endl;
+     char arr2[6] = {'a','b','c','d','z','a'};
+     PQueue<char> pch_queue5(arr2,6);
+     cout << "pch_queue5:  " << pch_queue5 << endl;
+     cout << "Test 6 Pass" << endl;
+
+
+     //Test 7: dequqeu from empty pqueue
+     cout << "---------------Test 7 Start---------------" << endl;
+     PQueue<char> pch_queue4;
+     try {
+        pch_queue4.dequeue();
+     } catch (const std::out_of_range& e) {
+        std::cout << "run time error: " << e.what() << std::endl;
+     }
+     cout << "Test 7 Pass" << endl;
+
+     //Test 8: peek from empty pqueue
+     cout << "---------------Test 8 Start---------------" << endl;
+     try {
+        pch_queue4.peek();
+     } catch (const std::out_of_range& e) {
+        std::cout << "run time error: " << e.what() << std::endl;
+     }
+     cout << "Test 8 Pass" << endl;
 
     cout << "Pass All Test Cases" << endl;
 
