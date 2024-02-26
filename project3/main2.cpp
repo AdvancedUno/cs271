@@ -218,7 +218,45 @@ int main ( void)
      }
      cout << "Test 8 Pass" << endl;
 
+
+
+   // Test 9: Check float
+    cout << "---------------Test 9 Start---------------" << endl;
+    PQueue<float> pq_f1;
+    pq_f1.enqueue(5.11);
+    pq_f1.enqueue(8.2);
+    pq_f1.enqueue(3.1);
+    cout << "pq_f1 = " << pq_f1 << endl; 
+   cout << "pq_f1  peek = " << pq_f1.peek() << endl; 
+
+    assert(pq_f1.peek() == float(8.2));
+    assert(pq_f1.length() == 3);
+    assert(pq_f1.dequeue() == float(8.2));
+    assert(pq_f1.dequeue() == float(5.11));
+    assert(pq_f1.length() == 1);
+    cout << "Test 9 Pass" << endl;
+
     cout << "Pass All Test Cases" << endl;
+
+
+    // Test 10: Check double
+    cout << "---------------Test 10 Start---------------" << endl;
+    PQueue<double> pq_d1;
+    pq_d1.enqueue(5.11);
+    pq_d1.enqueue(8.2);
+    pq_d1.enqueue(3.1);
+    cout << "pq_f1 = " << pq_d1 << endl; 
+   cout << "pq_f1  peek = " << pq_d1.peek() << endl; 
+
+    assert(pq_d1.peek() == 8.2);
+    assert(pq_d1.length() == 3);
+    assert(pq_d1.dequeue() == 8.2);
+    assert(pq_d1.dequeue() == 5.11);
+    assert(pq_d1.length() == 1);
+    cout << "Test 10 Pass" << endl;
+
+    cout << "Pass All Test Cases" << endl;
+
 
 
 
