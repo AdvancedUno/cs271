@@ -9,7 +9,8 @@
 using namespace std;
 #ifndef LIST_H
 #define LIST_H
-template <class T>
+
+template <typename T>
 class List
 {
 private:
@@ -34,6 +35,7 @@ public:
     int length ( void ) const;
     bool isEmpty ( void ) const;
     void clear ( void );
+    bool query ( const T &item );
     friend ostream & operator<< ( ostream &os, List<T> &mylist )
     {
         Node *ptr = mylist.head;
@@ -50,61 +52,8 @@ public:
         return os;
     }
 };
-//#include "List.cpp"
-#include <iostream>
-using namespace std;
-#ifndef HASH_H_H
-#define HASH_H
-#include "List.h"
-template <typename T>
-class List
-{
-    public:
-    List ( void );
-    List ( const List<T> &l );
-    ~List ( void );
-    List<T> operator= ( const List<T> &l );
-    void append ( T item );
-    void insert ( T item, int position );
-    int length ( void ) const;
-    T & operator[] ( int position );
-    void remove ( int position );
-    bool isEmpty ( void ) const;
-    void clear ( void );
 
-    friend ostream & operator << ( ostream &os, const List<T> &l )
-    {
-        os << "[ ";
-        for ( int i = 0; i < l.size-1; i++ )
-        os << l.list[i] << ", ";
-        if ( l.size != 0 )
-        os << l.list[l.size-1] << " ]";
-        else
-        os << " ]";
-        return os;
-    }
-private:
-    // the maximum capacity of the array storing the list
-    int capacity;
-    // the current number of items in the list
-    int size;
-    // the dynamically allocated array storing the list
-    T *list;
-    // make the array twice as big to hold more items
-    void reallocate ( void );
-};
-//========================================================
-// Tomer Osmo
-// List.cpp
-// November 2023
-// This file contains the class methods for the
-// List class.
-//========================================================
-#include "List.h"
-#include <string.h>
-#include <iostream>
-#include <cmath>
-using namespace std;
+
 //========================================================
 // Default Constructior
 // this method creates initializes a List object.
@@ -388,6 +337,18 @@ List<T> List<T>::operator+ ( const List<T> &mylist ) const
         mylist_copy = mylist_copy->next;
     }
     return lst;
+}
+
+bool    List<T>::query ( const T &item )
+{
+    Node *temp = head;
+    while(temp!=NULL)
+    {
+        if (temp->item == item)
+            return true;
+        temp = temp->next;
+    }
+    return false;
 }
 //#include "List.cpp" // this is necessary because the list
 // class is a template and cannot be
