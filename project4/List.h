@@ -338,7 +338,13 @@ List<T> List<T>::operator+ ( const List<T> &mylist ) const
     }
     return lst;
 }
-
+//========================================================
+// query
+// This method returns true if the item given in the parameter
+// exists in the list and false if not.
+// params: T item
+// return value: boolean
+//========================================================
 bool    List<T>::query ( const T &item )
 {
     Node *temp = head;
@@ -350,6 +356,14 @@ bool    List<T>::query ( const T &item )
     }
     return false;
 }
+
+//========================================================
+// remove by item
+// This method removes from the list the first occurance
+// of the item given in the parameter.
+// params: T item
+// return value: none
+//========================================================
 void    List<T>::remove_by_item (T &item)
 {
     Node *current = head;
