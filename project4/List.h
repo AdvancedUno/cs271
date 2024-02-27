@@ -31,6 +31,7 @@ public:
     T & operator[] ( int index );
     void insert ( const T &item, int index );
     void remove ( int index );
+    void remove_by_item (T &item);
     List<T> operator+ ( const List<T> &mylist ) const;
     int length ( void ) const;
     bool isEmpty ( void ) const;
@@ -306,8 +307,7 @@ void List<T>::clear ( void )
     Node *temp1 = this->head;
     while (temp1)
     {
-        Node *temp2 = temp1->next; // save the next node before deleting the
-        current one
+        Node *temp2 = temp1->next; // save the next node before deleting the current one
         delete temp1;
         temp1 = temp2;  
     }   
@@ -349,6 +349,29 @@ bool    List<T>::query ( const T &item )
         temp = temp->next;
     }
     return false;
+}
+void    List<T>::remove_by_item (T &item)
+{
+    Node *current = head;
+    Node *prev = NULL;
+
+    while ((current != NULL) && (current->item != item))
+    {
+        prev = current;
+        current = current->next;
+    }
+    if (current != NULL)
+    {
+        if(prev!= NULL)
+        {
+            prev->next = current->next;
+        }
+        else
+        {
+            head = current->next;
+        }
+        delete current;
+    }
 }
 //#include "List.cpp" // this is necessary because the list
 // class is a template and cannot be
