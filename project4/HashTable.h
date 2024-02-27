@@ -30,17 +30,13 @@ public:
 
     friend ostream & operator<< ( ostream &os, Hash<T> &myHash )
     {
-        Node *ptr = mylist.head;
-        os << "[ ";
-        while ( ptr != NULL )
+        
+        for(int i = 0; i< myHash.table_size; i++)
         {
-            if ( ptr->next != NULL )
-                os << ptr->item << ", ";
-            else
-                os << ptr->item << " ";
-            ptr = ptr->next;
+            List <T> mylist = myHash.table[i];
+            os << mylist;
+            os << "," << endl;
         }
-        os << "]";
         return os;
     }
 };
@@ -59,14 +55,48 @@ HashTable<T>:: HashTable		      ( int size)
 
 HashTable<T>::HashTable		         ( const HashTable<T> &myHash )
 {
+    table_size = myHash.table_size;
+    table = new List<T>[table_size];
+    for (int i = 0; i < table_size; i++)
+    {
+        List<T> other = myHash.table[i];
+        Node *temp = other.head;
+        while(temp != NULL)
+        {
+            table[i].append(temp->item);
+            temp = temp->next;
+        }
 
+    }
+    
 }
-
-
 
 HashTable<T>:: ~HashTable		      ( void )
 {
     delete []table;
     table_size = 0;
+}
+
+HashTable<T>     HashTable<T>:: operator=	    ( const HashTable<T> &myHash )
+{
+    delete []table;
+    table_size = 0;
+
+     table_size = myHash.table_size;
+    table = new List<T>[table_size];
+    for (int i = 0; i < table_size; i++)
+    {
+        List<T> other = myHash.table[i];
+        Node *temp = other.head;
+        while(temp != NULL)
+        {
+            table[i].append(temp->item);
+            temp = temp->next;
+        }
+
+    }
+
+    return *this;
+
 }
 
