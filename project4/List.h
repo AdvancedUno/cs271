@@ -345,6 +345,7 @@ List<T> List<T>::operator+ ( const List<T> &mylist ) const
 // params: T item
 // return value: boolean
 //========================================================
+template <typename T>
 bool    List<T>::query ( const T &item )
 {
     Node *temp = head;
@@ -364,6 +365,7 @@ bool    List<T>::query ( const T &item )
 // params: T item
 // return value: none
 //========================================================
+template <typename T>
 void    List<T>::remove_by_item (T &item)
 {
     Node *current = head;

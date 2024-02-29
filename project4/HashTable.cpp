@@ -12,6 +12,8 @@ using namespace std;
 // Params: none
 // return value: none
 //========================================================
+
+template <typename T>
 HashTable<T>:: HashTable		      ( void )
 {
     table_size = 10;
@@ -24,6 +26,8 @@ HashTable<T>:: HashTable		      ( void )
 // Params: int size
 // return value: none
 //========================================================
+
+template <typename T>
 HashTable<T>:: HashTable		      ( int size)
 {
     table_size = size;
@@ -35,6 +39,8 @@ HashTable<T>:: HashTable		      ( int size)
 // Params: HashTable<T> &myHash
 // return value: none
 //========================================================
+
+template <typename T>
 HashTable<T>::HashTable		         ( const HashTable<T> &myHash )
 {
     table_size = myHash.table_size; // copy the size
@@ -58,6 +64,8 @@ HashTable<T>::HashTable		         ( const HashTable<T> &myHash )
 // Params: none
 // return value: none
 //========================================================
+
+template <typename T>
 HashTable<T>::~HashTable		      ( void )
 {
     delete []table;
@@ -69,6 +77,7 @@ HashTable<T>::~HashTable		      ( void )
 // Params: HashTable<T> &myHash
 // return value: HashTable<T>  
 //========================================================
+template <typename T>
 HashTable<T>     HashTable<T>:: operator=	    ( const HashTable<T> &myHash )
 {
     delete []table;
@@ -101,6 +110,7 @@ HashTable<T>     HashTable<T>:: operator=	    ( const HashTable<T> &myHash )
 // params: T item
 // return value: none
 //========================================================
+template <typename T>
 void          HashTable<T>::remove          ( T &item )
 {
     int val = getHashValue(item);
@@ -113,6 +123,7 @@ void          HashTable<T>::remove          ( T &item )
 // params: T item
 // return value: none
 //========================================================
+template <typename T>
 void          HashTable<T>::insert         ( T &item )
 {
     int val = getHashValue(item);
@@ -124,6 +135,7 @@ void          HashTable<T>::insert         ( T &item )
 // params: none
 // return value: none
 //========================================================
+template <typename T>
 void        HashTable<T>::clearAll        ( void )
 {
     for (int i = 0; i <table_size;i++)
@@ -138,13 +150,19 @@ void        HashTable<T>::clearAll        ( void )
 // params: T item
 // return value: boolean
 //========================================================
+template <typename T>
 bool         HashTable<T>::query           ( const T &item )
 {
-    for(int i = 0; i < table_size; i++)
-    {
-        if(table[i].query(item))
-            return true;
-    }
+    // for(int i = 0; i < table_size; i++)
+    // {
+    //     if(table[i].query(item))
+    //         return true;
+    // }
+
+    int val = getHashValue(item);
+    if(table[val].query(item))
+        return true;
+
     return false;
 }
 //========================================================
@@ -153,6 +171,7 @@ bool         HashTable<T>::query           ( const T &item )
 // params: int slot
 // return value: int
 //========================================================
+template <typename T>
 int        HashTable<T>::getSlotCount    ( int slot )
 {
     return table[slot].length();
@@ -163,6 +182,7 @@ int        HashTable<T>::getSlotCount    ( int slot )
 // params: none
 // return value: int
 //========================================================
+template <typename T>
 int        HashTable<T>::getNumSlots    ( void )
 {
     return table_size;
