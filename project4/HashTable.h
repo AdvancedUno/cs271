@@ -1,8 +1,9 @@
+
 #include <iostream>
 #include <string>
 #include <cstring>
 using namespace std;
-#ifndef HASHTABLE_H_
+#ifndef HASHTABLE_H
 #define HASHTABLE_H
 #include "List.h"
 #include "Board.h"
@@ -157,7 +158,8 @@ template <typename T>
     return table_size;
  }
 */
-//#include "HashTable.cpp"
+
+#include "HashTable.cpp"
 
 
 

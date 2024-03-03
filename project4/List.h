@@ -1,5 +1,5 @@
 //========================================================
-// Matt Kretchmar
+// Ritika, EunHo , Tomer
 // November 2023
 // List.h
 // This file contains the List class declaration.
@@ -19,7 +19,9 @@ private:
     {
         T item;
         Node *next;
+        Node(T val) : item(val),next(nullptr) {}
     };
+
     Node *head; // the pointer for the linked list
 public:
     List ( void );
@@ -86,13 +88,15 @@ List<T>::List ( const List<T> &mylist )
         if (!head)
         {
         // If the list is empty, create a new node for the head
-            head = new Node{temp_mylist->item, nullptr};
+            //head = new Node{temp_mylist->item, nullptr};
+            head = new Node(temp_mylist->item);
             temp_head = head;
         }
         else
         {
             // Append a new node to the list
-            temp_head->next = new Node{temp_mylist->item, nullptr};
+            //temp_head->next = new Node{temp_mylist->item, nullptr};
+            temp_head->next = new Node(temp_mylist->item);
             temp_head = temp_head->next;
         }
         temp_mylist = temp_mylist->next;
@@ -129,13 +133,15 @@ List<T> List<T>::operator= (const List<T> &mylist )
         if (!head)
         {
             // If the list is empty, create a new node for the head
-            head = new Node{temp_mylist->item, nullptr};
+            //head = new Node{temp_mylist->item, nullptr};
+            head = new Node(temp_mylist->item);
             temp_head = head;
         }
         else
         {
             // Append a new node to the list
-            temp_head->next = new Node{temp_mylist->item, nullptr};
+            //temp_head->next = new Node{temp_mylist->item, nullptr};
+            temp_head->next = new Node(temp_mylist->item);
             temp_head = temp_head->next;
         }       
         temp_mylist = temp_mylist->next;
@@ -154,7 +160,8 @@ void List<T>::append ( const T &item)
     if (!head)
     {
         // If the list is empty, create a new node for the head
-        head = new Node{item, nullptr};
+        //head = new Node{item, nullptr};
+        head = new Node(item);
     }
     else
     {
@@ -162,7 +169,8 @@ void List<T>::append ( const T &item)
         Node *temp = head;
         while (temp->next)
             temp = temp->next;
-        temp->next = new Node{item, nullptr};
+        //temp->next = new Node{item, nullptr};
+        temp->next = new Node(item);
     }
 }
 //========================================================
@@ -183,6 +191,7 @@ void List<T>::insert ( const T &item, int index )
     Node *temp1 = head;
     Node *new_node = new Node;
     new_node->item = item;
+    new_node->next = nullptr;
     if (index == 0) // special case
     {
         new_node->next = temp1;
@@ -332,7 +341,8 @@ List<T> List<T>::operator+ ( const List<T> &mylist ) const
     }
     while (mylist_copy)
     {
-        lst_copy->next = new Node{mylist_copy->item, nullptr};
+        //lst_copy->next = new Node{mylist_copy->item, nullptr};
+        lst_copy->next = new Node(mylist_copy->item);
         lst_copy = lst_copy->next;
         mylist_copy = mylist_copy->next;
     }

@@ -3,7 +3,7 @@
 #include <cmath>
 #include <cstring>
 #include "HashTable.h"
-#include "List.h"
+// #include "List.h"
 using namespace std;
 
 //========================================================
@@ -18,6 +18,7 @@ HashTable<T>:: HashTable		      ( void )
 {
     table_size = 10;
     table = new List<T>[table_size];
+
 }
 //========================================================
 // Default Constructior using size
@@ -47,13 +48,15 @@ HashTable<T>::HashTable		         ( const HashTable<T> &myHash )
     table = new List<T>[table_size]; // create a new array of linked list with the parameter size
     for (int i = 0; i < table_size; i++) // traverse through the table
     {
-        List<T> other = myHash.table[i];
-        Node *temp = other.head;
-        while(temp != NULL)
-        {
-            table[i].append(temp->item); // copy the elements of linked list i
-            temp = temp->next;
-        }
+        table[i] = new List<T>(myHash.table[i]);
+
+        // List<T> other = myHash.table[i];
+        // Node *temp = other.head;
+        // while(temp != NULL)
+        // {
+        //     table[i].append(temp->item); // copy the elements of linked list i
+        //     temp = temp->next;
+        // }
 
     }
     
@@ -83,17 +86,19 @@ HashTable<T>     HashTable<T>:: operator=	    ( const HashTable<T> &myHash )
     delete []table;
     table_size = 0;
 
-     table_size = myHash.table_size;
+    table_size = myHash.table_size;
     table = new List<T>[table_size];
     for (int i = 0; i < table_size; i++)
     {
-        List<T> other = myHash.table[i];
-        Node *temp = other.head;
-        while(temp != NULL)
-        {
-            table[i].append(temp->item);
-            temp = temp->next;
-        }
+        table[i] = new List<T>(myHash.table[i]);
+
+        // List<T> other = myHash.table[i];
+        // Node *temp = other.head;
+        // while(temp != NULL)
+        // {
+        //     table[i].append(temp->item);
+        //     temp = temp->next;
+        // }
 
     }
 

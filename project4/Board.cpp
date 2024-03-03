@@ -1,5 +1,5 @@
 //============================================================================
-// Matt Kretchmar
+// Ritika, EunHo , Tomer
 // February 2024
 // Board.cpp
 //
@@ -142,13 +142,21 @@ int      Board::getHashValue    ( int numHashSlots ) const
 // We first convert a board into a char array (see Char2Board).  We then compute
 // a function based on the numbers in this storage format.
 //============================================================================
-#ifdef HASHFUNCTION2
+//#ifdef HASHFUNCTION2
 int      Board::getHashValue    ( int numHashSlots ) const
 {
-	// write your second (improved) hash function here.
+
+   //float 
+   for ( int i = 0; i < BOARD_SIZE; i++ )
+		for ( int j = 0; j < BOARD_SIZE; j++ )
+			
+				
+   
+
+
 	return 0;
 }
-#endif
+//#endif
 //============================================================================
 // getHashValue
 // The purpose of this function is to hash a board into the range [0..numHashSlots-1].

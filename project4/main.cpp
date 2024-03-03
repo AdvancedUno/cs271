@@ -1,5 +1,5 @@
 //================================================================
-// Matt Kretchmar
+// EunHo, Retika, Tomer
 // February 2024
 //
 // This is a stub file driver for testing the Board classs with
@@ -7,11 +7,10 @@
 // of your main file.
 //
 // To execute:
-// ./sampleRead 10 <Config0.txt
+// ./main 10 <Config0.txt
 //================================================================
 
 #include "Board.h"
-// your hash class eventually
 #include "HashTable.h"
 #include <iostream>
 #include<cstring>
