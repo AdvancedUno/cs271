@@ -157,30 +157,87 @@ int      Board::getHashValue    ( int numHashSlots ) const
 {
 
    double sum = 0.0;
-   
+
 
 	for(int i =0; i < BOARD_SIZE; i ++){
       for(int j = 0; j <BOARD_SIZE; j++){
 
          if(board[i][j]<= 'Z' && board[i][j] >= 'A'){
-            sum += ((int)board[i][j])/ static_cast<double>(i);
-            //cout << ((int)board[i][j])/ static_cast<double>(i)<< endl;
+            sum += ((int)board[i][j])/ (static_cast<double>(i+1)*static_cast<double>(j+1));
          }else{
-            sum+= static_cast<double>(i);
+            sum+= (static_cast<double>(i))/(static_cast<double>(j+1));
          }
+
+         if(i < 4 && j<4){
+            sum *= 1.01111111;
+         }
+         else if(i < 4 && j>=4){
+            sum *= 1.03333333 ;
+         }
+         else if(i >= 4 && j<4){
+            sum *=  1.0555555;
+         }
+         else if(i >= 4 && j>=4){
+            sum *= 1.077777;
+         }
+
+         if(j == 0){
+            sum += 0.9353753/1.1 * sqrt(M_PI);
+         }
+
+         if(j == 1){
+            sum += 0.9553753/1 * sqrt(M_PI *j);
+         }
+
+         if(j == 2){
+            sum += 0.9753753/1.3 * sqrt(M_PI +j);
+            sum /= log(sum)*j/M_PI;
+         }
+
+         if(j == 3){
+            sum += 0.9973111/1.9 * sqrt(M_PI+j);
+            sum /= log(sum)*j/M_PI;
+         }
+
+         if(j == 4){
+            sum += 0.9993111/6 * sqrt(M_PI*j);
+         }
+
+         if(j == 5){
+            sum += 1.003111/1.001 * sqrt(M_PI+j);
+         }
+
+         sum += j/(i*2+1);
       }
+
+      sum *= (i/5)+1.03377771;
    }
 
-   double sum_decimal = sum - long(sum);
-
-   sum_decimal *= 1000;
-   cout << sum_decimal << endl;
-   cout << (int)sum_decimal % numHashSlots << endl;
+   double integralPart;
+   double fractionalPart = modf(sum, &integralPart);
 
 
+   fractionalPart += sum/(M_PI* 31);
+   fractionalPart *= M_PI;
+   fractionalPart /= sqrt(M_PI);
+   fractionalPart = log(fractionalPart);
+
+   
+   // Multiply the fractional part by 1000
+   double scaledFractionalPart = fractionalPart * 757371 / integralPart*0.33;
+   scaledFractionalPart = fractionalPart * 3002301 / integralPart;
+
+   scaledFractionalPart += sum/(M_PI* 3)/log(M_PI);
+   scaledFractionalPart = scaledFractionalPart/log(scaledFractionalPart);
+   scaledFractionalPart /= sqrt(M_PI);
 
 
-   return (int)sum_decimal % numHashSlots;
+   // Cast to int after scaling to avoid precision loss
+   int scaledFractionalPartInt = static_cast<int>(scaledFractionalPart);
+
+   int slot = (scaledFractionalPartInt^17>>2) % numHashSlots;
+
+   return slot;
 }
 #endif
 //============================================================================
@@ -192,8 +249,61 @@ int      Board::getHashValue    ( int numHashSlots ) const
 #ifdef HASHFUNCTION3
 int      Board::getHashValue    ( int numHashSlots ) const
 {
-	// write your very best hash function here.
-	return 0;
+
+   /// Mean: 30.66 Standard Deviation: 4.03291 Min: 22 Max: 38
+
+   double sum = 0.0;
+   
+
+
+	for(int i =0; i < BOARD_SIZE; i ++){
+      for(int j = 0; j <BOARD_SIZE; j++){
+
+         if(board[i][j]<= 'Z' && board[i][j] >= 'A'){
+            sum += ((int)board[i][j])/ (static_cast<double>(i+1)*static_cast<double>(j+1));
+         }else{
+            sum+= (static_cast<double>(i+1))/(static_cast<double>(j+j+1));
+         }
+
+         if(i < 4 && j<4){
+            sum *= 1.01;
+         }
+         else if(i < 4 && j>=4){
+            sum *= 1.02;
+         }
+         else if(i >= 4 && j<4){
+            sum *=  1.03;
+         }
+         else if(i >= 4 && j>=4){
+            sum *= 1.04;
+         }
+
+         if(j == 3){
+            sum *= 0.98;
+         }
+
+
+      }
+
+   }
+
+   double integralPart;
+   double fractionalPart = modf(sum, &integralPart);
+
+   
+   // Multiply the fractional part by 1000
+   double scaledFractionalPart = fractionalPart * 3002301 / integralPart;
+
+    // Cast to int after scaling to avoid precision loss
+    int scaledFractionalPartInt = static_cast<int>(scaledFractionalPart);
+
+    int slot = scaledFractionalPartInt % numHashSlots;
+
+
+
+
+
+   return slot;
 }
 #endif
 //============================================================================

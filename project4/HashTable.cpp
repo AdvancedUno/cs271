@@ -142,7 +142,10 @@ template <typename T>
 void          HashTable<T>::insert         ( T &item )
 {
     int val = item.getHashValue(table_size);
-    table[val].append(item);
+    if(!query(item)){
+        table[val].append(item);
+    }
+    
 }
 //========================================================
 // clearAll

@@ -48,18 +48,54 @@ int		main	( int argc, char *argv[] )
       cout << "Read in board: \n";     // comment this out later
       cout << b;
       cin >> b;
+      
    };
 
    // add some code here to compute statistics for your
    // hashing performance
 
-    double mean = 0;
-    for(int i = 0; i < table.getNumSlots(); i ++){
-        mean += table.getSlotCount(i);
-        cout << table.getSlotCount(i) << endl;
-    }
-    mean /= (double)table.getNumSlots();
-    cout << "mean : " << mean << endl;
+   double mean = 0;
+   int min = 10000000;
+   int max = 0;
+
+
+   // mean
+
+   for (int i = 0; i < table.getNumSlots(); ++i) {
+      mean += table.getSlotCount(i);
+
+
+      if(table.getSlotCount(i) < min){
+         min = table.getSlotCount(i);
+      }
+
+      if(table.getSlotCount(i)  > max ){
+         max = table.getSlotCount(i);
+      }
+      //std::cout << table.getSlotCount(i) << std::endl;
+   }
+   mean /= static_cast<double>(table.getNumSlots());
+
+   // sum of squared differences
+   double sumSquaredDifferences = 0;
+   for (int i = 0; i < table.getNumSlots(); ++i) {
+      double difference = table.getSlotCount(i) - mean;
+      sumSquaredDifferences += difference * difference;
+   }
+
+   // standard deviation
+   double standardDeviation = std::sqrt(sumSquaredDifferences / table.getNumSlots());
+
+   
+   
+
+
+
+
+   std::cout << "Mean: " << mean << std::endl;
+   std::cout << "Standard Deviation: " << standardDeviation << std::endl;
+   std::cout << "Min: " << min << std::endl;
+   std::cout << "Max: " << max << std::endl;
 
 
 
