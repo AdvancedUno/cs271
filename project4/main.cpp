@@ -56,7 +56,7 @@ int		main	( int argc, char *argv[] )
     double mean = 0;
     for(int i = 0; i < table.getNumSlots(); i ++){
         mean += table.getSlotCount(i);
-        cout << mean << endl;
+        cout << table.getSlotCount(i) << endl;
     }
     mean /= (double)table.getNumSlots();
     cout << "mean : " << mean << endl;

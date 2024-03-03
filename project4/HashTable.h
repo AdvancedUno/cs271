@@ -1,4 +1,11 @@
 
+//================================================================
+// EunHo, Retika, Tomer
+// Mar 3 2024
+//
+// This a hash table class header file
+//
+//================================================================
 #include <iostream>
 #include <string>
 #include <cstring>
@@ -13,7 +20,7 @@ template <typename T>
 class HashTable
 {
 private:
-    List<T> *table;
+    List<T>* table;
     int table_size;
 
 

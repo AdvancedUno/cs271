@@ -1,18 +1,8 @@
-//================================================================
-// EunHo, Retika, Tomer
-// Mr 3 2024
-//
-// This a hash table class
-//
-//================================================================
-
-
 #include <iostream>
 #include <string>
 #include <cmath>
 #include <cstring>
 #include "HashTable.h"
-
 using namespace std;
 
 //========================================================

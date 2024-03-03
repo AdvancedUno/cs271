@@ -1,5 +1,5 @@
 //============================================================================
-// Ritika, EunHo , Tomer
+// Matt Kretchmar
 // February 2024
 // Board.cpp
 //
@@ -132,7 +132,17 @@ istream &  operator>> ( istream &is, Board &b )
 #ifdef HASHFUNCTION1
 int      Board::getHashValue    ( int numHashSlots ) const
 {
-	// write your first naive hash function here.
+	for(int i =0; i < 6; i ++){
+      for(int j = 0; j <6; j++){
+         
+
+
+
+
+      }
+   }
+
+
 	return 0;
 }
 #endif
@@ -146,20 +156,31 @@ int      Board::getHashValue    ( int numHashSlots ) const
 int      Board::getHashValue    ( int numHashSlots ) const
 {
 
-   double sum = 0;
-   for ( int i = 0; i < BOARD_SIZE; i++ ){
-		for ( int j = 0; j < BOARD_SIZE; j++ ){
+   double sum = 0.0;
+   
 
-         sum += int(board[i][j]);
+	for(int i =0; i < BOARD_SIZE; i ++){
+      for(int j = 0; j <BOARD_SIZE; j++){
 
+         if(board[i][j]<= 'Z' && board[i][j] >= 'A'){
+            sum += ((int)board[i][j])/ static_cast<double>(i);
+            //cout << ((int)board[i][j])/ static_cast<double>(i)<< endl;
+         }else{
+            sum+= static_cast<double>(i);
+         }
       }
    }
 
-				
-   
+   double sum_decimal = sum - long(sum);
+
+   sum_decimal *= 1000;
+   cout << sum_decimal << endl;
+   cout << (int)sum_decimal % numHashSlots << endl;
 
 
-	return 0;
+
+
+   return (int)sum_decimal % numHashSlots;
 }
 #endif
 //============================================================================
