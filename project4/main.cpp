@@ -43,6 +43,7 @@ int		main	( int argc, char *argv[] )
    {
       // here is where you might test if you have seen this board
       // before, if not enter it into your hash table.
+      table.insert(b);
 
       cout << "Read in board: \n";     // comment this out later
       cout << b;
@@ -51,6 +52,16 @@ int		main	( int argc, char *argv[] )
 
    // add some code here to compute statistics for your
    // hashing performance
+
+    double mean = 0;
+    for(int i = 0; i < table.getNumSlots(); i ++){
+        mean += table.getSlotCount(i);
+        cout << mean << endl;
+    }
+    mean /= (double)table.getNumSlots();
+    cout << "mean : " << mean << endl;
+
+
 
    return 0;
 }

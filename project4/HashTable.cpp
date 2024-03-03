@@ -118,7 +118,7 @@ HashTable<T>     HashTable<T>:: operator=	    ( const HashTable<T> &myHash )
 template <typename T>
 void          HashTable<T>::remove          ( T &item )
 {
-    int val = getHashValue(item);
+    int val = item.getHashValue(table_size);
     table[val].remove_by_item(item);
 }
 //========================================================
@@ -131,7 +131,7 @@ void          HashTable<T>::remove          ( T &item )
 template <typename T>
 void          HashTable<T>::insert         ( T &item )
 {
-    int val = getHashValue(item);
+    int val = item.getHashValue(table_size);
     table[val].append(item);
 }
 //========================================================
@@ -164,8 +164,8 @@ bool         HashTable<T>::query           ( const T &item )
     //         return true;
     // }
 
-    int val = getHashValue(item);
-    if(table[val].query(item))
+    int slot = item.getHashValue(table_size);
+    if(table[slot].query(item))
         return true;
 
     return false;
