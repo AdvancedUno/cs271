@@ -11,7 +11,7 @@
 //================================================================
 
 #include "Board.h"
-#include "HashTable.h"
+#include "Hash.h"
 #include <iostream>
 #include<cstring>
 using namespace std;
@@ -57,13 +57,13 @@ int		main	( int argc, char *argv[] )
    double mean = 0;
    int min = 10000000;
    int max = 0;
-
+   int total_item=0;
 
    // mean
 
    for (int i = 0; i < table.getNumSlots(); ++i) {
       mean += table.getSlotCount(i);
-
+      total_item += table.getSlotCount(i);
 
       if(table.getSlotCount(i) < min){
          min = table.getSlotCount(i);
@@ -72,7 +72,7 @@ int		main	( int argc, char *argv[] )
       if(table.getSlotCount(i)  > max ){
          max = table.getSlotCount(i);
       }
-      //std::cout << table.getSlotCount(i) << std::endl;
+      // std::cout << table.getSlotCount(i) << std::endl;
    }
    mean /= static_cast<double>(table.getNumSlots());
 
@@ -86,12 +86,7 @@ int		main	( int argc, char *argv[] )
    // standard deviation
    double standardDeviation = std::sqrt(sumSquaredDifferences / table.getNumSlots());
 
-   
-   
-
-
-
-
+   std::cout << "Total number of unique items: " << total_item << std::endl;
    std::cout << "Mean: " << mean << std::endl;
    std::cout << "Standard Deviation: " << standardDeviation << std::endl;
    std::cout << "Min: " << min << std::endl;

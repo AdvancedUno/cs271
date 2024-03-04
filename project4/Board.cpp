@@ -132,16 +132,22 @@ istream &  operator>> ( istream &is, Board &b )
 #ifdef HASHFUNCTION1
 int      Board::getHashValue    ( int numHashSlots ) const
 {
-	for(int i =0; i < 6; i ++){
-      for(int j = 0; j <6; j++){
-         
+	// write your first naive hash function here.
+   int row1_sum=0;
 
-
-
-
-      }
+   //Adding the characters in the first row of the board
+   int i=0;
+   for ( int j = 0; j < BOARD_SIZE; j++ ){
+      row1_sum= (int)board[i][j] + row1_sum;
    }
 
+   //Adding the characters in the first row of the board
+   int i2=BOARD_SIZE-1;
+   for ( int j = 0; j < BOARD_SIZE; j++ ){
+      row1_sum= (int)board[i2][j] + row1_sum;
+   }
+   cout << "Slot: "<< row1_sum%(numHashSlots) << endl;
+	return row1_sum%(numHashSlots);
 
 	return 0;
 }

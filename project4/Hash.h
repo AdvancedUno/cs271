@@ -166,7 +166,7 @@ template <typename T>
  }
 */
 
-#include "HashTable.cpp"
+#include "Hash.cpp"
 
 
 

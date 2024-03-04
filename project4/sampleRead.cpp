@@ -12,7 +12,7 @@
 
 #include "Board.h"
 // your hash class eventually
-#include "HashTable.h"
+#include "Hash.h"
 #include <iostream>
 #include<cstring>
 using namespace std;

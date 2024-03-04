@@ -11,7 +11,7 @@
 #include <string>
 #include <cmath>
 #include <cstring>
-#include "HashTable.h"
+#include "Hash.h"
 
 using namespace std;
 
@@ -25,7 +25,7 @@ using namespace std;
 template <typename T>
 HashTable<T>:: HashTable		      ( void )
 {
-    table_size = 10;
+    table_size = DEFAULT_HASHTABLE_SIZE;
     table = new List<T>[table_size];
 
 }
