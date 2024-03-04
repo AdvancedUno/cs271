@@ -60,13 +60,6 @@ HashTable<T>::HashTable		         ( const HashTable<T> &myHash )
     {
         table[i] = new List<T>(myHash.table[i]);
 
-        // List<T> other = myHash.table[i];
-        // Node *temp = other.head;
-        // while(temp != NULL)
-        // {
-        //     table[i].append(temp->item); // copy the elements of linked list i
-        //     temp = temp->next;
-        // }
 
     }
     
@@ -102,14 +95,6 @@ HashTable<T>     HashTable<T>:: operator=	    ( const HashTable<T> &myHash )
     {
         table[i] = new List<T>(myHash.table[i]);
 
-        // List<T> other = myHash.table[i];
-        // Node *temp = other.head;
-        // while(temp != NULL)
-        // {
-        //     table[i].append(temp->item);
-        //     temp = temp->next;
-        // }
-
     }
 
     return *this;
@@ -128,8 +113,8 @@ HashTable<T>     HashTable<T>:: operator=	    ( const HashTable<T> &myHash )
 template <typename T>
 void          HashTable<T>::remove          ( T &item )
 {
-    int val = item.getHashValue(table_size);
-    table[val].remove_by_item(item);
+    int slot = item.getHashValue(table_size);
+    table[slot].remove_by_item(item);
 }
 //========================================================
 // insert
@@ -141,9 +126,9 @@ void          HashTable<T>::remove          ( T &item )
 template <typename T>
 void          HashTable<T>::insert         ( T &item )
 {
-    int val = item.getHashValue(table_size);
+    int slot = item.getHashValue(table_size);
     if(!query(item)){
-        table[val].append(item);
+        table[slot].append(item);
     }
     
 }
@@ -171,11 +156,6 @@ void        HashTable<T>::clearAll        ( void )
 template <typename T>
 bool         HashTable<T>::query           ( const T &item )
 {
-    // for(int i = 0; i < table_size; i++)
-    // {
-    //     if(table[i].query(item))
-    //         return true;
-    // }
 
     int slot = item.getHashValue(table_size);
     if(table[slot].query(item))
