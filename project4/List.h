@@ -2,7 +2,7 @@
 // Ritika, EunHo , Tomer
 // November 2023
 // List.h
-// This file contains the List class declaration.
+// This file contains the List class declaration and Implementations.
 //========================================================
 #include <iostream>
 #include <string>

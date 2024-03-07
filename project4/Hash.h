@@ -1,14 +1,13 @@
-
 //================================================================
-// EunHo, Retika, Tomer
+// EunHo, Ritika, Tomer
 // Mar 3 2024
-//
-// This a hash table class header file
-//
+// Hash.h
+// This file contains the Hash class declaration.
 //================================================================
 #include <iostream>
 #include <string>
 #include <cstring>
+
 using namespace std;
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
@@ -170,4 +169,4 @@ template <typename T>
 
 
 
- #endif
+#endif

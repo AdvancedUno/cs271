@@ -1,9 +1,8 @@
 //================================================================
-// EunHo, Retika, Tomer
-// Mr 3 2024
-//
-// This a hash table class
-//
+// EunHo, Ritika, Tomer
+// Mar 3 2024
+// Hash.cpp
+// This file contains the Hash class implementation.
 //================================================================
 
 
@@ -29,6 +28,7 @@ HashTable<T>:: HashTable		      ( void )
     table = new List<T>[table_size];
 
 }
+
 //========================================================
 // Default Constructior using size
 // this method creates initializes a List object with a given
@@ -46,7 +46,7 @@ HashTable<T>:: HashTable		      ( int size)
 
 
 //========================================================
-// Copy Constructior
+// Copy Constructor
 // this method creates initializes a List object using deep copy
 // Params: HashTable<T> &myHash
 // return value: none
@@ -100,9 +100,7 @@ HashTable<T>     HashTable<T>:: operator=	    ( const HashTable<T> &myHash )
     return *this;
 
 }
-// not sure if the assignment wants us to remove the first occurance of item
-// in the entire table (like implemented here) or to remove the first occurance of item
-// in each link list 
+
 //========================================================
 // remove 
 // This method removes from the table the first occurance
@@ -113,6 +111,9 @@ HashTable<T>     HashTable<T>:: operator=	    ( const HashTable<T> &myHash )
 template <typename T>
 void          HashTable<T>::remove          ( T &item )
 {
+    if (table_size == 0 ){
+        return ;
+    }
     int slot = item.getHashValue(table_size);
     table[slot].remove_by_item(item);
 }
@@ -126,6 +127,9 @@ void          HashTable<T>::remove          ( T &item )
 template <typename T>
 void          HashTable<T>::insert         ( T &item )
 {
+    if (table_size == 0 ){
+        return ;
+    }    
     int slot = item.getHashValue(table_size);
     if(!query(item)){
         table[slot].append(item);
@@ -156,7 +160,9 @@ void        HashTable<T>::clearAll        ( void )
 template <typename T>
 bool         HashTable<T>::query           ( const T &item )
 {
-
+    if (table_size == 0 ){
+        return false;
+    }  
     int slot = item.getHashValue(table_size);
     if(table[slot].query(item))
         return true;
