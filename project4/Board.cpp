@@ -169,10 +169,10 @@ int      Board::getHashValue    ( int numHashSlots ) const
 
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
-            char piece = board[i][j];
-            if (piece >= 'A' && piece <= 'Z') {
-                int pieceValue = piece - 'A' + 1; 
-                sum = sum * 37 + pieceValue; 
+            char val = board[i][j];
+            if (val >= 'A' && val <= 'Z') {
+                int val_num = val - 'A' + 1; 
+                sum = sum * 37 + val_num; 
             }
             sum += i;
         }
