@@ -59,8 +59,6 @@ HashTable<T>::HashTable		         ( const HashTable<T> &myHash )
     for (int i = 0; i < table_size; i++) // traverse through the table
     {
         table[i] = new List<T>(myHash.table[i]);
-
-
     }
     
 }
@@ -185,7 +183,7 @@ int        HashTable<T>::getSlotCount    ( int slot )
 // This method returns the number of slots in the table.
 // params: none
 // return value: int
-//========================================================
+//=============================2===========================
 template <typename T>
 int        HashTable<T>::getNumSlots    ( void )
 {
