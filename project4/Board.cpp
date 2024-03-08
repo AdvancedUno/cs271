@@ -142,14 +142,14 @@ int      Board::getHashValue    ( int numHashSlots ) const
       row1_sum= (int)board[i][j] + row1_sum;
    }
 
-   //Adding the characters in the first row of the board
+   //Adding the characters in the last row of the board
    int i2=BOARD_SIZE-1;
    for ( int j = 0; j < BOARD_SIZE; j++ ){
       row1_sum= (int)board[i2][j] + row1_sum;
    }
 
+   //Dividing the sum of the ladt and first row by number of slots in the hash table
 	return row1_sum%(numHashSlots);
-
 
 }
 #endif
@@ -163,21 +163,22 @@ int      Board::getHashValue    ( int numHashSlots ) const
 int      Board::getHashValue    ( int numHashSlots ) const
 {
 
+   unsigned long long sum = 0;
 
-
-    unsigned long long sum = 0;
-
+   //Iterating through the characters in the board
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
             char val = board[i][j];
             if (val >= 'A' && val <= 'Z') {
                 int val_num = val - 'A' + 1; 
+                //Adding ascii values of each char to sum multiplied by a prime number
                 sum = sum * 37 + val_num; 
             }
             sum += i;
         }
     }
 
+   //
     sum = (sum >> 16);
     int slot = sum % numHashSlots;
 
