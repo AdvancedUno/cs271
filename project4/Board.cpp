@@ -199,101 +199,47 @@ int      Board::getHashValue    ( int numHashSlots ) const
 int      Board::getHashValue    ( int numHashSlots ) const
 {
 
-   // double sum = 1.0;
-
-
-	// for(int i =0; i < BOARD_SIZE; i ++){
-   //    for(int j = 0; j <BOARD_SIZE; j++){
-
-   //       if(board[i][j]<= 'Z' && board[i][j] >= 'A'){
-   //          sum += ((int)board[i][j])/ static_cast<double>(j+1);
-   //       }else{
-   //          //sum *= (static_cast<double>(i))/(static_cast<double>(j+1));
-   //       }
-   //       if(board[i][j] == ' '){
-   //          continue;
-   //       }
-
-
-   //       if(i >0){
-   //          sum *= M_PI/(i);
-   //       }
-
-   //       if(j > 0){
-   //          sum += exp(j);
-   //       }
-   //    }
-
-
-   // }
-
-   // double integralPart;
-   // double fractionalPart = modf(sum, &integralPart);
-
-   
-   // double scaledFractionalPart = fractionalPart*pow(M_PI,8);
-
-
-
-   // // Cast to int after scaling to avoid precision loss
-   // int scaledFractionalPartInt = static_cast<int>(scaledFractionalPart);
-
-   // int slot = scaledFractionalPartInt % numHashSlots;
-
-   // return slot;
-
-   double sum = 0.0;
-   
-
-
+   double sum = 1.0;
 	for(int i =0; i < BOARD_SIZE; i ++){
       for(int j = 0; j <BOARD_SIZE; j++){
 
          if(board[i][j]<= 'Z' && board[i][j] >= 'A'){
-            sum += ((int)board[i][j])/ (static_cast<double>(i+1)*static_cast<double>(j+1));
+            sum += ((int)board[i][j])/ (double)(j+1);
          }else{
-            sum+= (static_cast<double>(i+1))/(static_cast<double>(j+j+1));
+            continue;
+         }
+         
+         // devide pi by i and muliply to sum
+         if(i >0){
+            sum *= M_PI/(i);
          }
 
-         if(i < 4 && j<4){
-            sum *= 1.01;
+         // add e^j to sum
+         if(j > 0){
+            sum += exp(j);
          }
-         else if(i < 4 && j>=4){
-            sum *= 1.02;
-         }
-         else if(i >= 4 && j<4){
-            sum *=  1.03;
-         }
-         else if(i >= 4 && j>=4){
-            sum *= 1.04;
-         }
-
-         if(j == 3){
-            sum *= 0.98;
-         }
-
-
       }
+
 
    }
 
-   double integralPart;
-   double fractionalPart = modf(sum, &integralPart);
+   // seperate integer and fractional part
+   double integer_part;
+   double fractional_part = modf(sum, &integer_part);
 
    
-   // Multiply the fractional part by 1000
-   double scaledFractionalPart = fractionalPart * 3002301 / integralPart;
-
-    // Cast to int after scaling to avoid precision loss
-    int scaledFractionalPartInt = static_cast<int>(scaledFractionalPart);
-
-    int slot = scaledFractionalPartInt % numHashSlots;
+   // multiply fractuional part by pi^8
+   double scaled_fractional_part = fractional_part*pow(M_PI,8);
 
 
+   // make scaled_fractional_part to integer
+   int scaled_fractional_part_int = int(scaled_fractional_part);
 
-
+   int slot = scaled_fractional_part_int % numHashSlots;
 
    return slot;
+
+
 }
 #endif
 //============================================================================
