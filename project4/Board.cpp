@@ -169,6 +169,7 @@ int      Board::getHashValue    ( int numHashSlots ) const
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
             char val = board[i][j];
+            //Excluding spaces
             if (val >= 'A' && val <= 'Z') {
                 int val_num = val - 'A' + 1; 
                 //Adding ascii values of each char to sum multiplied by a prime number
@@ -178,8 +179,7 @@ int      Board::getHashValue    ( int numHashSlots ) const
         }
     }
 
-   //
-    sum = (sum >> 16);
+    sum = (sum / 8);
     int slot = sum % numHashSlots;
 
     return slot;
@@ -209,7 +209,7 @@ int      Board::getHashValue    ( int numHashSlots ) const
             continue;
          }
          
-         // devide pi by i and muliply to sum
+         // divide pi by i and muliply to sum
          if(i >0){
             sum *= M_PI/(i);
          }
@@ -228,7 +228,7 @@ int      Board::getHashValue    ( int numHashSlots ) const
    double fractional_part = modf(sum, &integer_part);
 
    
-   // multiply fractuional part by pi^8
+   // multiply fractional part by pi^8
    double scaled_fractional_part = fractional_part*pow(M_PI,8);
 
 

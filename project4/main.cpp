@@ -71,7 +71,7 @@ int		main	( int argc, char *argv[] )
       if(table.getSlotCount(i)  > max ){
          max = table.getSlotCount(i);
       }
-      //std::cout << table.getSlotCount(i) << std::endl;
+      // std::cout << table.getSlotCount(i) << std::endl;
    }
    mean /= static_cast<double>(table.getNumSlots());
 
