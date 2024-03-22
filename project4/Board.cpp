@@ -132,97 +132,24 @@ istream &  operator>> ( istream &is, Board &b )
 #ifdef HASHFUNCTION1
 int      Board::getHashValue    ( int numHashSlots ) const
 {
-	// // write your first naive hash function here.
-   // int row1_sum=0;
-
-   // //Adding the characters in the first row of the board
-   // int i=0;
-   // for ( int j = 0; j < BOARD_SIZE; j++ ){
-   //    row1_sum= (int)board[i][j] + row1_sum;
-   // }
-
-   // //Adding the characters in the first row of the board
-   // int i2=BOARD_SIZE-1;
-   // for ( int j = 0; j < BOARD_SIZE; j++ ){
-   //    row1_sum= (int)board[i2][j] + row1_sum;
-   // }
-   // cout << "Slot: "<< row1_sum%(numHashSlots) << endl;
-	// return row1_sum%(numHashSlots);
-
-	// return 0;
-
-   double sum = 0.0;
    
+	// write your first naive hash function here.
+   int row1_sum=0;
 
-
-	for(int i =0; i < BOARD_SIZE; i ++){
-      for(int j = 0; j <BOARD_SIZE; j++){
-
-         if(board[i][j]<= 'Z' && board[i][j] >= 'A'){
-            sum += ((int)board[i][j])/ (static_cast<double>(i+1)*static_cast<double>(j+1));
-         }else{
-            sum+= (static_cast<double>(i+1))/(static_cast<double>(j+j+1));
-         }
-
-         if(i < 4 && j<4){
-            sum *= 1.01;
-         }
-         else if(i < 4 && j>=4){
-            sum *= 1.02;
-         }
-         else if(i >= 4 && j<4){
-            sum *=  1.03;
-         }
-         else if(i >= 4 && j>=4){
-            sum *= 1.04;
-         }
-
-         if(j == 3){
-            sum *= 0.98;
-         }
-
-
-
-      }
+   //Adding the characters in the first row of the board
+   int i=0;
+   for ( int j = 0; j < BOARD_SIZE; j++ ){
+      row1_sum= (int)board[i][j] + row1_sum;
    }
 
-   int slot = 0;
-   if(sum > 80){
-
-      double integralPart;
-      double fractionalPart = modf(sum, &integralPart);
-
-      
-      // Multiply the fractional part by 1000
-      double scaledFractionalPart = fractionalPart * 3002301 / integralPart;
-
-      // Cast to int after scaling to avoid precision loss
-      int scaledFractionalPartInt = static_cast<int>(scaledFractionalPart);
-
-      slot = scaledFractionalPartInt % numHashSlots;
-
-   }else{
-      double integralPart;
-      double fractionalPart = modf(sum, &integralPart); fractionalPart = modf(sum, &integralPart);
-      // Multiply the fractional part by 1000
-      
-      double scaledFractionalPart = fractionalPart*37771 * sqrt(M_PI)/  (integralPart) ;
-
-      // Cast to int after scaling to avoid precision loss
-      int scaledFractionalPartInt = static_cast<int>(scaledFractionalPart);
-      slot = scaledFractionalPartInt % numHashSlots;   
-      
+   //Adding the characters in the last row of the board
+   int i2=BOARD_SIZE-1;
+   for ( int j = 0; j < BOARD_SIZE; j++ ){
+      row1_sum= (int)board[i2][j] + row1_sum;
    }
 
-
-
-
-
-
-   return slot;
-
-
-
+   //Dividing the sum of the ladt and first row by number of slots in the hash table
+	return row1_sum%(numHashSlots);
 
 }
 #endif
@@ -236,89 +163,30 @@ int      Board::getHashValue    ( int numHashSlots ) const
 int      Board::getHashValue    ( int numHashSlots ) const
 {
 
-   double sum = 0.0;
+   unsigned long long sum = 0;
+
+   //Iterating through the characters in the board
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            char val = board[i][j];
+            //Excluding spaces
+            if (val >= 'A' && val <= 'Z') {
+                int val_num = val - 'A' + 1; 
+                //Adding ascii values of each char to sum multiplied by a prime number
+                sum = sum * 37 + val_num; 
+            }
+            sum += i;
+        }
+    }
+
+    sum = (sum / 8);
+    int slot = sum % numHashSlots;
+
+    return slot;
 
 
-	for(int i =0; i < BOARD_SIZE; i ++){
-      for(int j = 0; j <BOARD_SIZE; j++){
+  
 
-         if(board[i][j]<= 'Z' && board[i][j] >= 'A'){
-            sum += ((int)board[i][j])/ (static_cast<double>(i+1)*static_cast<double>(j+1));
-         }else{
-            sum+= (static_cast<double>(i))/(static_cast<double>(j+1));
-         }
-
-         if(i < 4 && j<4){
-            sum *= 1.01111111;
-         }
-         else if(i < 4 && j>=4){
-            sum *= 1.03333333 ;
-         }
-         else if(i >= 4 && j<4){
-            sum *=  1.0555555;
-         }
-         else if(i >= 4 && j>=4){
-            sum *= 1.077777;
-         }
-
-         if(j == 0){
-            sum += 0.9353753/1.1 * sqrt(M_PI);
-         }
-
-         if(j == 1){
-            sum += 0.9553753/1 * sqrt(M_PI *j);
-         }
-
-         if(j == 2){
-            sum += 0.9753753/1.3 * sqrt(M_PI +j);
-            sum /= log(sum)*j/M_PI;
-
-         }
-
-         if(j == 3){
-            sum += 0.9973111/1.9 * sqrt(M_PI+j);
-            sum /= log(sum)*j/M_PI;
-         }
-
-         if(j == 4){
-            sum += 0.9993111/6 * sqrt(M_PI*j);
-         }
-
-         if(j == 5){
-            sum += 1.003111/1.001 * sqrt(M_PI+j);
-         }
-
-         sum += j/(i*2+1);
-      }
-
-      sum *= (i/5)+1.03377771;
-   }
-
-   double integralPart;
-   double fractionalPart = modf(sum, &integralPart);
-
-
-   fractionalPart += sum/(M_PI* 31);
-   fractionalPart *= M_PI;
-   fractionalPart /= sqrt(M_PI);
-   fractionalPart = log(fractionalPart);
-
-   
-   // Multiply the fractional part by 1000
-   double scaledFractionalPart = fractionalPart * 757371 / integralPart*0.33;
-   scaledFractionalPart = fractionalPart * 3002301 / integralPart;
-
-   scaledFractionalPart += sum/(M_PI* 3)/log(M_PI);
-   scaledFractionalPart = scaledFractionalPart/log(scaledFractionalPart);
-   scaledFractionalPart /= sqrt(M_PI);
-
-
-   // Cast to int after scaling to avoid precision loss
-   int scaledFractionalPartInt = static_cast<int>(scaledFractionalPart);
-
-   int slot = (scaledFractionalPartInt^17>>2) % numHashSlots;
-
-   return slot;
 }
 #endif
 //============================================================================
@@ -331,60 +199,47 @@ int      Board::getHashValue    ( int numHashSlots ) const
 int      Board::getHashValue    ( int numHashSlots ) const
 {
 
-   /// Mean: 30.66 Standard Deviation: 4.03291 Min: 22 Max: 38
-
-   double sum = 0.0;
-   
-
-
+   double sum = 1.0;
 	for(int i =0; i < BOARD_SIZE; i ++){
       for(int j = 0; j <BOARD_SIZE; j++){
 
          if(board[i][j]<= 'Z' && board[i][j] >= 'A'){
-            sum += ((int)board[i][j])/ (static_cast<double>(i+1)*static_cast<double>(j+1));
+            sum += ((int)board[i][j])/ (double)(j+1);
          }else{
-            sum+= (static_cast<double>(i+1))/(static_cast<double>(j+j+1));
+            continue;
+         }
+         
+         // divide pi by i and muliply to sum
+         if(i >0){
+            sum *= M_PI/(i);
          }
 
-         if(i < 4 && j<4){
-            sum *= 1.01;
+         // add e^j to sum
+         if(j > 0){
+            sum += exp(j);
          }
-         else if(i < 4 && j>=4){
-            sum *= 1.02;
-         }
-         else if(i >= 4 && j<4){
-            sum *=  1.03;
-         }
-         else if(i >= 4 && j>=4){
-            sum *= 1.04;
-         }
-
-         if(j == 3){
-            sum *= 0.98;
-         }
-
-
       }
+
 
    }
 
-   double integerPart;
-   double fractionalPart = modf(sum, &integerPart);
+   // seperate integer and fractional part
+   double integer_part;
+   double fractional_part = modf(sum, &integer_part);
 
    
-   // Multiply the fractional part by 1000
-   double scaledFractionalPart = fractionalPart * 3002301 / integerPart;
-
-    // Cast to int after scaling to avoid precision loss
-    int scaledFractionalPartInt = static_cast<int>(scaledFractionalPart);
-
-    int slot = scaledFractionalPartInt % numHashSlots;
+   // multiply fractional part by pi^8
+   double scaled_fractional_part = fractional_part*pow(M_PI,8);
 
 
+   // make scaled_fractional_part to integer
+   int scaled_fractional_part_int = int(scaled_fractional_part);
 
-
+   int slot = scaled_fractional_part_int % numHashSlots;
 
    return slot;
+
+
 }
 #endif
 //============================================================================

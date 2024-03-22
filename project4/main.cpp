@@ -45,8 +45,8 @@ int		main	( int argc, char *argv[] )
       // before, if not enter it into your hash table.
       table.insert(b);
 
-      cout << "Read in board: \n";     // comment this out later
-      cout << b;
+      // cout << "Read in board: \n";     // comment this out later
+      // cout << b;
       cin >> b;
       
    };
@@ -59,8 +59,7 @@ int		main	( int argc, char *argv[] )
    int max = 0;
    int total_item=0;
 
-   // mean
-
+   // Count mean and total unique items
    for (int i = 0; i < table.getNumSlots(); ++i) {
       mean += table.getSlotCount(i);
       total_item += table.getSlotCount(i);
