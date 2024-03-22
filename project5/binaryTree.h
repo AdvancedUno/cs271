@@ -13,25 +13,25 @@ using namespace std;
 #ifndef BT_H
 #define BT_H
 
-// struct for Node for Binary tree
-template <class T> 
-struct Node
-{
-	T	item;
-	Node 	*left;
-	Node  	*right;
-    Node    *parent;
-};
 
 template <class T> 
 class BT{
 private:
+    // struct for Node for Binary tree
+    struct Node
+    {
+        T	item;
+        Node 	*left;
+        Node  	*right;
+        Node    *parent;
+         
+        
+    };
 
-    Node<T>* root;
+    Node* root;
     int  size = 0;     
-    void printBT(Node<T> &root);
-
-	
+    void printBT(Node* root);
+    
 public:
 	BT		                ( void );   //Default constructor
 	BT		                ( const BT<T> &myBT ); // copy constructor
@@ -93,7 +93,7 @@ BT<T>::BT( const BT<T> &myBT ){
         return;
     } 
 
-    // Node<T> *temp = myBT.root;
+    // Node *temp = myBT.root;
     
     // // copy the Node until the end
     // while (temp != NULL) {
@@ -184,7 +184,7 @@ BT<T>     operator+	    ( const BT<T> &myBT ){
 // RETURN: None
 //==============================================
 template <class T> 
-void printBT(Node<T> &root) {
+void printBT(Node* root) {
     cout << root->item << " ";
     printBT(root->left);
     printBT(root->right);
