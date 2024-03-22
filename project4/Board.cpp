@@ -368,12 +368,12 @@ int      Board::getHashValue    ( int numHashSlots ) const
 
    }
 
-   double integralPart;
-   double fractionalPart = modf(sum, &integralPart);
+   double integerPart;
+   double fractionalPart = modf(sum, &integerPart);
 
    
    // Multiply the fractional part by 1000
-   double scaledFractionalPart = fractionalPart * 3002301 / integralPart;
+   double scaledFractionalPart = fractionalPart * 3002301 / integerPart;
 
     // Cast to int after scaling to avoid precision loss
     int scaledFractionalPartInt = static_cast<int>(scaledFractionalPart);
