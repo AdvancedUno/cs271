@@ -13,7 +13,9 @@
 #include <cassert>
 #include "binaryTree.h"
 #include <queue>
+#include <fstream> 
 
+  
 
 using namespace std;
 
@@ -21,6 +23,15 @@ using namespace std;
 //functiom decleration
 //==========================================
 void countcharacters(const string &filename, vector<int> &charCounts );
+
+
+struct CompareBT
+{
+  bool operator()(const BT<char>& ltree, const BT<char>& rtree) const
+  {
+    return  ltree.rootFreq() < rtree.rootFreq() ;
+  }
+};
 
 
 //==============================================
@@ -42,9 +53,18 @@ int main ( void)
         cout << letter << "  " << charCounts[i] << endl;
     }
 
+
+    std::priority_queue<BT<char>, CompareBT> pq;
+
+    for(int i =0; i < 26; i ++){
+        BT<char> b_tree;
+        
+
+        pq.push(b_tree);
+    }
+
     
  
-    priority_queue<BT<char>> pq;
 
 
 
@@ -61,7 +81,8 @@ int main ( void)
 //==============================================
 void countcharacters(const string &filename, vector<int> &charCounts )
 {
-    ifstream file(filename);
+
+    std::ifstream file(filename);
     if (!file.is_open())
         throw runtime_error("Error opening file");
     char c;
@@ -77,6 +98,6 @@ void countcharacters(const string &filename, vector<int> &charCounts )
         }
         
     }
-    file.close() // not neccesarry, we need to decide.
+    file.close(); // not neccesarry, we need to decide.
 }
 

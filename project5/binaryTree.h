@@ -20,17 +20,18 @@ private:
     // struct for Node for Binary tree
     struct Node
     {
-        T	item;
+        T	    item;
         Node 	*left;
         Node  	*right;
         Node    *parent;
+        int     freq;
          
         
     };
 
     Node* root;
     int  size = 0;     
-    void printBT(Node* root);
+    void       printBT      (Node* root);
     
 public:
 	BT		                ( void );   //Default constructor
@@ -45,7 +46,7 @@ public:
     void        insert          (const T &item);
     int         length          (void) const;
     bool        empty           (void) const;
-    // T           max             (void);
+    int         rootFreq         (void) const;
     // T           extract         (void);
 
 
@@ -64,6 +65,18 @@ public:
 
 #endif
 
+
+//==============================================
+// BT(void)
+// Contructor for BT class
+// INPUT: none
+// RETURN: none
+//==============================================
+template <class T> 
+BT<T>::BT( void ){
+    root = NULL;
+    size = 0;
+}
 
 //==============================================
 // BT(void)
@@ -173,7 +186,29 @@ BT<T> BT<T>::operator= ( const BT<T> &myBT ){
 // RETURN: BT<T>
 //==============================================
 template <class T> 
-BT<T>     operator+	    ( const BT<T> &myBT ){
+BT<T>     BT<T>::operator+	    ( const BT<T> &myBT ){
+
+
+    Node* newNode = new Node;
+    newNode->cnt = root->cnt + myBT.root->cnt;
+
+    newNode->item = NULL;
+
+
+    newNode->left = root;
+    root->parent = newNode;
+    root = newNode;
+
+
+    newNode->right = myBT.root;
+
+
+    return *this;
+
+
+
+
+
 
 }
 
@@ -184,7 +219,7 @@ BT<T>     operator+	    ( const BT<T> &myBT ){
 // RETURN: None
 //==============================================
 template <class T> 
-void printBT(Node* root) {
+void BT<T>::printBT(Node* root) {
     cout << root->item << " ";
     printBT(root->left);
     printBT(root->right);
@@ -310,6 +345,19 @@ bool	BT<T>::	empty		( void ) const{
 
 }
 
+//==============================================
+// rootCnt(void)
+// Returns the cnt value of root
+// INPUT: none
+// RETURN: bool
+//==============================================
+template <class T> 
+int	BT<T>::	rootFreq		( void ) const{
+
+    return root->freq;
+
+}
+
 
 
 // //==============================================
@@ -370,4 +418,4 @@ bool	BT<T>::	empty		( void ) const{
 //     tail = NULL;
 
 // }
-
+;
