@@ -26,13 +26,7 @@ using namespace std;
 int main ( void)
 {
 
-    vector<int> store(26);
-    char temp;
-
-    if( 'a' <= temp <= 'z'){
-
-        store[cchar- 'a']++;
-    }
+ 
  
     priority_queue<BT<char>> pq;
 
