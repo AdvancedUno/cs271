@@ -17,44 +17,46 @@ using namespace std;
 template <class T> 
 class BT{
 private:
-    // struct for Node for Binary tree
-    struct Node
-    {
-        T	    item;
-        Node 	*left;
-        Node  	*right;
-        Node    *parent;
-        int     freq;
-         
-        
+
+    // Node structure for binary tree
+    struct Node {
+        T     item;
+        Node* left;
+        Node* right;
+        Node* parent;
+
+        Node(T item) : item(item),  left(nullptr), right(nullptr), parent(nullptr) {}
     };
 
+
     Node* root;
-    int  size = 0;     
+
+    
     void       printBT      (Node* root);
     
 public:
 	BT		                ( void );   //Default constructor
 	BT		                ( const BT<T> &myBT ); // copy constructor
+    BT		                ( T item); // constructor
 	~BT		                ( void ); // destructor
 
 
     BT<T>     operator=	    ( const BT<T> &myBT );
     BT<T>     operator+	    ( const BT<T> &myBT );
 
+    T          getRootItem     (void);
 
-    void        insert          (const T &item);
+
     int         length          (void) const;
     bool        empty           (void) const;
-    int         rootFreq         (void) const;
-    // T           extract         (void);
-
+    //void        printBT         (Node* root);
 
 
     friend ostream & operator<< ( ostream &os, BT<T> &myBT )
     {
         os << "[ ";
-            myBT.printBT(myBT.root);
+        os << myBT.root->item;
+        //myBT.printBT(myBT.root);
         os << "]";
         return os;
     }
@@ -75,7 +77,6 @@ public:
 template <class T> 
 BT<T>::BT( void ){
     root = NULL;
-    size = 0;
 }
 
 //==============================================
@@ -85,10 +86,11 @@ BT<T>::BT( void ){
 // RETURN: none
 //==============================================
 template <class T> 
-BT<T>::BT( void ){
-    root = NULL;
-    size = 0;
+BT<T>::BT( T item ){
+    root = new Node(item);
 }
+
+
 
 //==============================================
 // BT(const BT<T> &myBT)
@@ -99,14 +101,14 @@ BT<T>::BT( void ){
 //==============================================
 template <class T> 
 BT<T>::BT( const BT<T> &myBT ){
-    root = NULL;
+    // root = NULL;
 
-    if (myBT.root == NULL) {
-        // If the input BT is empty, return
-        return;
-    } 
+    // if (myBT.root == NULL) {
+    //     // If the input BT is empty, return
+    //     return;
+    // } 
 
-    // Node *temp = myBT.root;
+    // Node *temp = root;
     
     // // copy the Node until the end
     // while (temp != NULL) {
@@ -129,19 +131,7 @@ BT<T>::BT( const BT<T> &myBT ){
 template <class T> 
 BT<T>::~BT	( void ){
 
-	// clear();
-    // // Call clear function for destruction
-    // Node* ptr;
 
-    // // clear all the dynamically allocated memeory to the BT nodes
-    // while(head != NULL){
-    //     ptr = head;
-    //     head = head->next;
-    //     delete ptr;
-    // }
-
-    // // set the tail to NULL
-    // tail = NULL;
 
 
 }
@@ -156,25 +146,10 @@ BT<T>::~BT	( void ){
 template <class T> 
 BT<T> BT<T>::operator= ( const BT<T> &myBT ){
 
-    // // clear the existing BT before assign new value for the new BT
-    // clear();
-    
-    // head = NULL;
-    // tail = NULL;
 
-    // // if the input BT is empty, return
-    // if (myBT.head == NULL) {
-    //     return *this;
-    // } 
-
-    // Node * qtr = myBT.head;
-    // while (qtr != NULL) {
-    //     append(qtr->item);
-    //     qtr = qtr->next;
-    // }
     
 
-    // return *this;
+    return *this;
 
 }
 
@@ -188,19 +163,21 @@ BT<T> BT<T>::operator= ( const BT<T> &myBT ){
 template <class T> 
 BT<T>     BT<T>::operator+	    ( const BT<T> &myBT ){
 
+    cout << root << endl;
+
 
     Node* newNode = new Node;
-    newNode->cnt = root->cnt + myBT.root->cnt;
-
+    newNode->nodeFreq = root->nodeFreq + myBT.root->nodeFreq;
     newNode->item = NULL;
 
 
     newNode->left = root;
-    root->parent = newNode;
     root = newNode;
 
 
     newNode->right = myBT.root;
+
+    
 
 
     return *this;
@@ -212,71 +189,29 @@ BT<T>     BT<T>::operator+	    ( const BT<T> &myBT ){
 
 }
 
-//==============================================
-// printBT ( )
-// Prints the element in the binary tree.
-// INPUT: None
-// RETURN: None
-//==============================================
 template <class T> 
-void BT<T>::printBT(Node* root) {
-    cout << root->item << " ";
-    printBT(root->left);
-    printBT(root->right);
+T BT<T>::getRootItem(void){
+
+    cout << root->item << endl;
+    return root->item;
+
 
 }
 
-//==============================================
-// insert(const T &item)
-// Inserts a new value.
-// INPUT: const T &item
-// RETURN: none
-//==============================================
-template <class T> 
-void BT<T>::insert(const T& item ){
+// //==============================================
+// // printBT ( )
+// // Prints the element in the binary tree.
+// // INPUT: None
+// // RETURN: None
+// //==============================================
+// template <class T> 
+// void BT<T>::printBT(Node* root) {
+//     cout << root->item << " ";
+//     printBT(root->left);
+//     printBT(root->right);
 
-    // // throw error if it is out of range
-    // if(index < 0 || index > length()){
-    //     cout << "Invalid position" << endl;
-    //     throw std::out_of_range("BT<T>::insert(const T &item, int index ) : index is out of range");
+// }
 
-    // }
-
-    // // if it is inserting to the head, then just prepend
-    // if (index == 0) {
-    //     prepend(item);
-    //     return;
-    // }
-
-    // // if it is end, jsut call append
-    // if(index == length()){
-    //     append(item);
-    //     return;
-    // }
-
-    // // create new node for the insert
-    // Node *newNode = new Node;
-    // newNode->item = item;
-    // newNode->next = NULL;
-    // newNode->prev = NULL;
-
-    // Node *qtr = head;
-    // // loop to the index where to insert
-    // while(index > 1){
-    //     index--;  
-    //     qtr = qtr->next;
-    // }
-
-    // // insert the new node
-    // newNode->next = qtr->next;
-    // newNode->prev = qtr;
-    // if(qtr->next !=NULL){
-    //     qtr->next->prev = newNode;
-    // }
-
-    // qtr->next = newNode;
-
-}
 
 
 //==============================================
@@ -298,38 +233,11 @@ int		BT<T>::	length		( void ) const{
     // }
 
     // return cnt;
-    return size;
+    return 0;
 
 }
 
 
-// //==============================================
-// // search( const T &item )
-// // Returns the index of items in the BT.
-// // INPUT: const T &item
-// // RETURN: int
-// //==============================================
-// template <class T> 
-// int		BT<T>::	search		( const T &item ) const{
-
-//     // set defalut index to -1
-//     int index = -1;
-
-//     Node *qtr = head;
-
-//     // loop till the end of the BT
-//     while(qtr != NULL){
-//         index++;
-//         if(qtr->item == item){ // If the item is found, return the index
-//             return index;
-//         }
-//         qtr = qtr->next; // move the next node
-//     }
-
-//     return -1;
-
-
-// }
 
 
 //==============================================
@@ -345,77 +253,10 @@ bool	BT<T>::	empty		( void ) const{
 
 }
 
-//==============================================
-// rootCnt(void)
-// Returns the cnt value of root
-// INPUT: none
-// RETURN: bool
-//==============================================
-template <class T> 
-int	BT<T>::	rootFreq		( void ) const{
-
-    return root->freq;
-
-}
 
 
 
-// //==============================================
-// // concat(const BT<T> &myBT )
-// // concat two existing BTs to return the newly created BT.
-// // INPUT: const BT<T> &myBT
-// // RETURN: BT<T>
-// //==============================================
-// template <class T> 
-// BT<T>	BT<T>::concat( const BT<T> &myBT ) const{
-
-//     //create newly created BT for return
-//     BT<T> resultBT;
-
-//     Node* ptr = head;
-
-//     // start appending first BT
-//     while (ptr != NULL) {
-//         resultBT.append(ptr->item);
-//         ptr = ptr->next;
-//     }
-
-//     // start appending second BT
-//     Node* qtr = myBT.head;
-//     while (qtr != NULL) {
-//         resultBT.append(qtr->item);
-//         qtr = qtr->next;
-//     }
-
-//     // tail should be pointing to the last node memory address
 
 
-//     return resultBT;
-// }
 
- 
-
-
-// //==============================================
-// // clear( void )
-// // Removes all items from the BT.
-// // INPUT: none
-// // RETURN: none
-// //==============================================
-// template <class T> 
-// void BT<T>::clear( void ){
-
-//     Node* ptr;
-
-//     // clear all the dynamically allocated memeory to the BT nodes
-//     while(head != NULL){
-//         ptr = head;
-//         head = head->next;
-//         delete ptr;
-//     }
-
-//     // set the tail to NULL
-//     tail = NULL;
-
-// }
 ;

@@ -12,6 +12,7 @@
 #include <string>
 #include <cassert>
 #include "binaryTree.h"
+#include "info.h"
 #include <queue>
 #include <fstream> 
 
@@ -25,13 +26,19 @@ using namespace std;
 void countcharacters(const string &filename, vector<int> &charCounts );
 
 
-struct CompareBT
-{
-  bool operator()(const BT<char>& ltree, const BT<char>& rtree) const
-  {
-    return  ltree.rootFreq() < rtree.rootFreq() ;
-  }
+// Comparison functor for priority queue
+class CompareBT {
+    public:
+    bool operator()(BT<Info>& ltree,  BT<Info>& rtree)  {
+        ltree.getRootItem() ;
+        return ltree.getRootItem() > rtree.getRootItem(); // Prioritize lower frequencies
+    }
 };
+
+
+
+
+
 
 
 //==============================================
@@ -54,16 +61,34 @@ int main ( void)
     }
 
 
-    std::priority_queue<BT<char>, CompareBT> pq;
+
+
+    priority_queue<BT<Info>, vector<BT<Info>>, CompareBT> pq;
 
     for(int i =0; i < 26; i ++){
-        BT<char> b_tree;
-        
-
+        Info info(char(i+97), charCounts[i]);
+        BT<Info> b_tree(info);
         pq.push(b_tree);
     }
 
     
+    
+
+    for(int i = 0; i < 25; i ++){
+        BT<Info> combined_tree = pq.top();
+        pq.pop();
+        cout << combined_tree << endl;
+        
+
+
+        // combined_tree = combined_tree + pq.top();
+
+        // pq.pop();
+        // pq.push(combined_tree);
+    }
+
+
+
  
 
 
