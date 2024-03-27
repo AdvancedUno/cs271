@@ -77,14 +77,14 @@ int main ( void)
     for(int i = 0; i < 25; i ++){
         BT<Info> combined_tree = pq.top();
         pq.pop();
-        cout << combined_tree << endl;
+        //cout << combined_tree << endl;
         
 
 
-        // combined_tree = combined_tree + pq.top();
+        combined_tree = combined_tree + pq.top();
 
-        // pq.pop();
-        // pq.push(combined_tree);
+        pq.pop();
+        pq.push(combined_tree);
     }
 
 

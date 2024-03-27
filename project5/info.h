@@ -55,8 +55,8 @@ Info::Info( void ){
 //==============================================
 Info::Info( char data, int freq ){
 
-    data = data;
-    freq = freq;
+    this->data = data;
+    this->freq = freq;
 
 }
 

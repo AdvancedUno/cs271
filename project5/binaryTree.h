@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include "info.h"
 
 using namespace std;
 
@@ -14,45 +15,74 @@ using namespace std;
 #define BT_H
 
 
-template <class T> 
+ 
 class BT{
 private:
 
     // Node structure for binary tree
     struct Node {
-        T     item;
+        Info  item;
         Node* left;
         Node* right;
         Node* parent;
 
-        Node(T item) : item(item),  left(nullptr), right(nullptr), parent(nullptr) {}
+        Node(Info item) : item(item),  left(nullptr), right(nullptr), parent(nullptr) {}
     };
 
 
-    Node* root;
+    Node*   root;
+
+ 
+
+
 
     
-    void       printBT      (Node* root);
+    void    printBT      (Node* root);
+           // //==============================================
+    // // deepCopy 
+    // // 
+    // // INPUT: None
+    // // RETURN: None
+    // //==============================================
+    
+    Node* deepCopy(Node* rootNode){
+
+        if(rootNode == NULL)return rootNode;
+
+        Node* newRoot = new Node(rootNode->item);
+
+        newRoot->left = deepCopy(rootNode->left);
+        newRoot->right = deepCopy(rootNode->right);
+
+
+       return newRoot;
+
+
+    }
+
     
 public:
 	BT		                ( void );   //Default constructor
-	BT		                ( const BT<T> &myBT ); // copy constructor
-    BT		                ( T item); // constructor
+	BT		                ( const BT &myBT ); // copy constructor
+    BT		                ( Info& item); // constructor
 	~BT		                ( void ); // destructor
 
 
-    BT<T>     operator=	    ( const BT<T> &myBT );
-    BT<T>     operator+	    ( const BT<T> &myBT );
 
-    T          getRootItem     (void);
+    BT    operator=	    ( const BT &myBT );
+    BT    operator+	    ( const BT &myBT );
+    
+
+    Info        getRootItem     (void);
 
 
-    int         length          (void) const;
-    bool        empty           (void) const;
+    int      length          (void) const;
+    bool     empty           (void) const;
     //void        printBT         (Node* root);
 
 
-    friend ostream & operator<< ( ostream &os, BT<T> &myBT )
+
+    friend ostream & operator<< ( ostream &os, BT &myBT )
     {
         os << "[ ";
         os << myBT.root->item;
@@ -74,8 +104,8 @@ public:
 // INPUT: none
 // RETURN: none
 //==============================================
-template <class T> 
-BT<T>::BT( void ){
+
+BT::BT( void ){
     root = NULL;
 }
 
@@ -85,22 +115,20 @@ BT<T>::BT( void ){
 // INPUT: none
 // RETURN: none
 //==============================================
-template <class T> 
-BT<T>::BT( T item ){
+BT::BT( Info& item ){
     root = new Node(item);
 }
 
 
 
 //==============================================
-// BT(const BT<T> &myBT)
+// BT(const BT &myBT)
 // Contructor for BT class
 // Create a new BT from an existing one.
-// INPUT: const BT<T> &myBT
+// INPUT: const BT &myBT
 // RETURN: none
 //==============================================
-template <class T> 
-BT<T>::BT( const BT<T> &myBT ){
+BT::BT( const BT &myBT ){
     // root = NULL;
 
     // if (myBT.root == NULL) {
@@ -108,13 +136,9 @@ BT<T>::BT( const BT<T> &myBT ){
     //     return;
     // } 
 
-    // Node *temp = root;
+    root = deepCopy(myBT.root);
+
     
-    // // copy the Node until the end
-    // while (temp != NULL) {
-    //     insert(temp->item);
-    //     temp = temp->left;
-    // }
 
 
     
@@ -128,8 +152,7 @@ BT<T>::BT( const BT<T> &myBT ){
 // INPUT: none
 // RETURN: none
 //==============================================
-template <class T> 
-BT<T>::~BT	( void ){
+BT::~BT	( void ){
 
 
 
@@ -137,14 +160,13 @@ BT<T>::~BT	( void ){
 }
 
 //==============================================
-// operator= ( const BT<T> &myBT )
+// operator= ( const BT &myBT )
 // Assignment operator.
 // Assign BT to the class
-// INPUT: const BT<T> &myBT 
-// RETURN: BT<T>
+// INPUT: const BT &myBT 
+// RETURN: BT
 //==============================================
-template <class T> 
-BT<T> BT<T>::operator= ( const BT<T> &myBT ){
+BT BT::operator= ( const BT &myBT ){
 
 
     
@@ -154,21 +176,19 @@ BT<T> BT<T>::operator= ( const BT<T> &myBT ){
 }
 
 //==============================================
-// operator+ ( const BT<T> &myBT )
+// operator+ ( const BT &myBT )
 // Addition operator.
 // Add two Binary tree object
-// INPUT: const BT<T> &myBT 
-// RETURN: BT<T>
+// INPUT: const BT &myBT 
+// RETURN: BT
 //==============================================
-template <class T> 
-BT<T>     BT<T>::operator+	    ( const BT<T> &myBT ){
 
-    cout << root << endl;
+BT  BT::operator+	    ( const BT &myBT ){
 
 
-    Node* newNode = new Node;
-    newNode->nodeFreq = root->nodeFreq + myBT.root->nodeFreq;
-    newNode->item = NULL;
+
+    Node* newNode = new Node();
+    newNode->item = myBT.root->item + root->item;
 
 
     newNode->left = root;
@@ -180,7 +200,7 @@ BT<T>     BT<T>::operator+	    ( const BT<T> &myBT ){
     
 
 
-    return *this;
+    return newNode;
 
 
 
@@ -189,14 +209,17 @@ BT<T>     BT<T>::operator+	    ( const BT<T> &myBT ){
 
 }
 
-template <class T> 
-T BT<T>::getRootItem(void){
 
-    cout << root->item << endl;
+T BT::getRootItem(void){
+
+    //cout << root->item << endl;
     return root->item;
 
 
 }
+
+
+
 
 // //==============================================
 // // printBT ( )
@@ -204,8 +227,8 @@ T BT<T>::getRootItem(void){
 // // INPUT: None
 // // RETURN: None
 // //==============================================
-// template <class T> 
-// void BT<T>::printBT(Node* root) {
+// 
+// void BT::printBT(Node* root) {
 //     cout << root->item << " ";
 //     printBT(root->left);
 //     printBT(root->right);
@@ -220,8 +243,8 @@ T BT<T>::getRootItem(void){
 // INPUT: none
 // RETURN: int
 //==============================================
-template <class T> 
-int		BT<T>::	length		( void ) const{
+
+int		BT::	length		( void ) const{
 
     // int cnt = 0;
     // Node *qtr = head;
@@ -246,16 +269,12 @@ int		BT<T>::	length		( void ) const{
 // INPUT: none
 // RETURN: bool
 //==============================================
-template <class T> 
-bool	BT<T>::	empty		( void ) const{
+
+bool	BT::	empty		( void ) const{
 
     return length() == NULL;
 
 }
-
-
-
-
 
 
 
