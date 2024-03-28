@@ -20,6 +20,7 @@ public:
     bool operator>=(const NodeInfo &myInfo) const;
     bool operator==(const NodeInfo &myInfo) const;
     bool operator!=(const NodeInfo &myInfo) const;
+    NodeInfo operator+ ( const NodeInfo &myNodeInfo ) const;
     int getFreq(void);
     char getChar(void);
 
@@ -36,7 +37,7 @@ public:
 //==============================================
 NodeInfo::NodeInfo( void ){
 
-    dataC = ' ';
+    dataC = 0;
     freq = 0;
 
 }
@@ -188,6 +189,14 @@ char NodeInfo::getChar(void){
     return dataC;
 
 }
+
+NodeInfo  NodeInfo::operator+ ( const NodeInfo &myNodeInfo ) const{
+    NodeInfo newInfo;
+    newInfo.dataC = 0;
+    newInfo.freq = freq + myNodeInfo.freq;
+    return newInfo;
+}
+
 
 
 
