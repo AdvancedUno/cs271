@@ -1,8 +1,8 @@
 //===============================
-// main2.cpp
+// main.cpp
 // Name: EunHo Lee , Ritika, Tomer  
-// Date: 22 Feb 2024
-// This file contains all test case for the priority queue class.
+// Date: 28 mar 2024
+// This file creates the frequency count file.
 //===============================
 
 #include <ctime>
@@ -26,10 +26,10 @@ using namespace std;
 void countcharacters(const string &filename, vector<int> &charCounts );
 
 
-// Comparison functor for priority queue
+// Comparison function for priority queue
 class CompareBT {
     public:
-    bool operator()(BT<Info>& ltree,  BT<Info>& rtree)  {
+    bool operator()(BT& ltree,  BT& rtree)  {
         ltree.getRootItem() ;
         return ltree.getRootItem() > rtree.getRootItem(); // Prioritize lower frequencies
     }
@@ -62,12 +62,12 @@ int main ( void)
 
 
 
-
-    priority_queue<BT<Info>, vector<BT<Info>>, CompareBT> pq;
+    //Creating the binary tree using frequency table
+    priority_queue<BT, vector<BT>, CompareBT> pq;
 
     for(int i =0; i < 26; i ++){
         Info info(char(i+97), charCounts[i]);
-        BT<Info> b_tree(info);
+        BT b_tree(info);
         pq.push(b_tree);
     }
 
@@ -75,7 +75,7 @@ int main ( void)
     
 
     for(int i = 0; i < 25; i ++){
-        BT<Info> combined_tree = pq.top();
+        BT combined_tree = pq.top();
         pq.pop();
         //cout << combined_tree << endl;
         
@@ -86,13 +86,6 @@ int main ( void)
         pq.pop();
         pq.push(combined_tree);
     }
-
-
-
- 
-
-
-
 
     return 0;
 }

@@ -1,11 +1,8 @@
-
-
 #include <ctime>
 #include <iostream>
 #include <vector>
 #include <iomanip>
 #include <string>
-
 
 // Info structure for binary tree
 class Info {
@@ -16,13 +13,14 @@ private:
 public:
 	Info		                    ( void );   //Default constructor
 	Info		                    ( char data, int freq );   //Default constructor
-    bool        operator<	        ( const Info &myInfo );
-    bool        operator>	        ( const Info &myInfo );
-    bool        operator<=	        ( const Info &myInfo );
-    bool        operator>=	        ( const Info &myInfo );
-    bool        operator==	        ( const Info &myInfo );
-    bool        operator!=	        ( const Info &myInfo );
-    friend ostream & operator<< ( ostream &os, Info &myInfo )
+    bool        operator<	        ( const Info &myInfo ) const;
+    bool        operator>	        ( const Info &myInfo ) const;
+    bool        operator<=	        ( const Info &myInfo ) const;
+    bool        operator>=	        ( const Info &myInfo ) const;
+    bool        operator==	        ( const Info &myInfo ) const;
+    bool        operator!=	        ( const Info &myInfo ) const;
+    Info        operator+	        ( const Info &myInfo );
+    friend ostream & operator<< ( ostream &os, const Info &myInfo )
     {
         os << "[ ";
         os << "char : " << myInfo.data << "  freq : " << myInfo.freq;
@@ -41,7 +39,7 @@ public:
 //==============================================
 Info::Info( void ){
 
-    data = ' ';
+    data = 0;
     freq = 0;
 
 }
@@ -68,7 +66,7 @@ Info::Info( char data, int freq ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator< ( const Info &myInfo ){
+bool Info::operator< ( const Info &myInfo ) const {
 
 
 
@@ -82,7 +80,7 @@ bool Info::operator< ( const Info &myInfo ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator<= ( const Info &myInfo ){
+bool Info::operator<= ( const Info &myInfo ) const {
 
 
 
@@ -98,7 +96,7 @@ bool Info::operator<= ( const Info &myInfo ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator> ( const Info &myInfo ){
+bool Info::operator> ( const Info &myInfo ) const {
 
 
 
@@ -114,7 +112,7 @@ bool Info::operator> ( const Info &myInfo ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator>= ( const Info &myInfo ){
+bool Info::operator>= ( const Info &myInfo ) const {
 
 
 
@@ -130,7 +128,7 @@ bool Info::operator>= ( const Info &myInfo ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator!= ( const Info &myInfo ){
+bool Info::operator!= ( const Info &myInfo ) const {
 
 
 
@@ -146,7 +144,7 @@ bool Info::operator!= ( const Info &myInfo ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator== ( const Info &myInfo ){
+bool Info::operator== ( const Info &myInfo ) const {
 
 
 
@@ -155,8 +153,12 @@ bool Info::operator== ( const Info &myInfo ){
 }
 
 
-
-
+Info  Info::operator+ ( const Info &myInfo ){
+    Info newInfo;
+    newInfo.data = 0;
+    newInfo.freq = freq + myInfo.freq;
+    return newInfo;
+}
 
 
 

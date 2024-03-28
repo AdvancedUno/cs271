@@ -11,11 +11,11 @@
 
 using namespace std;
 
+
 #ifndef BT_H
 #define BT_H
 
 
- 
 class BT{
 private:
 
@@ -26,24 +26,20 @@ private:
         Node* right;
         Node* parent;
 
-        Node(Info item) : item(item),  left(nullptr), right(nullptr), parent(nullptr) {}
+        Node(const Info& item) : item(item),  left(nullptr), right(nullptr), parent(nullptr) {}
     };
 
 
     Node*   root;
 
- 
-
-
-
-    
     void    printBT      (Node* root);
-           // //==============================================
-    // // deepCopy 
-    // // 
-    // // INPUT: None
-    // // RETURN: None
-    // //==============================================
+
+    //==============================================
+    // deepCopy 
+    // Copy the BT and return pointer to the new root of the BT
+    // INPUT: Node* rootNode
+    // RETURN: Node* 
+    //==============================================
     
     Node* deepCopy(Node* rootNode){
 
@@ -60,11 +56,28 @@ private:
 
     }
 
+    //==============================================
+    // countNodes
+    // Computes the number of nodes in the Binary tree
+    // INPUT: Node* rootNode
+    // RETURN: int
+    //==============================================
+    int countNodes(Node* rootNode){
+        if(rootNode == NULL)return 0;
+
+        //Go left and right recursively and increase the len by 1 
+        int len_left  = countNodes(rootNode->left);
+        int len_right = countNodes(rootNode->right);
+
+
+       return len_right + len_left + 1; 
+    }
+
     
 public:
 	BT		                ( void );   //Default constructor
 	BT		                ( const BT &myBT ); // copy constructor
-    BT		                ( Info& item); // constructor
+    BT		                (const Info &item); // constructor
 	~BT		                ( void ); // destructor
 
 
@@ -78,8 +91,6 @@ public:
 
     int      length          (void) const;
     bool     empty           (void) const;
-    //void        printBT         (Node* root);
-
 
 
     friend ostream & operator<< ( ostream &os, BT &myBT )
@@ -115,15 +126,14 @@ BT::BT( void ){
 // INPUT: none
 // RETURN: none
 //==============================================
-BT::BT( Info& item ){
+BT::BT(const Info &item ){
     root = new Node(item);
 }
 
 
-
 //==============================================
 // BT(const BT &myBT)
-// Contructor for BT class
+// Copy Contructor for BT class
 // Create a new BT from an existing one.
 // INPUT: const BT &myBT
 // RETURN: none
@@ -186,21 +196,20 @@ BT BT::operator= ( const BT &myBT ){
 BT  BT::operator+	    ( const BT &myBT ){
 
 
-
-    Node* newNode = new Node();
-    newNode->item = myBT.root->item + root->item;
-
-
-    newNode->left = root;
-    root = newNode;
+    BT newBT(myBT.root->item + root->item);
+    // Node* newNode = new Node(myBT.root->item + root->item);
+    // newNode->item = myBT.root->item + root->item;
 
 
-    newNode->right = myBT.root;
+    newBT.root->left = root;
+    root =  newBT.root;
 
-    
+
+    newBT.root->right = myBT.root;
 
 
-    return newNode;
+    // return newNode;
+    return newBT;
 
 
 
@@ -210,7 +219,7 @@ BT  BT::operator+	    ( const BT &myBT ){
 }
 
 
-T BT::getRootItem(void){
+Info BT::getRootItem(void){
 
     //cout << root->item << endl;
     return root->item;
@@ -227,7 +236,7 @@ T BT::getRootItem(void){
 // // INPUT: None
 // // RETURN: None
 // //==============================================
-// 
+
 // void BT::printBT(Node* root) {
 //     cout << root->item << " ";
 //     printBT(root->left);
@@ -245,18 +254,8 @@ T BT::getRootItem(void){
 //==============================================
 
 int		BT::	length		( void ) const{
-
-    // int cnt = 0;
-    // Node *qtr = head;
-    
-    // // loop until it reach to the end of the BT
-    // while(qtr != NULL){
-    //     qtr = qtr->next;
-    //     cnt ++;
-    // }
-
-    // return cnt;
-    return 0;
+    // Node* temp = root;
+    return countNodes(root);
 
 }
 
@@ -272,10 +271,6 @@ int		BT::	length		( void ) const{
 
 bool	BT::	empty		( void ) const{
 
-    return length() == NULL;
+    return root == NULL;
 
 }
-
-
-
-;
