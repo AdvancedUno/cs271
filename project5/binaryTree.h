@@ -39,7 +39,7 @@ private:
 
 
     
-    void    printBT      (Node* root);
+    void   printBT      (Node* root);
     void   clear(Node* root);
            
 
@@ -129,15 +129,9 @@ BT::BT(NodeInfo item){
 // INPUT: const BT &myBT
 // RETURN: none
 //==============================================
-BT::BT( const BT &myBT ){
-    delete root;
+BT::BT(const BT &myBT) {
 
-    cout << "copy " << myBT.getFreq() << endl;
     root = deepCopy(myBT.root);
-
-
-
-    
 }
 
 
@@ -162,14 +156,16 @@ BT::~BT	( void ){
 // RETURN: void
 //==============================================
 void BT::clear(Node* root) {
-    if (root == nullptr) return; // Base case: if the root is null, return
+    if(root!=NULL)
+    {
+        //Recursively work way to bottom node 
+        clear(root->left);
+        clear(root->right);
 
-    // Recursively clear the left and right subtrees
-    clear(root->left);
-    clear(root->right);
+        //one more time here
+        delete root;
+    }
 
-    // Delete the current node
-    delete root;
 }
 
 //==============================================
@@ -181,6 +177,10 @@ void BT::clear(Node* root) {
 //==============================================
 BT BT::operator= ( const BT &myBT ){
 
+
+
+    // Perform deep copy from myBT
+    root = deepCopy(myBT.root);
 
     
 
@@ -199,20 +199,20 @@ BT BT::operator= ( const BT &myBT ){
 BT  BT::operator+	    ( const BT &myBT ){
 
 
-    // BT newBT(myBT.root->item + root->item);
-    // // Node* newNode = new Node(myBT.root->item + root->item);
-    // // newNode->item = myBT.root->item + root->item;
+    BT newBT(myBT.root->item + root->item);
+    // Node* newNode = new Node(myBT.root->item + root->item);
+    // newNode->item = myBT.root->item + root->item;
 
 
-    // newBT.root->left = root;
-    // root =  newBT.root;
+    newBT.root->left = root;
+    root =  newBT.root;
 
 
-    // newBT.root->right = myBT.root;
+    newBT.root->right = myBT.root;
 
 
-    // // return newNode;
-    // return newBT;
+    // return newNode;
+    return newBT;
 
 
 
@@ -259,22 +259,22 @@ int		BT::	getFreq		( void ){
 }
 
 
-// //==============================================
-// // deepCopy 
-// // 
-// // INPUT: None
-// // RETURN: None
-// //==============================================
+// deepCopy - Recursively performs a deep copy of the binary tree
 BT::Node* BT::deepCopy(Node* rootNode) {
-    
-    if (rootNode == nullptr) return nullptr;
+    if (rootNode == nullptr) {
+        return nullptr; // Base case: if the original node is null, return null
+    }
 
+    // Create a new node with the same data as the original node
     Node* newRoot = new Node(rootNode->item);
-    
+
+    // Recursively copy the left and right children of the original node
     newRoot->left = deepCopy(rootNode->left);
     newRoot->right = deepCopy(rootNode->right);
-    return newRoot;
+
+    return newRoot; // Return the new node
 }
+
 
 
 //==============================================

@@ -30,7 +30,7 @@ class CompareBT {
     public:
     bool operator()(BT& ltree,  BT& rtree)  {
         //cout << "ltree.getFreq() : " <<ltree.getFreq() << " rtree.getFreq() : " << rtree.getFreq()<< endl;
-        return ltree.getFreq() < rtree.getFreq(); // Prioritize lower frequencies
+        return ltree.getFreq() > rtree.getFreq(); // Prioritize lower frequencies
     }
 };
 
@@ -64,24 +64,25 @@ int main ( void)
 
     priority_queue<BT, vector<BT>, CompareBT> pq;
 
-    for(int i =0; i < 3; i ++){
+
+    for(int i =0; i < 26; i ++){
         NodeInfo info = NodeInfo(char(i+97), charCounts[i]);
         cout << char(i+97) << "  " << charCounts[i] << endl;
         BT b_tree(info);
         pq.push(b_tree);
+
     }
     
     
 
-
     while(pq.size() > 0){
+
         BT combined_tree = pq.top();
         
-        cout << combined_tree.getFreq() << endl;
+        cout << combined_tree.getFreq()<< endl;
         pq.pop();
 
-
-        //combined_tree = combined_tree + pq.top();
+        combined_tree = combined_tree + pq.top();
 
         //pq.pop();
         //pq.push(combined_tree);
