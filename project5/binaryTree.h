@@ -132,7 +132,9 @@ BT::BT(NodeInfo item){
 BT::BT( const BT &myBT ){
     delete root;
 
+    cout << "copy " << myBT.getFreq() << endl;
     root = deepCopy(myBT.root);
+
 
 
     
@@ -197,20 +199,21 @@ BT BT::operator= ( const BT &myBT ){
 BT  BT::operator+	    ( const BT &myBT ){
 
 
-    BT newBT(myBT.root->item + root->item);
-    // Node* newNode = new Node(myBT.root->item + root->item);
-    // newNode->item = myBT.root->item + root->item;
+    // BT newBT(myBT.root->item + root->item);
+    // // Node* newNode = new Node(myBT.root->item + root->item);
+    // // newNode->item = myBT.root->item + root->item;
 
 
-    newBT.root->left = root;
-    root =  newBT.root;
+    // newBT.root->left = root;
+    // root =  newBT.root;
 
 
-    newBT.root->right = myBT.root;
+    // newBT.root->right = myBT.root;
 
 
-    // return newNode;
-    return newBT;
+    // // return newNode;
+    // return newBT;
+
 
 
 
@@ -267,7 +270,6 @@ BT::Node* BT::deepCopy(Node* rootNode) {
     if (rootNode == nullptr) return nullptr;
 
     Node* newRoot = new Node(rootNode->item);
-    cout << "items: " <<  rootNode->item.getFreq() << endl;
     
     newRoot->left = deepCopy(rootNode->left);
     newRoot->right = deepCopy(rootNode->right);
