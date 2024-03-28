@@ -12,7 +12,6 @@
 #include <string>
 #include <cassert>
 #include "binaryTree.h"
-#include "info.h"
 #include <queue>
 #include <fstream> 
 
@@ -30,8 +29,8 @@ void countcharacters(const string &filename, vector<int> &charCounts );
 class CompareBT {
     public:
     bool operator()(BT& ltree,  BT& rtree)  {
-        ltree.getRootItem() ;
-        return ltree.getRootItem() > rtree.getRootItem(); // Prioritize lower frequencies
+        //cout << "ltree.getFreq() : " <<ltree.getFreq() << " rtree.getFreq() : " << rtree.getFreq()<< endl;
+        return ltree.getFreq() < rtree.getFreq(); // Prioritize lower frequencies
     }
 };
 
@@ -57,34 +56,35 @@ int main ( void)
     for (int i =0; i < 26; i++)
     {
         char letter = i +'a';
-        cout << letter << "  " << charCounts[i] << endl;
+        //cout << letter << "  " << charCounts[i] << endl;
     }
 
 
 
-    //Creating the binary tree using frequency table
+
     priority_queue<BT, vector<BT>, CompareBT> pq;
 
-    for(int i =0; i < 26; i ++){
-        Info info(char(i+97), charCounts[i]);
+    for(int i =0; i < 3; i ++){
+        NodeInfo info = NodeInfo(char(i+97), charCounts[i]);
+        cout << char(i+97) << "  " << charCounts[i] << endl;
         BT b_tree(info);
         pq.push(b_tree);
     }
-
     
     
 
-    for(int i = 0; i < 25; i ++){
+
+    while(pq.size() > 0){
         BT combined_tree = pq.top();
-        pq.pop();
-        //cout << combined_tree << endl;
         
-
-
-        combined_tree = combined_tree + pq.top();
-
+        cout << combined_tree.getFreq() << endl;
         pq.pop();
-        pq.push(combined_tree);
+
+
+        //combined_tree = combined_tree + pq.top();
+
+        //pq.pop();
+        //pq.push(combined_tree);
     }
 
     return 0;

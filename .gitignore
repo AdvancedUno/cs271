@@ -33,3 +33,4 @@
 *.exec
 */dSYM
 /dSYM
+*.exe

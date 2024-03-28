@@ -25,8 +25,8 @@ using namespace std;
 //==============================================
 int main (){
 
-    //Reading code vectors for each letter(code.txt)
-    map<char, string> code_vector;
+    // //Reading code vectors for each letter(code.txt)
+     map<char, string> code_vector;
     // string code_vector_file;
     // cin >> code_vector_file;
     // while(getline(cin,code_vector_file)){

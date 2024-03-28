@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <string>
-#include "info.h"
+#include "nodeinfo.h"
 
 using namespace std;
 
@@ -16,45 +16,33 @@ using namespace std;
 #define BT_H
 
 
+
+ 
 class BT{
 private:
 
     // Node structure for binary tree
     struct Node {
-        Info  item;
+        NodeInfo  item;
         Node* left;
         Node* right;
-        Node* parent;
 
-        Node(const Info& item) : item(item),  left(nullptr), right(nullptr), parent(nullptr) {}
+        Node(NodeInfo item) : item(item),  left(nullptr), right(nullptr) {}
     };
 
 
     Node*   root;
 
-    void    printBT      (Node* root);
+ 
+    Node* deepCopy(Node* rootNode);
 
-    //==============================================
-    // deepCopy 
-    // Copy the BT and return pointer to the new root of the BT
-    // INPUT: Node* rootNode
-    // RETURN: Node* 
-    //==============================================
+
+
     
-    Node* deepCopy(Node* rootNode){
+    void    printBT      (Node* root);
+    void   clear(Node* root);
+           
 
-        if(rootNode == NULL)return rootNode;
-
-        Node* newRoot = new Node(rootNode->item);
-
-        newRoot->left = deepCopy(rootNode->left);
-        newRoot->right = deepCopy(rootNode->right);
-
-
-       return newRoot;
-
-
-    }
 
     //==============================================
     // countNodes
@@ -76,8 +64,8 @@ private:
     
 public:
 	BT		                ( void );   //Default constructor
-	BT		                ( const BT &myBT ); // copy constructor
-    BT		                (const Info &item); // constructor
+	BT                      ( const BT &myBT ); // copy constructor
+    BT		                ( NodeInfo item); // constructor
 	~BT		                ( void ); // destructor
 
 
@@ -86,10 +74,9 @@ public:
     BT    operator+	    ( const BT &myBT );
     
 
-    Info        getRootItem     (void);
 
 
-    int      length          (void) const;
+    int      getFreq         (void);
     bool     empty           (void) const;
 
 
@@ -117,7 +104,7 @@ public:
 //==============================================
 
 BT::BT( void ){
-    root = NULL;
+    root = nullptr; // Initialize root to nullptr
 }
 
 //==============================================
@@ -126,9 +113,13 @@ BT::BT( void ){
 // INPUT: none
 // RETURN: none
 //==============================================
-BT::BT(const Info &item ){
-    root = new Node(item);
+BT::BT(NodeInfo item){
+    NodeInfo newItem(item);
+    root = new Node(newItem);
 }
+
+
+
 
 
 //==============================================
@@ -139,16 +130,11 @@ BT::BT(const Info &item ){
 // RETURN: none
 //==============================================
 BT::BT( const BT &myBT ){
-    // root = NULL;
+    delete root;
 
-    // if (myBT.root == NULL) {
-    //     // If the input BT is empty, return
-    //     return;
-    // } 
-
+    cout << "copy " << myBT.getFreq() << endl;
     root = deepCopy(myBT.root);
 
-    
 
 
     
@@ -164,9 +150,26 @@ BT::BT( const BT &myBT ){
 //==============================================
 BT::~BT	( void ){
 
+    clear(root);
 
 
+}
 
+//==============================================
+// clear
+// Clears the binary tree by deallocating all dynamically allocated memory.
+// INPUT: Node* root
+// RETURN: void
+//==============================================
+void BT::clear(Node* root) {
+    if (root == nullptr) return; // Base case: if the root is null, return
+
+    // Recursively clear the left and right subtrees
+    clear(root->left);
+    clear(root->right);
+
+    // Delete the current node
+    delete root;
 }
 
 //==============================================
@@ -196,36 +199,31 @@ BT BT::operator= ( const BT &myBT ){
 BT  BT::operator+	    ( const BT &myBT ){
 
 
-    BT newBT(myBT.root->item + root->item);
-    // Node* newNode = new Node(myBT.root->item + root->item);
-    // newNode->item = myBT.root->item + root->item;
+    // BT newBT(myBT.root->item + root->item);
+    // // Node* newNode = new Node(myBT.root->item + root->item);
+    // // newNode->item = myBT.root->item + root->item;
 
 
-    newBT.root->left = root;
-    root =  newBT.root;
+    // newBT.root->left = root;
+    // root =  newBT.root;
 
 
-    newBT.root->right = myBT.root;
+    // newBT.root->right = myBT.root;
 
 
-    // return newNode;
-    return newBT;
-
-
-
+    // // return newNode;
+    // return newBT;
 
 
 
-}
 
 
-Info BT::getRootItem(void){
-
-    //cout << root->item << endl;
-    return root->item;
 
 
 }
+
+
+
 
 
 
@@ -253,13 +251,30 @@ Info BT::getRootItem(void){
 // RETURN: int
 //==============================================
 
-int		BT::	length		( void ) const{
-    // Node* temp = root;
-    return countNodes(root);
+int		BT::	getFreq		( void ){
+
+
+    return root->item.getFreq();
 
 }
 
 
+// //==============================================
+// // deepCopy 
+// // 
+// // INPUT: None
+// // RETURN: None
+// //==============================================
+BT::Node* BT::deepCopy(Node* rootNode) {
+    
+    if (rootNode == nullptr) return nullptr;
+
+    Node* newRoot = new Node(rootNode->item);
+    
+    newRoot->left = deepCopy(rootNode->left);
+    newRoot->right = deepCopy(rootNode->right);
+    return newRoot;
+}
 
 
 //==============================================
@@ -271,6 +286,6 @@ int		BT::	length		( void ) const{
 
 bool	BT::	empty		( void ) const{
 
-    return root == NULL;
+    return false;
 
 }

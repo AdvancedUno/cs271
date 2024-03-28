@@ -12,7 +12,6 @@
 #include <string>
 #include <cassert>
 #include "binaryTree.h"
-#include "info.h"
 #include <queue>
 #include <fstream> 
 #include <map>
