@@ -1,8 +1,8 @@
 //===============================
-// main2.cpp
+// main.cpp
 // Name: EunHo Lee , Ritika, Tomer  
-// Date: 22 Feb 2024
-// This file contains all test case for the priority queue class.
+// Date: 28 mar 2024
+// This file creates the frequency count file.
 //===============================
 
 #include <ctime>
@@ -25,7 +25,7 @@ using namespace std;
 void countcharacters(const string &filename, vector<int> &charCounts );
 
 
-// Comparison functor for priority queue
+// Comparison function for priority queue
 class CompareBT {
     public:
     bool operator()(BT& ltree,  BT& rtree)  {
@@ -86,13 +86,6 @@ int main ( void)
         //pq.pop();
         //pq.push(combined_tree);
     }
-
-
-
- 
-
-
-
 
     return 0;
 }

@@ -11,6 +11,7 @@
 
 using namespace std;
 
+
 #ifndef BT_H
 #define BT_H
 
@@ -43,6 +44,23 @@ private:
            
 
 
+    //==============================================
+    // countNodes
+    // Computes the number of nodes in the Binary tree
+    // INPUT: Node* rootNode
+    // RETURN: int
+    //==============================================
+    int countNodes(Node* rootNode){
+        if(rootNode == NULL)return 0;
+
+        //Go left and right recursively and increase the len by 1 
+        int len_left  = countNodes(rootNode->left);
+        int len_right = countNodes(rootNode->right);
+
+
+       return len_right + len_left + 1; 
+    }
+
     
 public:
 	BT		                ( void );   //Default constructor
@@ -60,8 +78,6 @@ public:
 
     int      getFreq         (void);
     bool     empty           (void) const;
-    //void        printBT         (Node* root);
-
 
 
     friend ostream & operator<< ( ostream &os, BT &myBT )
@@ -108,7 +124,7 @@ BT::BT(NodeInfo item){
 
 //==============================================
 // BT(const BT &myBT)
-// Contructor for BT class
+// Copy Contructor for BT class
 // Create a new BT from an existing one.
 // INPUT: const BT &myBT
 // RETURN: none
@@ -181,21 +197,20 @@ BT BT::operator= ( const BT &myBT ){
 BT  BT::operator+	    ( const BT &myBT ){
 
 
-    NodeInfo newInfo;
-    Node* newNode = new Node(newInfo);
+    BT newBT(myBT.root->item + root->item);
+    // Node* newNode = new Node(myBT.root->item + root->item);
     // newNode->item = myBT.root->item + root->item;
 
 
-    // newNode->left = root;
-    // root = newNode;
+    newBT.root->left = root;
+    root =  newBT.root;
 
 
-    // newNode->right = myBT.root;
-
-    
+    newBT.root->right = myBT.root;
 
 
-    return *this;
+    // return newNode;
+    return newBT;
 
 
 
@@ -216,7 +231,7 @@ BT  BT::operator+	    ( const BT &myBT ){
 // // INPUT: None
 // // RETURN: None
 // //==============================================
-// 
+
 // void BT::printBT(Node* root) {
 //     cout << root->item << " ";
 //     printBT(root->left);
@@ -272,7 +287,3 @@ bool	BT::	empty		( void ) const{
     return false;
 
 }
-
-
-
-;
