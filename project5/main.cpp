@@ -23,6 +23,8 @@ using namespace std;
 //functiom decleration
 //==========================================
 void countcharacters(const string &filename, vector<int> &charCounts );
+void saveCodeToFile(map<char, string> myCodeMap, string filename);
+
 
 
 // Comparison function for priority queue
@@ -75,20 +77,44 @@ int main ( void)
     
     
 
-    while(pq.size() > 0){
+    while(pq.size() > 1){
 
         BT combined_tree = pq.top();
         
-        cout << combined_tree.getFreq()<< endl;
         pq.pop();
 
         combined_tree = combined_tree + pq.top();
 
-        //pq.pop();
-        //pq.push(combined_tree);
+        pq.pop();
+
+        pq.push(combined_tree);
     }
 
+    BT final_tree = pq.top(); pq.pop();
+
+    map<char,string> code = final_tree.buildCodeChar();
+
+    for(char i = 'a'; i <= 'z'; i ++){
+        cout << i << "   :  " << code[i] << endl;
+    }
+    saveCodeToFile(code, "code.txt");
+
+
     return 0;
+}
+
+
+void saveCodeToFile(map<char, string> myCodeMap, string filename) {
+    ofstream outputFile(filename);
+    if (outputFile.is_open()) {
+        for (pair<char, string> code_pair : myCodeMap) {
+            outputFile << code_pair.first << " : " << code_pair.second << endl;
+        }
+        outputFile.close();
+        cout << "Map saved to file: " << filename << endl;
+    } else {
+        cout << "error in " << filename << endl;
+    }
 }
 
 //==============================================

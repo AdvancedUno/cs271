@@ -11,12 +11,13 @@
 #include <iomanip>
 #include <string>
 #include <fstream> 
+#include <sstream>
 #include <map>
   
 
 using namespace std;
 
-
+map<char, string> getCodeMap();
 //==============================================
 // main
 // Reads the text block from stdin and encodes it
@@ -27,10 +28,9 @@ int main (){
 
     // //Reading code vectors for each letter(code.txt)
      map<char, string> code_vector;
+     code_vector = getCodeMap();
 
-    for (char i='a';i <= 'z';i++ ){
-      code_vector[i] = "101";
-    }
+
 
     //Reading block of text from stdin line by line and encoding it using code vector
     string codedText;
@@ -52,7 +52,38 @@ int main (){
       cout << i;
     }
 
-
+ 
 
     return 0;
+}
+
+
+
+map<char, string> getCodeMap(){
+    
+    map<char, string> charToBinaryMap;
+    ifstream file("code.txt");
+    if (!file.is_open()) {
+        cout  << "Error " << endl;
+        return charToBinaryMap;
+    }
+
+
+    string line;
+    while (getline(file, line)) {
+        istringstream iss(line);
+        char character;
+        string separator, binaryString;
+
+        // Split each line into character and binary string
+        if (iss >> character >> separator >> binaryString && separator == ":") {
+            // Store the character and binary string in the map
+            charToBinaryMap[character] = binaryString;
+        } 
+    }
+
+    file.close();
+    return charToBinaryMap;
+
+
 }

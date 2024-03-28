@@ -75,7 +75,7 @@ NodeInfo::NodeInfo( char data, int freq ){
 // RETURN: none
 //==============================================
 NodeInfo::~NodeInfo( void ){
-
+    
 }
 
 
@@ -86,8 +86,6 @@ NodeInfo::~NodeInfo( void ){
 // RETURN: bool
 //==============================================
 bool NodeInfo::operator< ( const NodeInfo &myInfo )const{
-
-
 
     return freq < myInfo.freq;
 

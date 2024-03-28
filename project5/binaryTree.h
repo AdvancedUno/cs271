@@ -31,12 +31,11 @@ private:
     };
 
 
-    Node*   root;
+    Node*   root = nullptr;
 
  
-    Node* deepCopy(Node* rootNode);
 
-
+    map<char, string> store_code;
 
     
     void   printBT      (Node* root);
@@ -51,14 +50,24 @@ public:
 
 
 
-    BT    operator=	    ( const BT &myBT );
+    BT&    operator=	    ( const BT &myBT );
     BT    operator+	    ( const BT &myBT );
+<<<<<<< HEAD
     BT    CreateBT      ( map<char,string> &code_vector );
+=======
+    
+    Node* deepCopy(Node* rootNode);
+
+>>>>>>> 6612e45b4498f5ab76792cc16b2d4937c921a55d
 
 
 
     int      getFreq         (void);
     bool     empty           (void) const;
+    map<char,string>    buildCodeChar        (void);
+
+
+    void    codeChar        (Node* rootNode, string code);
 
 
     friend ostream & operator<< ( ostream &os, BT &myBT )
@@ -94,8 +103,7 @@ BT::BT( void ){
 // RETURN: none
 //==============================================
 BT::BT(NodeInfo item){
-    NodeInfo newItem(item);
-    root = new Node(newItem);
+    root = new Node(item);
 }
 
 
@@ -110,6 +118,8 @@ BT::BT(NodeInfo item){
 // RETURN: none
 //==============================================
 BT::BT(const BT &myBT) {
+
+    
 
     root = deepCopy(myBT.root);
 }
@@ -136,6 +146,8 @@ BT::~BT	( void ){
 // RETURN: void
 //==============================================
 void BT::clear(Node* root) {
+
+
     if(root!=NULL)
     {
         //Recursively work way to bottom node 
@@ -194,14 +206,12 @@ BT   BT::CreateBT(map<char,string> &code_vector ){
 // INPUT: const BT &myBT 
 // RETURN: BT
 //==============================================
-BT BT::operator= ( const BT &myBT ){
+BT& BT::operator= ( const BT &myBT ){
 
 
-
-    // Perform deep copy from myBT
-    root = deepCopy(myBT.root);
-
-    
+    if (this != &myBT) {
+        root = deepCopy(myBT.root);
+    }
 
     return *this;
 
@@ -218,23 +228,13 @@ BT BT::operator= ( const BT &myBT ){
 BT  BT::operator+	    ( const BT &myBT ){
 
 
-    BT newBT(myBT.root->item + root->item);
-    // Node* newNode = new Node(myBT.root->item + root->item);
-    // newNode->item = myBT.root->item + root->item;
+    Node* newNode = new Node(myBT.root->item + root->item);
+    newNode->left =myBT.root;
+    newNode->right = root;
+    root = newNode;
 
 
-    newBT.root->left = root;
-    root =  newBT.root;
-
-
-    newBT.root->right = myBT.root;
-
-
-    // return newNode;
-    return newBT;
-
-
-
+    return *this;
 
 
 
@@ -254,7 +254,13 @@ void BT::printBT(Node* root) {
     printBT(root->left);
     printBT(root->right);
 
+<<<<<<< HEAD
 }
+=======
+
+
+
+>>>>>>> 6612e45b4498f5ab76792cc16b2d4937c921a55d
 
 
 
@@ -273,8 +279,9 @@ int		BT::	getFreq		( void ){
 }
 
 
-// deepCopy - Recursively performs a deep copy of the binary tree
 BT::Node* BT::deepCopy(Node* rootNode) {
+
+
     if (rootNode == nullptr) {
         return nullptr; // Base case: if the original node is null, return null
     }
@@ -303,3 +310,44 @@ bool	BT::	empty		( void ) const{
     return false;
 
 }
+
+
+//==============================================
+// codeChar(void)
+// Returns true if the BT is empty, false otherwise.
+// INPUT: void
+// RETURN: void
+//==============================================
+
+void	BT::	codeChar		(Node* rootNode, string code) {
+
+
+    if (rootNode == nullptr) {
+        return;
+    }
+
+    if(rootNode->item.getChar() >= 'a' && rootNode->item.getChar() <= 'z'){
+        store_code.insert(make_pair(rootNode->item.getChar(),code));
+        //cout << rootNode->item.getChar() << "   : " << code << endl;
+        return;
+    }
+
+
+    codeChar(rootNode->left, code+ "0");
+    codeChar(rootNode->right, code+"1");
+
+}
+
+
+
+map<char,string>	BT::buildCodeChar		(void) {
+
+
+   codeChar(root, "");
+
+   return store_code;
+
+}
+
+
+
