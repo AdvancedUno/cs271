@@ -27,13 +27,7 @@ int main (){
 
     // //Reading code vectors for each letter(code.txt)
      map<char, string> code_vector;
-    // string code_vector_file;
-    // cin >> code_vector_file;
-    // while(getline(cin,code_vector_file)){
-    //     code_vector[code_vector_file[0]] = "1001";
-    //     // cout << code_vector_file[0] <<endl;
 
-    // }
     for (char i='a';i <= 'z';i++ ){
       code_vector[i] = "101";
     }
@@ -53,24 +47,12 @@ int main (){
       codedText = codedText + "\n" ;
     }
 
-    // //Printing the encoded song text
-    // for( char i : codedText){
-    //   cout << i;
-    // }
-
-    for (char i='a';i <= 'z';i++ ){
-      
-      for (char each:code_vector[i]){
-        if (each == '0'){
-          cout << "left" << " " ;
-        }
-        if (each == '1'){
-          cout << "right" << " ";
-        }
-
-      }
-      cout << code_vector[i] << endl;
+    //Printing the encoded song text
+    for( char i : codedText){
+      cout << i;
     }
+
+
 
     return 0;
 }

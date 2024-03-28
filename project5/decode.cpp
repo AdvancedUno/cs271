@@ -12,6 +12,7 @@
 #include <string>
 #include <cassert>
 #include "binaryTree.h"
+#include "nodeinfo.h"
 #include <queue>
 #include <fstream> 
 #include <map>
@@ -33,27 +34,24 @@ int main ( void)
     map<char, string> code_vector;
 
     for (char i='a';i <= 'z';i++ ){
-      code_vector[i] = "101";
+      code_vector[i] = "101" + code_vector[i];
     }   
 
-    BT mainBT();
-    for (char i='a';i <= 'z';i++ ){
-      
-      for (char each:code_vector[i]){
-        if (each == '0'){
-          cout << "left" << " " ;
+    NodeInfo item(0,0);
+    BT mainBT(item);
+    mainBT.CreateBT(code_vector);
+    cout << "mainBT";
+    cout << mainBT;
 
-        }
-        if (each == '1'){
-          cout << "right" << " ";
-        }
-
+    //Reading block of decodes text from stdin line by line and using binary tree
+    string decodedText;
+    string inputText;
+    while(getline(cin,inputText)){
+      for(char i:inputText){
+        
       }
-      cout << code_vector[i] << endl;
-    }
 
+    }
 
     return 0;
 }
-
-÷

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include "nodeinfo.h"
+#include <map>
 
 using namespace std;
 
@@ -16,8 +17,6 @@ using namespace std;
 #define BT_H
 
 
-
- 
 class BT{
 private:
 
@@ -26,8 +25,9 @@ private:
         NodeInfo  item;
         Node* left;
         Node* right;
+        Node* parent;
 
-        Node(NodeInfo item) : item(item),  left(nullptr), right(nullptr) {}
+        Node(NodeInfo item) : item(item),  left(nullptr), right(nullptr), parent(nullptr) {}
     };
 
 
@@ -42,25 +42,6 @@ private:
     void   printBT      (Node* root);
     void   clear(Node* root);
            
-
-
-    //==============================================
-    // countNodes
-    // Computes the number of nodes in the Binary tree
-    // INPUT: Node* rootNode
-    // RETURN: int
-    //==============================================
-    int countNodes(Node* rootNode){
-        if(rootNode == NULL)return 0;
-
-        //Go left and right recursively and increase the len by 1 
-        int len_left  = countNodes(rootNode->left);
-        int len_right = countNodes(rootNode->right);
-
-
-       return len_right + len_left + 1; 
-    }
-
     
 public:
 	BT		                ( void );   //Default constructor
@@ -72,7 +53,7 @@ public:
 
     BT    operator=	    ( const BT &myBT );
     BT    operator+	    ( const BT &myBT );
-    
+    BT    CreateBT      ( map<char,string> &code_vector );
 
 
 
@@ -83,8 +64,7 @@ public:
     friend ostream & operator<< ( ostream &os, BT &myBT )
     {
         os << "[ ";
-        os << myBT.root->item;
-        //myBT.printBT(myBT.root);
+        myBT.printBT(myBT.root);
         os << "]";
         return os;
     }
@@ -168,6 +148,45 @@ void BT::clear(Node* root) {
 
 }
 
+
+//==============================================
+// CreateBT ( map<char, string> &code_vector  )
+// Creates binary tree.
+// INPUT: map<char, string> &code_vector 
+// RETURN: BT
+//==============================================
+BT   BT::CreateBT(map<char,string> &code_vector ){
+
+    NodeInfo DummyItem(0,0);
+    Node* tempRoot = root;
+
+    for (char i='a';i <= 'z';i++ ){
+      for (char each:code_vector[i]){
+        if (each == '0'){
+            if (root->left == NULL){
+                root->left = new Node(DummyItem); 
+                root->left->parent = root;              
+            }
+          root= root->left;
+        }
+        if (each == '1'){
+            if (root->right == NULL){
+                root->right = new Node(DummyItem);  
+                root->right->parent = root;               
+            }
+          root= root->right;
+        }
+      }
+      root->item = NodeInfo(i,0);
+      root = tempRoot;
+    }   
+
+    return *this;
+
+}
+
+
+
 //==============================================
 // operator= ( const BT &myBT )
 // Assignment operator.
@@ -223,24 +242,19 @@ BT  BT::operator+	    ( const BT &myBT ){
 }
 
 
+//==============================================
+// printBT ( )
+// Prints the element in the binary tree.
+// INPUT: None
+// RETURN: None
+//==============================================
 
+void BT::printBT(Node* root) {
+    cout << root->item << " ";
+    printBT(root->left);
+    printBT(root->right);
 
-
-
-
-// //==============================================
-// // printBT ( )
-// // Prints the element in the binary tree.
-// // INPUT: None
-// // RETURN: None
-// //==============================================
-
-// void BT::printBT(Node* root) {
-//     cout << root->item << " ";
-//     printBT(root->left);
-//     printBT(root->right);
-
-// }
+}
 
 
 

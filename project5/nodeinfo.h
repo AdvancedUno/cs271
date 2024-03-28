@@ -24,7 +24,12 @@ public:
     int getFreq(void);
     char getChar(void);
 
-    friend ostream & operator<< (std::ostream &os, const NodeInfo &myInfo);
+    friend ostream & operator<< (std::ostream &os, const NodeInfo &myInfo){
+        os << "[ ";
+        os<< "(" << myInfo.freq << "," << myInfo.dataC << ")" << "  ";
+        os << "]";
+        return os;
+    };
 };
 
 #endif
