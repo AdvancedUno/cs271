@@ -1,37 +1,32 @@
+#ifndef INFO_H
+#define INFO_H
 
-
-#include <ctime>
 #include <iostream>
-#include <vector>
-#include <iomanip>
-#include <string>
-
-
-// Info structure for binary tree
-class Info {
+using namespace std;
+class NodeInfo {
 private:
-    char data;
-    int freq;
+    char dataC;
+    int  freq;
 
 public:
-	Info		                    ( void );   //Default constructor
-	Info		                    ( char data, int freq );   //Default constructor
-    bool        operator<	        ( const Info &myInfo );
-    bool        operator>	        ( const Info &myInfo );
-    bool        operator<=	        ( const Info &myInfo );
-    bool        operator>=	        ( const Info &myInfo );
-    bool        operator==	        ( const Info &myInfo );
-    bool        operator!=	        ( const Info &myInfo );
-    friend ostream & operator<< ( ostream &os, Info &myInfo )
-    {
-        os << "[ ";
-        os << "char : " << myInfo.data << "  freq : " << myInfo.freq;
-        os << "]";
-        return os;
-    }
+    NodeInfo(); //Default constructor
+    NodeInfo(char data, int freq); //Parameterized constructor
+    NodeInfo( const NodeInfo &myNodeInfo ); // copy constructor
 
+    ~NodeInfo(); //Default destructor
+    bool operator<(const NodeInfo &myInfo) const;
+    bool operator>(const NodeInfo &myInfo) const;
+    bool operator<=(const NodeInfo &myInfo) const;
+    bool operator>=(const NodeInfo &myInfo) const;
+    bool operator==(const NodeInfo &myInfo) const;
+    bool operator!=(const NodeInfo &myInfo) const;
+    int getFreq(void);
+    char getChar(void);
+
+    friend ostream & operator<< (std::ostream &os, const NodeInfo &myInfo);
 };
 
+#endif
 
 //==============================================
 // Info(void)
@@ -39,13 +34,20 @@ public:
 // INPUT: none
 // RETURN: none
 //==============================================
-Info::Info( void ){
+NodeInfo::NodeInfo( void ){
 
-    data = ' ';
+    dataC = ' ';
     freq = 0;
 
 }
 
+NodeInfo::NodeInfo( const NodeInfo &myNodeInfo ){
+    dataC = myNodeInfo.dataC;
+    freq = myNodeInfo.freq;
+}
+
+
+
 
 //==============================================
 // Info(void)
@@ -53,13 +55,22 @@ Info::Info( void ){
 // INPUT: none
 // RETURN: none
 //==============================================
-Info::Info( char data, int freq ){
+NodeInfo::NodeInfo( char data, int freq ){
 
-    this->data = data;
+    this->dataC = data;
     this->freq = freq;
 
 }
 
+//==============================================
+// Info(void)
+// Contructor for BT class
+// INPUT: none
+// RETURN: none
+//==============================================
+NodeInfo::~NodeInfo( void ){
+
+}
 
 
 //==============================================
@@ -68,7 +79,7 @@ Info::Info( char data, int freq ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator< ( const Info &myInfo ){
+bool NodeInfo::operator< ( const NodeInfo &myInfo )const{
 
 
 
@@ -82,7 +93,7 @@ bool Info::operator< ( const Info &myInfo ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator<= ( const Info &myInfo ){
+bool NodeInfo::operator <= ( const NodeInfo &myInfo )const{
 
 
 
@@ -98,7 +109,7 @@ bool Info::operator<= ( const Info &myInfo ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator> ( const Info &myInfo ){
+bool NodeInfo::operator > ( const NodeInfo &myInfo )const{
 
 
 
@@ -114,7 +125,7 @@ bool Info::operator> ( const Info &myInfo ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator>= ( const Info &myInfo ){
+bool NodeInfo::operator>= ( const NodeInfo &myInfo )const{
 
 
 
@@ -130,7 +141,7 @@ bool Info::operator>= ( const Info &myInfo ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator!= ( const Info &myInfo ){
+bool NodeInfo::operator!= ( const NodeInfo &myInfo )const{
 
 
 
@@ -146,7 +157,7 @@ bool Info::operator!= ( const Info &myInfo ){
 // INPUT: const Info &myInfo
 // RETURN: bool
 //==============================================
-bool Info::operator== ( const Info &myInfo ){
+bool NodeInfo::operator== ( const NodeInfo &myInfo )const{
 
 
 
@@ -157,10 +168,26 @@ bool Info::operator== ( const Info &myInfo ){
 
 
 
+//==============================================
+
+//==============================================
+int NodeInfo::getFreq(void){
 
 
 
+    return freq;
 
+}
+
+
+//==============================================
+
+//==============================================
+char NodeInfo::getChar(void){
+
+    return dataC;
+
+}
 
 
 
