@@ -50,7 +50,7 @@ int main ( void)
 
     //Reading frequency table txt
     map<char, int> charCounts;
-    charCounts = getCodeMap("freqTable.txt");
+    charCounts = getCodeMap("FreqTable.txt");
 
     priority_queue<BT, vector<BT>, CompareBT> pq;
 
@@ -87,7 +87,7 @@ int main ( void)
     for(char i = 'a'; i <= 'z'; i ++){
         cout << i << "   :  " << code[i] << endl;
     }
-    saveCodeToFile(code, "code.txt");
+    saveCodeToFile(code, "codes.txt");
 
 
     return 0;

@@ -54,7 +54,7 @@ int main ( void)
 map<char, string> getCodeMap(){
     // if there is an error reading the file, print error and return the empty map.
     map<char, string> charToBinaryMap;
-    ifstream file("code.txt");
+    ifstream file("codes.txt");
     if (!file.is_open()) {
         cout  << "Error " << endl;
         return charToBinaryMap;

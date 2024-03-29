@@ -81,7 +81,7 @@ int main (){
 map<char, string> getCodeMap(){
     
     map<char, string> charToBinaryMap;
-    ifstream file("code.txt");
+    ifstream file("codes.txt");
     if (!file.is_open()) {
         cout  << "Error " << endl;
         return charToBinaryMap;

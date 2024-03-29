@@ -47,7 +47,7 @@ int main ( void)
         // cout << letter << "  " << charCounts[i] << endl;
     }
     
-    saveCodeToFile(freqCode, "freqTable.txt");
+    saveCodeToFile(freqCode, "FreqTable.txt");
 
     return 0;
 }
