@@ -37,19 +37,14 @@ int main ( void)
     NodeInfo item(0,0);
     BT mainBT(item);
     mainBT.CreateBT(code_vector);
-    cout << mainBT; 
 
-    //Now decode , make 
 
-    // //Reading block of decodes text from stdin line by line and using binary tree
-    // string decodedText;
-    // string inputText;
-    // while(getline(cin,inputText)){
-    //   for(char i:inputText){
-        
-    //   }
+    //Reading block of decodes text from stdin line by line and using binary tree
+    string inputText;
+    while(getline(cin,inputText)){
 
-    // }
+      cout<< mainBT.decode(inputText) <<endl; 
+    }
 
     return 0;
 }

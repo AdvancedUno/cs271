@@ -51,14 +51,14 @@ public:
 
 
 
-    BT&    operator=	    ( const BT &myBT );
+    BT&   operator=	    ( const BT &myBT );
     BT    operator+	    ( const BT &myBT );
     BT    CreateBT      ( map<char,string> &code_vector );
-
 
     int      getFreq         (void);
     bool     empty           (void) const;
     map<char,string>    buildCodeChar        (void);
+    string  decode(string code);
 
     void    codeChar        (Node* rootNode, string code);
 
@@ -169,14 +169,16 @@ BT   BT::CreateBT(map<char,string> &code_vector ){
         if (each == '0'){
             if (root->left == NULL){
                 root->left = new Node(DummyItem); 
-                root->left->parent = root;              
+                root->left->parent = root; 
+                //parent to child relation             
             }
           root= root->left;
         }
         if (each == '1'){
             if (root->right == NULL){
                 root->right = new Node(DummyItem);  
-                root->right->parent = root;               
+                root->right->parent = root;  
+                //parent to child relation             
             }
           root= root->right;
         }
@@ -189,6 +191,28 @@ BT   BT::CreateBT(map<char,string> &code_vector ){
 
 }
 
+string  BT::decode(string code){
+    string output = "";
+    Node* currnetNode = root;
+    for(int i =0 ; i < code.length()+1; i ++){
+
+        if(currnetNode->item.getChar() >= 'a' && currnetNode->item.getChar() <='z'){
+            output += currnetNode->item.getChar();
+            currnetNode = root;
+        }
+        if(code[i] == '0'){
+            currnetNode = currnetNode->left;
+        }else{
+            currnetNode = currnetNode->right;
+
+        }
+    }
+
+    return output;
+
+
+
+}
 
 
 //==============================================
@@ -279,6 +303,12 @@ BT::Node* BT::deepCopy(Node* rootNode) {
     // Recursively copy the left and right children of the original node
     newRoot->left = deepCopy(rootNode->left);
     newRoot->right = deepCopy(rootNode->right);
+    if(newRoot->left != nullptr){
+        newRoot->left->parent = rootNode;
+    }
+    if(newRoot->right != nullptr){
+        newRoot->right->parent = rootNode;
+    }
 
     return newRoot; // Return the new node
 }
