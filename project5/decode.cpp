@@ -14,14 +14,13 @@
 #include "binaryTree.h"
 #include <queue>
 #include <fstream> 
+#include <sstream>
 #include <map>
   
-  
-
 using namespace std;
 
-// Node* buildBT();
-
+//function declaration
+map<char, string> getCodeMap();
 //==============================================
 // main
 // Decodes the encoded files/text
@@ -30,29 +29,54 @@ using namespace std;
 //==============================================
 int main ( void)
 {
+
+    //Reading code vectors for each letter(code.txt)
     map<char, string> code_vector;
+    code_vector = getCodeMap();
 
-    for (char i='a';i <= 'z';i++ ){
-      code_vector[i] = "101";
-    }   
+    // create a bt using CreareBT function on code vector (map with characters and their)
+    NodeInfo item(0,0);
+    BT mainBT(item);
+    mainBT.CreateBT(code_vector);
 
-    BT mainBT();
-    for (char i='a';i <= 'z';i++ ){
-      
-      for (char each:code_vector[i]){
-        if (each == '0'){
-          cout << "left" << " " ;
 
-        }
-        if (each == '1'){
-          cout << "right" << " ";
-        }
+    //Reading block of encodes text from stdin line by line and using binary tree
+    // to decode them.
+    string inputText;
+    while(getline(cin,inputText)){
 
-      }
-      cout << code_vector[i] << endl;
+      cout<< mainBT.decode(inputText) <<endl; 
+    }
+
+    return 0;
+}
+
+map<char, string> getCodeMap(){
+    // if there is an error reading the file, print error and return the empty map.
+    map<char, string> charToBinaryMap;
+    ifstream file("codes.txt");
+    if (!file.is_open()) {
+        cout  << "Error " << endl;
+        return charToBinaryMap;
     }
 
 
-    return 0;
+    string line;
+    while (getline(file, line)) {
+        istringstream iss(line);
+        char character;
+        string separator, binaryString;
+
+        // Split each line into character and binary string
+        if (iss >> character >> separator >> binaryString && separator == ":") {
+            // Store the character and binary string in the map
+            charToBinaryMap[character] = binaryString;
+        } 
+    }
+
+    file.close();
+    return charToBinaryMap;
+
+
 }
 

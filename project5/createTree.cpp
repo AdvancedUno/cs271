@@ -1,8 +1,8 @@
 //===============================
-// main.cpp
+// createTree.cpp
 // Name: EunHo Lee , Ritika, Tomer  
 // Date: 28 mar 2024
-// This file creates the frequency count file.
+// This file creates the code file using binary tree.
 //===============================
 
 #include <ctime>
@@ -11,6 +11,7 @@
 #include <iomanip>
 #include <string>
 #include <cassert>
+#include <sstream>
 #include "binaryTree.h"
 #include <queue>
 #include <fstream> 
@@ -19,13 +20,16 @@
 using namespace std;
 
 //==========================================
-//functiom decleration
+//function decleration
 //==========================================
-void countcharacters(const string &filename, vector<int> &charCounts );
 void saveCodeToFile(map<char, string> myCodeMap, string filename);
+map<char, int> getCodeMap(string filename);
 
 
-// Comparison function for priority queue
+//==============================================
+// CompareBT class
+// Comparison class for priority queue
+//==============================================
 class CompareBT {
     public:
     bool operator()(BT& ltree,  BT& rtree)  {
@@ -37,30 +41,23 @@ class CompareBT {
 
 //==============================================
 // main
-// Run test case on heap class
+// Creates Binary tree from freqTable.txt
 // INPUT: none
 // RETURN: int 
 //==============================================
 int main ( void)
 {
 
-    vector<int> charCounts(26);
-    string filename = "WarPeace.txt";
-
-    countcharacters(filename, charCounts);
-    for (int i =0; i < 26; i++)
-    {
-        char letter = i +'a';
-        //cout << letter << "  " << charCounts[i] << endl;
-    }
-
+    //Reading frequency table txt
+    map<char, int> charCounts;
+    charCounts = getCodeMap("FreqTable.txt");
 
     priority_queue<BT, vector<BT>, CompareBT> pq;
 
 
     for(int i =0; i < 26; i ++){
-        NodeInfo info = NodeInfo(char(i+97), charCounts[i]);
-        cout << char(i+97) << "  " << charCounts[i] << endl;
+        NodeInfo info = NodeInfo(char(i+97), charCounts[char(i+97)]);
+        cout << char(i+97) << "  " << charCounts[char(i+97)] << endl;
         BT b_tree(info);
         pq.push(b_tree);
 
@@ -69,16 +66,18 @@ int main ( void)
     
 
     while(pq.size() > 1){
-
         BT combined_tree = pq.top();
         
         pq.pop();
 
         combined_tree = combined_tree + pq.top();
 
+
         pq.pop();
 
+
         pq.push(combined_tree);
+
     }
 
     BT final_tree = pq.top(); pq.pop();
@@ -88,13 +87,18 @@ int main ( void)
     for(char i = 'a'; i <= 'z'; i ++){
         cout << i << "   :  " << code[i] << endl;
     }
-    saveCodeToFile(code, "code.txt");
+    saveCodeToFile(code, "codes.txt");
 
 
     return 0;
 }
 
-
+//==============================================
+// saveCodeToFile
+// Creates a text file for frequency table
+// INPUT: map<char, string> myCodeMap, string filename
+// RETURN: void 
+//==============================================
 void saveCodeToFile(map<char, string> myCodeMap, string filename) {
     ofstream outputFile(filename);
     if (outputFile.is_open()) {
@@ -109,31 +113,34 @@ void saveCodeToFile(map<char, string> myCodeMap, string filename) {
 }
 
 //==============================================
-// countcharacters
-// open and read a text file and count the frequency of each
-// character between a-z in the text file.
-// INPUT: const string &filename, vector<int> &charCounts
-// RETURN: void 
+// getCodeMap
+// Reads a text file and createa a map 
+// INPUT: 
+// RETURN: map<char, string> 
 //==============================================
-void countcharacters(const string &filename, vector<int> &charCounts )
-{
-
-    std::ifstream file(filename);
-    if (!file.is_open())
-        throw runtime_error("Error opening file");
-    char c;
-    charCounts.assign(26,0);
-
-    while(file.get(c))
-    {
-        c = tolower(c);
-        if(isalpha(c))
-        {
-            int index = c - 'a';
-            charCounts[index]++;
-        }
-        
+map<char, int> getCodeMap(string filename){
+    
+    map<char, int> charMap;
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cout  << "Error " << endl;
+        return charMap;
     }
-    file.close(); // not neccesarry, we need to decide.
-}
 
+    string line;
+    while (getline(file, line)) {
+
+        istringstream iss(line);
+        char character;
+        string separator, freq;
+
+        // Split each line into character and binary string
+        if (iss >> character >> separator >> freq && separator == ":") {
+            // Store the character and binary string in the map
+            charMap[character] = stoi(freq);
+        } 
+    }
+
+    file.close();
+    return charMap;
+}

@@ -13,11 +13,16 @@
 #include <fstream> 
 #include <sstream>
 #include <map>
-  
 
 using namespace std;
 
+
+//==========================================
+//function decleration
+//==========================================
 map<char, string> getCodeMap();
+
+
 //==============================================
 // main
 // Reads the text block from stdin and encodes it
@@ -26,11 +31,9 @@ map<char, string> getCodeMap();
 //==============================================
 int main (){
 
-    // //Reading code vectors for each letter(code.txt)
-     map<char, string> code_vector;
-     code_vector = getCodeMap();
-
-
+    //Reading code vectors for each letter(code.txt)
+    map<char, string> code_vector;
+    code_vector = getCodeMap();
 
     //Reading block of text from stdin line by line and encoding it using code vector
     string codedText;
@@ -39,7 +42,6 @@ int main (){
         for(char i:inputText){
           i = tolower(i);
           if ( i >= 'a' && i <= 'z'){
-            // cout << i ;
             codedText = codedText + code_vector[i] ;
           }
         }
@@ -47,27 +49,43 @@ int main (){
       codedText = codedText + "\n" ;
     }
 
-    //Printing the encoded song text
+    string filename= "encoded.txt";
+    ofstream outputFile(filename);
+
+    //Printing the encoded song text and saving it as a "decoded.txt" file
     for( char i : codedText){
       cout << i;
     }
 
- 
+    if (outputFile.is_open()) {
+          outputFile << codedText << endl;
+        outputFile.close();
+        cout << "Map saved to file: " << filename << endl;
+    } else {
+        cout << "error in " << filename << endl;
+    }   
+
 
     return 0;
 }
 
 
 
+
+//==============================================
+// getCodeMap
+// Reads a text file and createa a map 
+// INPUT: 
+// RETURN: map<char, string> 
+//==============================================
 map<char, string> getCodeMap(){
     
     map<char, string> charToBinaryMap;
-    ifstream file("code.txt");
+    ifstream file("codes.txt");
     if (!file.is_open()) {
         cout  << "Error " << endl;
         return charToBinaryMap;
     }
-
 
     string line;
     while (getline(file, line)) {
@@ -84,6 +102,4 @@ map<char, string> getCodeMap(){
 
     file.close();
     return charToBinaryMap;
-
-
 }
