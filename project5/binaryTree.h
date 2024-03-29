@@ -80,7 +80,7 @@ public:
 
 //==============================================
 // BT(void)
-// Contructor for BT class
+// Default Contructor for BT class
 // INPUT: none
 // RETURN: none
 //==============================================
@@ -91,17 +91,13 @@ BT::BT( void ){
 
 //==============================================
 // BT(void)
-// Contructor for BT class
+// Parameterized Contructor for BT class
 // INPUT: none
 // RETURN: none
 //==============================================
 BT::BT(NodeInfo item){
     root = new Node(item); // initilize the root with the item 'item'
 }
-
-
-
-
 
 //==============================================
 // BT(const BT &myBT)
@@ -111,8 +107,6 @@ BT::BT(NodeInfo item){
 // RETURN: none
 //==============================================
 BT::BT(const BT &myBT) {
-
-    
 
     root = deepCopy(myBT.root); // calling deepcopy function in the copy constructor
 }
@@ -129,7 +123,6 @@ BT::~BT	( void ){
 
     clear(root); 
 
-
 }
 
 //==============================================
@@ -139,7 +132,6 @@ BT::~BT	( void ){
 // RETURN: void
 //==============================================
 void BT::clear(Node* root) {
-
 
     if(root!=NULL)
     {
@@ -204,7 +196,7 @@ string  BT::decode(string code){
     string output = "";
     Node* currnetNode = root;
     // go through the line of code
-    for(int i =0 ; i < code.length()+1; i ++){
+    for(int i =0 ; i < int(code.length()+1); i ++){
         // if the current node has a character, add the char to the string output, and 
         // point back to the root
         if(currnetNode->item.getChar() >= 'a' && currnetNode->item.getChar() <='z'){
@@ -225,7 +217,6 @@ string  BT::decode(string code){
 
 }
 
-
 //==============================================
 // printBT ( )
 // Prints the element in the binary tree.
@@ -242,7 +233,6 @@ void BT::printBT(Node* root) {
 }
 
 
-
 //==============================================
 // operator= ( const BT &myBT )
 // Assignment operator.
@@ -252,11 +242,9 @@ void BT::printBT(Node* root) {
 //==============================================
 BT& BT::operator= ( const BT &myBT ){
 
-    clear(root);
-    root = deepCopy(myBT.root);
-    //if (this != &myBT) {
-        //root = deepCopy(myBT.root);
-    //}
+    if (this != &myBT) {
+        root = deepCopy(myBT.root);
+    }
 
     return *this;
 
@@ -282,12 +270,7 @@ BT  BT::operator+	    ( const BT &myBT ){
 
 
     return *this;
-
-
-
-
 }
-
 
 //==============================================
 // length( void )
@@ -298,14 +281,11 @@ BT  BT::operator+	    ( const BT &myBT ){
 
 int		BT::	getFreq		( void ){
 
-
     return root->item.getFreq();
 
 }
 
-
 BT::Node* BT::deepCopy(Node* rootNode) {
-
 
     if (rootNode == nullptr) {
         return nullptr; // Base case: if the original node is null, return null
@@ -329,8 +309,6 @@ BT::Node* BT::deepCopy(Node* rootNode) {
     return newRoot; // Return the new node
 }
 
-
-
 //==============================================
 // isEmpty(void)
 // Returns true if the BT is empty, false otherwise.
@@ -343,7 +321,6 @@ bool	BT::	empty		( void ) const{
     return root == NULL;
 
 }
-
 
 //==============================================
 // codeChar(void)
@@ -373,7 +350,6 @@ void	BT::	codeChar		(Node* rootNode, string code) {
     codeChar(rootNode->right, code+"1");
 
 }
-
 
 
 map<char,string>	BT::buildCodeChar		(void) {

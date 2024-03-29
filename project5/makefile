@@ -1,19 +1,25 @@
-all: main encode decode
+all: createTree encode decode freqTable
 
-main: main.o 
-	g++ -std=c++11 -Wall -g -o main main.o 
+freqTable: freqTable.o 
+	g++ -std=c++11 -Wall -g -o freqTable freqTable.o 
 
-main.o: main.cpp nodeinfo.h binaryTree.h
-	g++ -std=c++11 -c -g -Wall main.cpp
+freqTable.o: freqTable.cpp nodeinfo.h binaryTree.h
+	g++ -std=c++11 -c -g -Wall freqTable.cpp
+
+createTree: createTree.o 
+	g++ -std=c++11 -Wall -g -o createTree createTree.o 
+
+createTree.o: freqTable.cpp createTree.cpp nodeinfo.h binaryTree.h
+	g++ -std=c++11 -c -g -Wall createTree.cpp
 
 encode: encode.o 
 	g++ -std=c++11 -Wall -g -o encode encode.o 
 
-encode.o: main.cpp binaryTree.h encode.cpp decode.cpp nodeinfo.h
+encode.o: freqTable.cpp createTree.cpp binaryTree.h encode.cpp decode.cpp nodeinfo.h
 	g++ -std=c++11 -c -g -Wall encode.cpp
 
 decode: decode.o 
 	g++ -std=c++11 -Wall -g -o decode decode.o 
 
-decode.o: main.cpp binaryTree.h encode.cpp decode.cpp nodeinfo.h
+decode.o: freqTable.cpp createTree.cpp binaryTree.h encode.cpp decode.cpp nodeinfo.h
 	g++ -std=c++11 -c -g -Wall decode.cpp
