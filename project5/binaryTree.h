@@ -31,9 +31,10 @@ private:
     };
 
 
-    Node*   root = nullptr;
+    Node*   root;
 
- 
+    //Add "parent" to deep copy and operator+
+    Node* deepCopy(Node* rootNode);
 
     map<char, string> store_code;
 
@@ -52,20 +53,12 @@ public:
 
     BT&    operator=	    ( const BT &myBT );
     BT    operator+	    ( const BT &myBT );
-<<<<<<< HEAD
     BT    CreateBT      ( map<char,string> &code_vector );
-=======
-    
-    Node* deepCopy(Node* rootNode);
-
->>>>>>> 6612e45b4498f5ab76792cc16b2d4937c921a55d
-
 
 
     int      getFreq         (void);
     bool     empty           (void) const;
     map<char,string>    buildCodeChar        (void);
-
 
     void    codeChar        (Node* rootNode, string code);
 
@@ -160,7 +153,6 @@ void BT::clear(Node* root) {
 
 }
 
-
 //==============================================
 // CreateBT ( map<char, string> &code_vector  )
 // Creates binary tree.
@@ -194,6 +186,23 @@ BT   BT::CreateBT(map<char,string> &code_vector ){
     }   
 
     return *this;
+
+}
+
+
+
+//==============================================
+// printBT ( )
+// Prints the element in the binary tree.
+// INPUT: None
+// RETURN: None
+//==============================================
+
+void BT::printBT(Node* root) {
+    if (root == NULL) return;
+    cout << root->item << " ";
+    printBT(root->left);
+    printBT(root->right);
 
 }
 
@@ -243,28 +252,6 @@ BT  BT::operator+	    ( const BT &myBT ){
 
 
 //==============================================
-// printBT ( )
-// Prints the element in the binary tree.
-// INPUT: None
-// RETURN: None
-//==============================================
-
-void BT::printBT(Node* root) {
-    cout << root->item << " ";
-    printBT(root->left);
-    printBT(root->right);
-
-<<<<<<< HEAD
-}
-=======
-
-
-
->>>>>>> 6612e45b4498f5ab76792cc16b2d4937c921a55d
-
-
-
-//==============================================
 // length( void )
 // Returns the number of items in the BT.
 // INPUT: none
@@ -307,7 +294,7 @@ BT::Node* BT::deepCopy(Node* rootNode) {
 
 bool	BT::	empty		( void ) const{
 
-    return false;
+    return root == NULL;
 
 }
 

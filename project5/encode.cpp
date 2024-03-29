@@ -13,7 +13,6 @@
 #include <fstream> 
 #include <sstream>
 #include <map>
-  
 
 using namespace std;
 
@@ -26,7 +25,7 @@ map<char, string> getCodeMap();
 //==============================================
 int main (){
 
-    // //Reading code vectors for each letter(code.txt)
+    //Reading code vectors for each letter(code.txt)
      map<char, string> code_vector;
      code_vector = getCodeMap();
 
@@ -52,7 +51,6 @@ int main (){
       cout << i;
     }
 
- 
 
     return 0;
 }

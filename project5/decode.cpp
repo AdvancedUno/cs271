@@ -12,17 +12,14 @@
 #include <string>
 #include <cassert>
 #include "binaryTree.h"
-#include "nodeinfo.h"
 #include <queue>
 #include <fstream> 
+#include <sstream>
 #include <map>
   
-  
-
 using namespace std;
 
-// Node* buildBT();
-
+map<char, string> getCodeMap();
 //==============================================
 // main
 // Decodes the encoded files/text
@@ -31,28 +28,58 @@ using namespace std;
 //==============================================
 int main ( void)
 {
-    map<char, string> code_vector;
 
-    for (char i='a';i <= 'z';i++ ){
-      code_vector[i] = "101" + code_vector[i];
-    }   
+    //Reading code vectors for each letter(code.txt)
+    map<char, string> code_vector;
+    code_vector = getCodeMap();
+
 
     NodeInfo item(0,0);
     BT mainBT(item);
     mainBT.CreateBT(code_vector);
-    cout << "mainBT";
-    cout << mainBT;
+    cout << mainBT; 
 
-    //Reading block of decodes text from stdin line by line and using binary tree
-    string decodedText;
-    string inputText;
-    while(getline(cin,inputText)){
-      for(char i:inputText){
+    //Now decode , make 
+
+    // //Reading block of decodes text from stdin line by line and using binary tree
+    // string decodedText;
+    // string inputText;
+    // while(getline(cin,inputText)){
+    //   for(char i:inputText){
         
-      }
+    //   }
 
-    }
+    // }
 
     return 0;
+}
+
+map<char, string> getCodeMap(){
+    
+    map<char, string> charToBinaryMap;
+    ifstream file("code.txt");
+    if (!file.is_open()) {
+        cout  << "Error " << endl;
+        return charToBinaryMap;
+    }
+
+
+    string line;
+    while (getline(file, line)) {
+        istringstream iss(line);
+        char character;
+        string separator, binaryString;
+
+        // Split each line into character and binary string
+        if (iss >> character >> separator >> binaryString && separator == ":") {
+            // Store the character and binary string in the map
+            charToBinaryMap[character] = binaryString;
+        } 
+    }
+
+    file.close();
+    return charToBinaryMap;
+
+
 }
 

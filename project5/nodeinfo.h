@@ -25,9 +25,7 @@ public:
     char getChar(void);
 
     friend ostream & operator<< (std::ostream &os, const NodeInfo &myInfo){
-        os << "[ ";
         os<< "(" << myInfo.freq << "," << myInfo.dataC << ")" << "  ";
-        os << "]";
         return os;
     };
 };
