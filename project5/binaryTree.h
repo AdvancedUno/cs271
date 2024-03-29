@@ -22,7 +22,7 @@ private:
 
     // Node structure for binary tree
     struct Node {
-        NodeInfo  item;
+        NodeInfo  item;     // create an item object that has freq and char (infronode)
         Node* left;
         Node* right;
         Node* parent;
@@ -33,7 +33,7 @@ private:
 
     Node*   root;
 
-    //Add "parent" to deep copy and operator+
+    
     Node* deepCopy(Node* rootNode);
 
     map<char, string> store_code;
@@ -46,7 +46,7 @@ private:
 public:
 	BT		                ( void );   //Default constructor
 	BT                      ( const BT &myBT ); // copy constructor
-    BT		                ( NodeInfo item); // constructor
+    BT		                ( NodeInfo item); // constructor with item
 	~BT		                ( void ); // destructor
 
 
@@ -96,7 +96,7 @@ BT::BT( void ){
 // RETURN: none
 //==============================================
 BT::BT(NodeInfo item){
-    root = new Node(item);
+    root = new Node(item); // initilize the root with the item 'item'
 }
 
 
@@ -114,7 +114,7 @@ BT::BT(const BT &myBT) {
 
     
 
-    root = deepCopy(myBT.root);
+    root = deepCopy(myBT.root); // calling deepcopy function in the copy constructor
 }
 
 
@@ -127,7 +127,7 @@ BT::BT(const BT &myBT) {
 //==============================================
 BT::~BT	( void ){
 
-    clear(root);
+    clear(root); 
 
 
 }
@@ -161,8 +161,12 @@ void BT::clear(Node* root) {
 //==============================================
 BT   BT::CreateBT(map<char,string> &code_vector ){
 
-    NodeInfo DummyItem(0,0);
-    Node* tempRoot = root;
+    NodeInfo DummyItem(0,0);    // create a dummy item for the begining
+    Node* tempRoot = root;      // create temproot that will point to the root
+
+// traverse through each of the letters, and then traverse through each digit in
+// the letter's encoding, and build the binary tree in a way that if we have 0 we going
+// left and if we have a 1 we going right.
 
     for (char i='a';i <= 'z';i++ ){
       for (char each:code_vector[i]){
@@ -180,22 +184,29 @@ BT   BT::CreateBT(map<char,string> &code_vector ){
                 root->right->parent = root;  
                 //parent to child relation             
             }
-          root= root->right;
+          root= root->right;  
         }
       }
-      root->item = NodeInfo(i,0);
-      root = tempRoot;
+      root->item = NodeInfo(i,0);   // assining to the node it's letter.
+      root = tempRoot;              // go back to the root.
     }   
 
     return *this;
 
 }
-
+//==============================================
+// decode(string code)
+// decode the given code
+// INPUT: string code
+// RETURN: string
+//==============================================
 string  BT::decode(string code){
     string output = "";
     Node* currnetNode = root;
+    // go through the line of code
     for(int i =0 ; i < code.length()+1; i ++){
-
+        // if the current node has a character, add the char to the string output, and 
+        // point back to the root
         if(currnetNode->item.getChar() >= 'a' && currnetNode->item.getChar() <='z'){
             output += currnetNode->item.getChar();
             currnetNode = root;
@@ -241,10 +252,11 @@ void BT::printBT(Node* root) {
 //==============================================
 BT& BT::operator= ( const BT &myBT ){
 
-
-    if (this != &myBT) {
-        root = deepCopy(myBT.root);
-    }
+    clear(root);
+    root = deepCopy(myBT.root);
+    //if (this != &myBT) {
+        //root = deepCopy(myBT.root);
+    //}
 
     return *this;
 
@@ -260,7 +272,9 @@ BT& BT::operator= ( const BT &myBT ){
 
 BT  BT::operator+	    ( const BT &myBT ){
 
-
+    // the new bt root will be the sum of the two roots
+    // the left child will be the root of mybt
+    // and the right child will be the root of root
     Node* newNode = new Node(myBT.root->item + root->item);
     newNode->left =myBT.root;
     newNode->right = root;
@@ -303,6 +317,8 @@ BT::Node* BT::deepCopy(Node* rootNode) {
     // Recursively copy the left and right children of the original node
     newRoot->left = deepCopy(rootNode->left);
     newRoot->right = deepCopy(rootNode->right);
+
+    // set the parent connection 
     if(newRoot->left != nullptr){
         newRoot->left->parent = rootNode;
     }
@@ -331,7 +347,7 @@ bool	BT::	empty		( void ) const{
 
 //==============================================
 // codeChar(void)
-// Returns true if the BT is empty, false otherwise.
+// This method populating the map with pairs of characters and their coding
 // INPUT: void
 // RETURN: void
 //==============================================
@@ -342,6 +358,8 @@ void	BT::	codeChar		(Node* rootNode, string code) {
     if (rootNode == nullptr) {
         return;
     }
+    // if the character of the current node is between a and z, insert
+    // the character and its encoding to store_code
 
     if(rootNode->item.getChar() >= 'a' && rootNode->item.getChar() <= 'z'){
         store_code.insert(make_pair(rootNode->item.getChar(),code));
@@ -349,7 +367,8 @@ void	BT::	codeChar		(Node* rootNode, string code) {
         return;
     }
 
-
+    // recursively calling the function left and right with the corresponding digit 
+    // attached
     codeChar(rootNode->left, code+ "0");
     codeChar(rootNode->right, code+"1");
 

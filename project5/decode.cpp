@@ -19,6 +19,7 @@
   
 using namespace std;
 
+//function declaration
 map<char, string> getCodeMap();
 //==============================================
 // main
@@ -33,13 +34,14 @@ int main ( void)
     map<char, string> code_vector;
     code_vector = getCodeMap();
 
-
+    // create a bt using CreareBT function on code vector (map with characters and their)
     NodeInfo item(0,0);
     BT mainBT(item);
     mainBT.CreateBT(code_vector);
 
 
-    //Reading block of decodes text from stdin line by line and using binary tree
+    //Reading block of encodes text from stdin line by line and using binary tree
+    // to decode them.
     string inputText;
     while(getline(cin,inputText)){
 
@@ -50,7 +52,7 @@ int main ( void)
 }
 
 map<char, string> getCodeMap(){
-    
+    // if there is an error reading the file, print error and return the empty map.
     map<char, string> charToBinaryMap;
     ifstream file("code.txt");
     if (!file.is_open()) {
